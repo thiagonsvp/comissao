@@ -1,0 +1,8 @@
+.vercel/
+.browser-debug/
+
+# Arquivos locais de recuperacao e fontes que nao devem ser publicados
+supabase_atualizar_dados_locais.sql
+Vendas - Abril-2026.pdf
+transform.js
+

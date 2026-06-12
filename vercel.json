@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/Gerenciamento_Financeiro.html"
+    }
+  ]
+}
