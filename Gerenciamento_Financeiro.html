@@ -460,7 +460,7 @@ tr:hover td { background: rgba(255,255,255,.03); }
         <table>
           <thead><tr>
             <th style="width:32px;"><input type="checkbox" id="chk-all" onchange="toggleAllVendas(this)" style="accent-color:var(--accent);cursor:pointer;"></th>
-            <th>OS</th><th>Data</th><th>Cliente</th><th>Produto</th><th>Pagamento</th><th>Valor</th><th>Recebido</th><th>Saldo aberto</th><th>Comissão liberada</th><th>Com. baixada</th><th>Status</th><th>Pag. Comissão</th><th></th>
+            <th>OS</th><th>Data</th><th>Cliente</th><th>Produto</th><th>Pagamento</th><th>Valor</th><th>Recebido</th><th>Saldo aberto</th><th>Comissão liberada</th><th>Com. baixada</th><th>Saldo comissão</th><th>Status</th><th>Pag. Comissão</th><th></th>
           </tr></thead>
           <tbody id="tabela-vendas"></tbody>
         </table>
@@ -1622,12 +1622,14 @@ function renderVendas() {
   const totalSaldo = filtered.filter(v=>v.status!=='cancelado').reduce((s,v)=>s+saldoAbertoVenda(v),0);
   const totalCom  = filtered.filter(v=>v.status!=='cancelado').reduce((s,v)=>s+comissaoLiberada(v),0);
   const totalBaixado= filtered.filter(v=>v.status!=='cancelado').reduce((s,v)=>s+comissaoBaixada(v),0);
+  const totalSaldoComissao= filtered.filter(v=>v.status!=='cancelado').reduce((s,v)=>s+comissaoDisponivelBaixa(v),0);
 
   document.getElementById('tabela-vendas').innerHTML = filtered.length
     ? filtered.map(v=>{
         const info   = infoComMinha(v);
         const comLib = comissaoLiberada(v);
         const comBx  = comissaoBaixada(v);
+        const comSaldo = comissaoDisponivelBaixa(v);
         const recebido = valorRecebidoVenda(v);
         const saldo = saldoAbertoVenda(v);
         const isCancelado = v.status==='cancelado';
@@ -1649,6 +1651,7 @@ function renderVendas() {
           <td style="font-family:var(--mono);color:${saldo>0?'var(--amber)':'var(--text-3)'};">${fmtR(saldo)}</td>
           <td>${comCel}</td>
           <td style="font-family:var(--mono);color:var(--purple);">${fmtR(comBx)}</td>
+          <td style="font-family:var(--mono);color:${comSaldo>0?'var(--amber)':'var(--text-3)'};">${fmtR(comSaldo)}</td>
           <td><span class="badge ${statusBadgeClass(v)}">${statusLabel(v)}</span></td>
           <td style="font-size:11px;font-family:var(--mono);">${comBx>0?`<span style="color:var(--purple)">${dataBaixa}</span>`:'—'}</td>
           <td><div style="display:flex;gap:4px;">
@@ -1658,10 +1661,10 @@ function renderVendas() {
           </div></td>
         </tr>`;
       }).join('')
-    : '<tr><td colspan="13" class="empty">Nenhuma venda encontrada</td></tr>';
+    : '<tr><td colspan="14" class="empty">Nenhuma venda encontrada</td></tr>';
 
   document.getElementById('vendas-total').innerHTML =
-    `${filtered.length} venda(s) &nbsp;·&nbsp; Total: <strong>${fmtR(totalVal)}</strong> &nbsp;·&nbsp; Recebido: <strong>${fmtR(totalRecebido)}</strong> &nbsp;·&nbsp; Saldo aberto: <strong>${fmtR(totalSaldo)}</strong> &nbsp;·&nbsp; Comissão liberada: <strong>${fmtR(totalCom)}</strong> &nbsp;·&nbsp; Baixada: <strong>${fmtR(totalBaixado)}</strong>`;
+    `${filtered.length} venda(s) &nbsp;·&nbsp; Total: <strong>${fmtR(totalVal)}</strong> &nbsp;·&nbsp; Recebido: <strong>${fmtR(totalRecebido)}</strong> &nbsp;·&nbsp; Saldo aberto: <strong>${fmtR(totalSaldo)}</strong> &nbsp;·&nbsp; Comissão liberada: <strong>${fmtR(totalCom)}</strong> &nbsp;·&nbsp; Baixada: <strong>${fmtR(totalBaixado)}</strong> &nbsp;·&nbsp; Saldo comissão: <strong>${fmtR(totalSaldoComissao)}</strong>`;
   document.getElementById('chk-all').checked=false;
 }
 
