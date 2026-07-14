@@ -899,6 +899,26 @@ function toSnakeCase(obj) {
   return res;
 }
 
+const SUPABASE_COLUMNS = {
+  atendentes: ['id', 'nome', 'tipo', 'valor', 'created_at'],
+  vendas: ['id', 'data', 'os', 'cliente', 'produto', 'atendente', 'valor', 'pagamento', 'status', 'obs', 'com_tipo', 'com_valor', 'data_baixa_comissao', 'obs_baixa', 'created_at'],
+  recebimentos: ['id', 'cliente', 'tipo', 'recorrencia', 'valor', 'data_prevista', 'dia', 'inicio', 'created_at'],
+  produtos: ['nome', 'created_at']
+};
+
+function toSupabaseRow(table, item) {
+  const snakeItem = toSnakeCase(item);
+  const allowed = SUPABASE_COLUMNS[table];
+  if (!allowed) return snakeItem;
+
+  return allowed.reduce((row, column) => {
+    if (Object.prototype.hasOwnProperty.call(snakeItem, column)) {
+      row[column] = snakeItem[column];
+    }
+    return row;
+  }, {});
+}
+
 function toCamelCase(obj) {
   if (!obj) return obj;
   const mapping = {
@@ -934,20 +954,21 @@ async function enviarDadosLocaisParaSupabase(client, dadosLocais) {
   const relatorio = [];
 
   if (dadosLocais.atendentes.length > 0) {
-    const { error } = await client.from('com_atendentes').upsert(dadosLocais.atendentes, { onConflict: 'id' });
+    const atendentesLimpos = dadosLocais.atendentes.map(item => toSupabaseRow('atendentes', item));
+    const { error } = await client.from('com_atendentes').upsert(atendentesLimpos, { onConflict: 'id' });
     if (error) throw new Error('Atendentes: ' + error.message);
     relatorio.push(`${dadosLocais.atendentes.length} atendente(s)`);
   }
 
   if (dadosLocais.vendas.length > 0) {
-    const mappedVendas = dadosLocais.vendas.map(toSnakeCase);
+    const mappedVendas = dadosLocais.vendas.map(item => toSupabaseRow('vendas', item));
     const { error } = await client.from('com_vendas').upsert(mappedVendas, { onConflict: 'id' });
     if (error) throw new Error('Vendas: ' + error.message);
     relatorio.push(`${dadosLocais.vendas.length} venda(s)`);
   }
 
   if (dadosLocais.recebimentos.length > 0) {
-    const mappedRec = dadosLocais.recebimentos.map(toSnakeCase);
+    const mappedRec = dadosLocais.recebimentos.map(item => toSupabaseRow('recebimentos', item));
     const { error } = await client.from('com_recebimentos').upsert(mappedRec, { onConflict: 'id' });
     if (error) throw new Error('Recebimentos: ' + error.message);
     relatorio.push(`${dadosLocais.recebimentos.length} recebimento(s)`);
@@ -1074,7 +1095,7 @@ async function migrarDadosLocaisParaSupabase() {
 async function dbInsert(table, item) {
   const client = getSupabaseClient();
   if (client) {
-    const snakeItem = toSnakeCase(item);
+    const snakeItem = toSupabaseRow(table, item);
     const { error } = await client.from('com_' + table).insert(snakeItem);
     if (error) {
       alert("Erro ao salvar no Supabase (com_" + table + "): " + error.message);
@@ -1086,7 +1107,7 @@ async function dbInsert(table, item) {
 async function dbUpsert(table, item) {
   const client = getSupabaseClient();
   if (client) {
-    const snakeItem = toSnakeCase(item);
+    const snakeItem = toSupabaseRow(table, item);
     const { error } = await client.from('com_' + table).upsert(snakeItem);
     if (error) {
       alert("Erro ao atualizar no Supabase (com_" + table + "): " + error.message);
@@ -1746,7 +1767,7 @@ async function confirmarBaixaMassa(){
     const idx=vendas.findIndex(x=>x.id===id);
     if(idx!==-1){
       const updated = { ...vendas[idx], status: 'baixado', dataBaixaComissao: data, obsBaixa: obs };
-      updates.push(toSnakeCase(updated));
+      updates.push(toSupabaseRow('vendas', updated));
       indices.push({ idx, updated });
     }
   });
