@@ -576,6 +576,7 @@ tr:hover td { background: rgba(255,255,255,.03); }
           </div>
         </div>
         <button class="btn-outline" onclick="gerarRelFinanceiro()">↻ Gerar</button>
+        <button class="btn-outline" onclick="gerarRelBaixasComissao()">Baixas por data</button>
         <button class="btn-sm accent" onclick="imprimirRel()">🖨 Imprimir / PDF</button>
       </div>
       <div id="rf-preview"></div>
@@ -2235,6 +2236,73 @@ function gerarRelFinanceiro(){
 function imprimirRel(){
   gerarRelFinanceiro();
   setTimeout(()=>window.print(),200);
+}
+
+function gerarRelBaixasComissao(){
+  const de=document.getElementById('rf-de').value||new Date().toISOString().slice(0,7);
+  const ate=document.getElementById('rf-ate').value||de;
+  const baixas=vendas
+    .filter(v=>v.status!=='cancelado'&&v.dataBaixaComissao&&mesKey(v.dataBaixaComissao)>=de&&mesKey(v.dataBaixaComissao)<=ate&&comissaoBaixada(v)>0)
+    .sort((a,b)=>a.dataBaixaComissao.localeCompare(b.dataBaixaComissao)||String(a.os||'').localeCompare(String(b.os||'')));
+  const total=baixas.reduce((s,v)=>s+comissaoBaixada(v),0);
+  const porData=baixas.reduce((acc,v)=>{
+    const data=v.dataBaixaComissao;
+    if(!acc[data]) acc[data]=[];
+    acc[data].push(v);
+    return acc;
+  },{});
+  const datas=Object.keys(porData).sort();
+  const deLabel=mesLabel(de+'-01'); const ateLabel=mesLabel(ate+'-01');
+  const periodo=de===ate?deLabel:`${deLabel} a ${ateLabel}`;
+  const hoje=new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric'});
+
+  const grupos=datas.map(data=>{
+    const itens=porData[data];
+    const subtotal=itens.reduce((s,v)=>s+comissaoBaixada(v),0);
+    const linhas=itens.map(v=>`<tr>
+      <td>${v.os||'—'}</td>
+      <td>${v.cliente}</td>
+      <td>${v.produto}</td>
+      <td style="text-align:right;">${fmtPrintR(v.valor)}</td>
+      <td style="text-align:right;">${fmtPrintR(valorRecebidoVenda(v))}</td>
+      <td style="text-align:right;color:#7e22ce;font-weight:600;">${fmtPrintR(comissaoBaixada(v))}</td>
+      <td>${esc(v.obsBaixa||'—')}</td>
+    </tr>`).join('');
+    return `<div style="margin-bottom:22px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #e5e7eb;padding-bottom:8px;margin-bottom:10px;">
+        <div style="font-size:14px;font-weight:700;color:#111;">${fmtDate(data)}</div>
+        <div style="font-size:14px;font-weight:700;color:#7e22ce;">${fmtPrintR(subtotal)}</div>
+      </div>
+      <table class="print-table">
+        <thead><tr><th>OS</th><th>Cliente</th><th>Produto</th><th style="text-align:right;">Valor venda</th><th style="text-align:right;">Recebido</th><th style="text-align:right;">Com. baixada</th><th>Obs. baixa</th></tr></thead>
+        <tbody>${linhas}</tbody>
+        <tfoot><tr style="font-weight:700;background:#f3f4f6;"><td colspan="5" style="padding:8px 10px;">Total ${fmtDate(data)}</td><td style="padding:8px 10px;text-align:right;color:#7e22ce;">${fmtPrintR(subtotal)}</td><td></td></tr></tfoot>
+      </table>
+    </div>`;
+  }).join('');
+
+  const html=`<div class="print-doc" id="doc-baixas-comissao">
+    <div class="print-header">
+      <div>
+        <div class="print-title">Comissões Baixadas por Data</div>
+        <div class="print-subtitle">Período de pagamento: ${periodo}</div>
+      </div>
+      <div class="print-meta">Emitido em: ${hoje}</div>
+    </div>
+    <div class="print-cards">
+      <div class="print-card"><div class="print-card-label">Datas com baixa</div><div class="print-card-value">${datas.length}</div></div>
+      <div class="print-card"><div class="print-card-label">Itens baixados</div><div class="print-card-value">${baixas.length}</div></div>
+      <div class="print-card"><div class="print-card-label">Total baixado</div><div class="print-card-value blue">${fmtPrintR(total)}</div></div>
+    </div>
+    ${grupos||'<p style="color:#999;font-size:12px;padding:12px 0;">Nenhuma comissão baixada no período selecionado.</p>'}
+    <div class="print-footer">
+      <span>Sistema de Comissões &nbsp;·&nbsp; Gerado em ${hoje}</span>
+      <span>Total baixado: ${fmtPrintR(total)}</span>
+    </div>
+  </div>`;
+
+  document.getElementById('rf-preview').innerHTML=html;
+  document.getElementById('print-area').innerHTML=html;
 }
 
 // ══════════════════════════════════════════════
