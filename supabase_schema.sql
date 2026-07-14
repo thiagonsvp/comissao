@@ -26,10 +26,15 @@ CREATE TABLE IF NOT EXISTS com_vendas (
   obs TEXT DEFAULT '',
   com_tipo TEXT DEFAULT NULL,
   com_valor NUMERIC(10,2) DEFAULT NULL,
+  valor_recebido NUMERIC(10,2) DEFAULT 0,
+  valor_comissao_baixada NUMERIC(10,2) DEFAULT 0,
   data_baixa_comissao DATE DEFAULT NULL,
   obs_baixa TEXT DEFAULT '',
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
+
+ALTER TABLE com_vendas ADD COLUMN IF NOT EXISTS valor_recebido NUMERIC(10,2) DEFAULT 0;
+ALTER TABLE com_vendas ADD COLUMN IF NOT EXISTS valor_comissao_baixada NUMERIC(10,2) DEFAULT 0;
 
 -- 3. Tabela de recebimentos
 CREATE TABLE IF NOT EXISTS com_recebimentos (

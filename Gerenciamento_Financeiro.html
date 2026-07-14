@@ -132,6 +132,7 @@ tr:hover td { background: rgba(255,255,255,.03); }
 .badge.recebido { background: var(--green-dim); color: var(--green); border: 1px solid rgba(77,255,160,.2); }
 .badge.pendente  { background: var(--amber-dim); color: var(--amber); border: 1px solid rgba(255,204,77,.2); }
 .badge.parcial  { background: var(--orange-dim); color: var(--orange); border: 1px solid rgba(251,146,60,.2); }
+.badge.parcial-baixado { background: var(--purple-dim); color: var(--purple); border: 1px solid rgba(192,132,252,.2); }
 .badge.cancelado { background: var(--red-dim);   color: var(--red);   border: 1px solid rgba(255,107,138,.2); }
 .badge.baixado   { background: var(--purple-dim); color: var(--purple); border: 1px solid rgba(192,132,252,.2); }
 
@@ -350,7 +351,7 @@ tr:hover td { background: rgba(255,255,255,.03); }
       <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="12" height="12" rx="1"/><path d="M5 6h6M5 9h4"/></svg>
       Financeiro
     </button>
-    <button class="nav-item" onclick="showSection('rel-atendentes',this)">
+    <button class="nav-item" onclick="showSection('rel-atendentes',this)" style="display:none;">
       <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="5" r="2.5"/><path d="M3 14c0-2.76 2.24-5 5-5s5 2.24 5 5"/></svg>
       Por atendente
     </button>
@@ -360,7 +361,7 @@ tr:hover td { background: rgba(255,255,255,.03); }
     </button>
 
     <div class="nav-section">Configurações</div>
-    <button class="nav-item" onclick="showSection('atendentes',this)">
+    <button class="nav-item" onclick="showSection('atendentes',this)" style="display:none;">
       <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="5" cy="5" r="2"/><circle cx="11" cy="5" r="2"/><path d="M1 14c0-2.21 1.79-4 4-4M15 14c0-2.21-1.79-4-4-4M8 12v-2M8 10c1.1 0 2-.9 2-2V6H6v2c0 1.1.9 2 2 2z"/></svg>
       Atendentes
     </button>
@@ -384,7 +385,7 @@ tr:hover td { background: rgba(255,255,255,.03); }
       <div class="section-label">Vendas recentes</div>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>OS</th><th>Data</th><th>Cliente</th><th>Produto</th><th>Atendente</th><th>Valor</th><th>Comissão</th><th>Status</th></tr></thead>
+          <thead><tr><th>OS</th><th>Data</th><th>Cliente</th><th>Produto</th><th>Valor</th><th>Recebido</th><th>Comissão</th><th>Status</th></tr></thead>
           <tbody id="dash-recentes"></tbody>
         </table>
       </div>
@@ -399,15 +400,12 @@ tr:hover td { background: rgba(255,255,255,.03); }
       <div class="form-grid" style="grid-template-columns:1fr 1fr 1fr;">
         <div class="form-group"><label>Nº OS</label><input type="text" id="v-os" placeholder="Ex: 2024001"></div>
         <div class="form-group"><label>Data</label><input type="date" id="v-data"></div>
-        <div class="form-group"><label>Status</label>
-          <select id="v-status"><option value="pendente">Pendente</option><option value="parcial">Parcial</option><option value="recebido">Recebido</option><option value="cancelado">Cancelado</option></select>
+        <div class="form-group"><label>Situação</label>
+          <select id="v-status"><option value="pendente">Automático</option><option value="cancelado">Cancelado</option></select>
         </div>
       </div>
       <div class="form-grid">
         <div class="form-group"><label>Cliente</label><input type="text" id="v-cliente" placeholder="Nome do cliente"></div>
-        <div class="form-group"><label>Atendente</label>
-          <select id="v-atendente"><option value="">— Sem atendente —</option></select>
-        </div>
         <div class="form-group"><label>Produto / categoria</label>
           <select id="v-produto"><option>Lona / Banner</option><option>Adesivo</option><option>Placa / ACM</option><option>Fachada</option><option>Outros</option></select>
         </div>
@@ -415,6 +413,7 @@ tr:hover td { background: rgba(255,255,255,.03); }
           <select id="v-pagamento"><option>À vista</option><option>Cartão de crédito</option><option>Boleto</option><option>Pix</option><option>Parcelado</option></select>
         </div>
         <div class="form-group"><label>Valor (R$)</label><input type="number" id="v-valor" placeholder="0,00" min="0" step="0.01" oninput="updatePreview()"></div>
+        <div class="form-group"><label>Valor recebido (R$)</label><input type="number" id="v-valor-recebido" placeholder="0,00" min="0" step="0.01" oninput="updatePreview()"></div>
         <div class="form-group">
           <label>Comissão especial <span style="color:var(--orange);font-size:9px;"> OPCIONAL</span></label>
           <div class="com-tipo-toggle">
@@ -449,7 +448,6 @@ tr:hover td { background: rgba(255,255,255,.03); }
           <option value="">Todos os produtos</option>
           <option>Lona / Banner</option><option>Adesivo</option><option>Placa / ACM</option><option>Fachada</option><option>Outros</option>
         </select>
-        <select id="f-atend" onchange="renderVendas()"><option value="">Todos os atendentes</option></select>
         <select id="f-status" onchange="renderVendas()">
           <option value="">Todos os status</option>
           <option value="recebido">Recebido</option><option value="parcial">Parcial</option><option value="pendente">Pendente</option>
@@ -462,7 +460,7 @@ tr:hover td { background: rgba(255,255,255,.03); }
         <table>
           <thead><tr>
             <th style="width:32px;"><input type="checkbox" id="chk-all" onchange="toggleAllVendas(this)" style="accent-color:var(--accent);cursor:pointer;"></th>
-            <th>OS</th><th>Data</th><th>Cliente</th><th>Produto</th><th>Atendente</th><th>Pagamento</th><th>Valor</th><th>Minha Comissão</th><th>Com. Atendente</th><th>Status</th><th>Pag. Comissão</th><th></th>
+            <th>OS</th><th>Data</th><th>Cliente</th><th>Produto</th><th>Pagamento</th><th>Valor</th><th>Recebido</th><th>Saldo aberto</th><th>Comissão liberada</th><th>Com. baixada</th><th>Status</th><th>Pag. Comissão</th><th></th>
           </tr></thead>
           <tbody id="tabela-vendas"></tbody>
         </table>
@@ -484,7 +482,7 @@ tr:hover td { background: rgba(255,255,255,.03); }
       <div id="com-mensal"><div class="chart-wrap" style="height:260px;"><canvas id="chart-com"></canvas></div></div>
       <div id="com-historico" style="display:none;">
         <div class="table-wrap"><table>
-          <thead><tr><th>Mês</th><th>Vendas</th><th>Total vendido</th><th>Minha Comissão</th><th>Com. Atendentes</th><th>Status</th></tr></thead>
+          <thead><tr><th>Mês</th><th>Vendas</th><th>Total vendido</th><th>Comissão total</th><th>Comissão baixada</th><th>Status</th></tr></thead>
           <tbody id="tabela-historico"></tbody>
         </table></div>
       </div>
@@ -754,15 +752,12 @@ tr:hover td { background: rgba(255,255,255,.03); }
     <div class="form-grid" style="grid-template-columns:1fr 1fr 1fr;">
       <div class="form-group"><label>Nº OS</label><input type="text" id="e-os"></div>
       <div class="form-group"><label>Data</label><input type="date" id="e-data"></div>
-      <div class="form-group"><label>Status</label>
-        <select id="e-status"><option value="pendente">Pendente</option><option value="parcial">Parcial</option><option value="recebido">Recebido</option><option value="cancelado">Cancelado</option></select>
+      <div class="form-group"><label>Situação</label>
+        <select id="e-status"><option value="pendente">Automático</option><option value="cancelado">Cancelado</option></select>
       </div>
     </div>
     <div class="form-grid">
       <div class="form-group"><label>Cliente</label><input type="text" id="e-cliente"></div>
-      <div class="form-group"><label>Atendente</label>
-        <select id="e-atendente"><option value="">— Sem atendente —</option></select>
-      </div>
       <div class="form-group"><label>Produto</label>
         <select id="e-produto"><option>Lona / Banner</option><option>Adesivo</option><option>Placa / ACM</option><option>Fachada</option><option>Outros</option></select>
       </div>
@@ -770,6 +765,7 @@ tr:hover td { background: rgba(255,255,255,.03); }
         <select id="e-pagamento"><option>À vista</option><option>Cartão de crédito</option><option>Boleto</option><option>Pix</option><option>Parcelado</option></select>
       </div>
       <div class="form-group"><label>Valor (R$)</label><input type="number" id="e-valor" min="0" step="0.01" oninput="updateEditPreview()"></div>
+      <div class="form-group"><label>Valor recebido (R$)</label><input type="number" id="e-valor-recebido" min="0" step="0.01" oninput="updateEditPreview()"></div>
       <div class="form-group">
         <label>Comissão especial <span style="color:var(--orange);font-size:9px;"> OPCIONAL</span></label>
         <div class="com-tipo-toggle">
@@ -804,8 +800,9 @@ tr:hover td { background: rgba(255,255,255,.03); }
     </div>
     <div id="baixar-info" style="font-size:13px;color:var(--text-2);margin-bottom:18px;line-height:1.8;"></div>
     <div class="form-grid">
+      <div class="form-group"><label>Valor recebido do cliente (R$)</label><input type="number" id="bi-valor-recebido" step="0.01" min="0" oninput="atualizarBaixaIndividualPreview()"></div>
       <div class="form-group"><label>Data de pagamento</label><input type="date" id="bi-data"></div>
-      <div class="form-group"><label>Valor pago (R$)</label><input type="number" id="bi-valor" step="0.01" min="0"></div>
+      <div class="form-group"><label>Valor da comissao baixada (R$)</label><input type="number" id="bi-valor" step="0.01" min="0"></div>
       <div class="form-group full"><label>Observação</label><input type="text" id="bi-obs" placeholder="Ex: Pix, transferência…"></div>
     </div>
     <div class="modal-footer">
@@ -889,6 +886,8 @@ function toSnakeCase(obj) {
     comValor: 'com_valor',
     dataBaixaComissao: 'data_baixa_comissao',
     obsBaixa: 'obs_baixa',
+    valorRecebido: 'valor_recebido',
+    valorComissaoBaixada: 'valor_comissao_baixada',
     dataPrevista: 'data_prevista'
   };
   const res = {};
@@ -899,6 +898,23 @@ function toSnakeCase(obj) {
   return res;
 }
 
+const SUPABASE_COLUMNS = {
+  atendentes: ['id', 'nome', 'tipo', 'valor', 'created_at'],
+  vendas: ['id', 'data', 'os', 'cliente', 'produto', 'atendente', 'valor', 'pagamento', 'status', 'obs', 'com_tipo', 'com_valor', 'data_baixa_comissao', 'obs_baixa', 'valor_recebido', 'valor_comissao_baixada', 'created_at'],
+  recebimentos: ['id', 'cliente', 'tipo', 'recorrencia', 'valor', 'data_prevista', 'dia', 'inicio', 'created_at'],
+  produtos: ['nome', 'created_at']
+};
+
+function toSupabaseRow(table, item) {
+  const snakeItem = toSnakeCase(item);
+  const allowed = SUPABASE_COLUMNS[table];
+  if (!allowed) return snakeItem;
+  return allowed.reduce((row, column) => {
+    if (Object.prototype.hasOwnProperty.call(snakeItem, column)) row[column] = snakeItem[column];
+    return row;
+  }, {});
+}
+
 function toCamelCase(obj) {
   if (!obj) return obj;
   const mapping = {
@@ -906,6 +922,8 @@ function toCamelCase(obj) {
     com_valor: 'comValor',
     data_baixa_comissao: 'dataBaixaComissao',
     obs_baixa: 'obsBaixa',
+    valor_recebido: 'valorRecebido',
+    valor_comissao_baixada: 'valorComissaoBaixada',
     data_prevista: 'dataPrevista'
   };
   const res = {};
@@ -934,20 +952,21 @@ async function enviarDadosLocaisParaSupabase(client, dadosLocais) {
   const relatorio = [];
 
   if (dadosLocais.atendentes.length > 0) {
-    const { error } = await client.from('com_atendentes').upsert(dadosLocais.atendentes, { onConflict: 'id' });
+    const atendentesLimpos = dadosLocais.atendentes.map(item => toSupabaseRow('atendentes', item));
+    const { error } = await client.from('com_atendentes').upsert(atendentesLimpos, { onConflict: 'id' });
     if (error) throw new Error('Atendentes: ' + error.message);
     relatorio.push(`${dadosLocais.atendentes.length} atendente(s)`);
   }
 
   if (dadosLocais.vendas.length > 0) {
-    const mappedVendas = dadosLocais.vendas.map(toSnakeCase);
+    const mappedVendas = dadosLocais.vendas.map(item => toSupabaseRow('vendas', item));
     const { error } = await client.from('com_vendas').upsert(mappedVendas, { onConflict: 'id' });
     if (error) throw new Error('Vendas: ' + error.message);
     relatorio.push(`${dadosLocais.vendas.length} venda(s)`);
   }
 
   if (dadosLocais.recebimentos.length > 0) {
-    const mappedRec = dadosLocais.recebimentos.map(toSnakeCase);
+    const mappedRec = dadosLocais.recebimentos.map(item => toSupabaseRow('recebimentos', item));
     const { error } = await client.from('com_recebimentos').upsert(mappedRec, { onConflict: 'id' });
     if (error) throw new Error('Recebimentos: ' + error.message);
     relatorio.push(`${dadosLocais.recebimentos.length} recebimento(s)`);
@@ -1074,7 +1093,7 @@ async function migrarDadosLocaisParaSupabase() {
 async function dbInsert(table, item) {
   const client = getSupabaseClient();
   if (client) {
-    const snakeItem = toSnakeCase(item);
+    const snakeItem = toSupabaseRow(table, item);
     const { error } = await client.from('com_' + table).insert(snakeItem);
     if (error) {
       alert("Erro ao salvar no Supabase (com_" + table + "): " + error.message);
@@ -1086,7 +1105,7 @@ async function dbInsert(table, item) {
 async function dbUpsert(table, item) {
   const client = getSupabaseClient();
   if (client) {
-    const snakeItem = toSnakeCase(item);
+    const snakeItem = toSupabaseRow(table, item);
     const { error } = await client.from('com_' + table).upsert(snakeItem);
     if (error) {
       alert("Erro ao atualizar no Supabase (com_" + table + "): " + error.message);
@@ -1215,15 +1234,70 @@ function comissaoMinha(v) {
 }
 
 function comissaoAtendente(v) {
-  if (!v.atendente) return 0;
-  const at = atendentes.find(a => String(a.id) === String(v.atendente));
-  if (!at) return 0;
-  if (at.tipo==='valor') return parseFloat(at.valor)||0;
-  return v.valor * (parseFloat(at.valor)||0) / 100;
+  if (v.status==='cancelado') return 0;
+  return v.valor * 0.02;
 }
 
 function comissaoLiquida(v) {
-  return comissaoMinha(v) - comissaoAtendente(v);
+  return comissaoTotal(v);
+}
+
+function comissaoTotal(v) {
+  return comissaoMinha(v);
+}
+
+function valorRecebidoVenda(v) {
+  const valor = parseFloat(v.valor)||0;
+  if (v.valorRecebido!=null && v.valorRecebido!=='') return Math.min(valor, Math.max(0, parseFloat(v.valorRecebido)||0));
+  if (v.status==='recebido'||v.status==='baixado') return valor;
+  return 0;
+}
+
+function saldoAbertoVenda(v) {
+  return Math.max(0, (parseFloat(v.valor)||0) - valorRecebidoVenda(v));
+}
+
+function comissaoLiberada(v) {
+  const valor = parseFloat(v.valor)||0;
+  if (!valor || v.status==='cancelado') return 0;
+  return comissaoTotal(v) * (valorRecebidoVenda(v) / valor);
+}
+
+function comissaoBaixada(v) {
+  const total = comissaoTotal(v);
+  if (v.valorComissaoBaixada!=null && v.valorComissaoBaixada!=='') return Math.min(total, Math.max(0, parseFloat(v.valorComissaoBaixada)||0));
+  if (v.status==='baixado') return total;
+  return 0;
+}
+
+function comissaoDisponivelBaixa(v) {
+  return Math.max(0, comissaoLiberada(v) - comissaoBaixada(v));
+}
+
+function statusCalculado(v) {
+  if (v.status==='cancelado') return 'cancelado';
+  const valor = parseFloat(v.valor)||0;
+  const recebido = valorRecebidoVenda(v);
+  const baixada = comissaoBaixada(v);
+  const totalCom = comissaoTotal(v);
+  if (valor>0 && recebido>=valor && totalCom>0 && baixada>=totalCom-0.009) return 'baixado';
+  if (recebido<=0) return 'pendente';
+  if (recebido<valor) return 'parcial';
+  return 'recebido';
+}
+
+function statusBadgeClass(v) {
+  const st = statusCalculado(v);
+  return st==='parcial' && comissaoBaixada(v)>0 ? 'parcial-baixado' : st;
+}
+
+function statusLabel(v) {
+  return statusCalculado(v);
+}
+
+function normalizarVenda(v) {
+  const status = statusCalculado(v);
+  return { ...v, status };
 }
 
 function infoComMinha(v) {
@@ -1243,6 +1317,7 @@ function printStatusStyle(status) {
     baixado:   { bg:'#dcfce7', fg:'#166534' },
     recebido: { bg:'#dbeafe', fg:'#1e40af' },
     parcial:  { bg:'#ffedd5', fg:'#9a3412' },
+    'parcial-baixado': { bg:'#f3e8ff', fg:'#7e22ce' },
     pendente: { bg:'#fef9c3', fg:'#713f12' },
   };
   return styles[status] || styles.pendente;
@@ -1250,7 +1325,8 @@ function printStatusStyle(status) {
 
 function printStatusBadge(status) {
   const st=printStatusStyle(status);
-  return `<span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;background:${st.bg};color:${st.fg};">${String(status||'pendente').toUpperCase()}</span>`;
+  const label=status==='parcial-baixado'?'parcial':(status||'pendente');
+  return `<span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;background:${st.bg};color:${st.fg};">${String(label).toUpperCase()}</span>`;
 }
 
 // ══════════════════════════════════════════════
@@ -1262,8 +1338,8 @@ function showSection(id, el) {
   document.getElementById(id).classList.add('active');
   if(el) el.classList.add('active');
   if(id==='dashboard')      renderDash();
-  if(id==='nova-venda')     { popularSelectAtendentes('v-atendente'); popularSelectProdutos('v-produto'); }
-  if(id==='vendas')         { initFiltroMes(); popularSelectAtendentes('f-atend'); popularSelectProdutos('f-prod'); renderVendas(); }
+  if(id==='nova-venda')     { popularSelectProdutos('v-produto'); }
+  if(id==='vendas')         { initFiltroMes(); popularSelectProdutos('f-prod'); renderVendas(); }
   if(id==='comissao')       renderComissao();
   if(id==='recebimentos')   { initFluxoMes(); renderRecebimentos(); }
   if(id==='rel-financeiro') { initRelDatas('rf'); gerarRelFinanceiro(); }
@@ -1411,20 +1487,18 @@ function renderDash() {
   const vMes = vendas.filter(v=>mesKey(v.data)===hoje);
   const ativas = vMes.filter(v=>v.status!=='cancelado');
   const totalMes  = ativas.reduce((s,v)=>s+v.valor,0);
-  const comMinha  = ativas.reduce((s,v)=>s+comissaoMinha(v),0);
-  const comAtend  = ativas.reduce((s,v)=>s+comissaoAtendente(v),0);
-  const comBaixada= vMes.filter(v=>v.status==='baixado').reduce((s,v)=>s+comissaoMinha(v),0);
-  const pendentes = ativas.filter(v=>v.status!=='baixado');
-  const comPendMinha = pendentes.reduce((s,v)=>s+comissaoMinha(v),0);
-  const comPendAtend = pendentes.reduce((s,v)=>s+comissaoAtendente(v),0);
-  const comPend   = comPendMinha - comPendAtend;
+  const recebidoMes = ativas.reduce((s,v)=>s+valorRecebidoVenda(v),0);
+  const comMinha  = ativas.reduce((s,v)=>s+comissaoTotal(v),0);
+  const comLiberada= ativas.reduce((s,v)=>s+comissaoLiberada(v),0);
+  const comBaixada= ativas.reduce((s,v)=>s+comissaoBaixada(v),0);
+  const comPend   = ativas.filter(v=>statusCalculado(v)==='pendente').reduce((s,v)=>s+comissaoTotal(v),0);
 
   document.getElementById('dash-cards').innerHTML = `
     <div class="card"><div class="card-label">Vendas no mês</div><div class="card-value">${fmtR(totalMes)}</div><div class="card-sub">${ativas.length} pedido(s)</div></div>
-    <div class="card accent"><div class="card-label">Minha comissão</div><div class="card-value">${fmtR(comMinha)}</div><div class="card-sub">${config.pct||7}% padrão</div></div>
-    <div class="card purple"><div class="card-label">Com. atendentes</div><div class="card-value">${fmtR(comAtend)}</div></div>
-    <div class="card green"><div class="card-label">Já baixado</div><div class="card-value">${fmtR(comBaixada)}</div></div>
-    <div class="card amber"><div class="card-label">A receber</div><div class="card-value">${fmtR(comPend)}</div><div class="card-sub">Minha comissão - com. atendente</div></div>
+    <div class="card accent"><div class="card-label">Recebido no mês</div><div class="card-value">${fmtR(recebidoMes)}</div></div>
+    <div class="card purple"><div class="card-label">Comissão total</div><div class="card-value">${fmtR(comMinha)}</div><div class="card-sub">Inclui Geice 1% + Gabrielle 1%</div></div>
+    <div class="card green"><div class="card-label">Comissão liberada</div><div class="card-value">${fmtR(comLiberada)}</div></div>
+    <div class="card amber"><div class="card-label">Comissões pendentes</div><div class="card-value">${fmtR(comPend)}</div><div class="card-sub">Status pendente</div></div>
   `;
 
   const pctMeta = config.meta>0?Math.min(100,Math.round(totalMes/config.meta*100)):0;
@@ -1442,17 +1516,17 @@ function renderDash() {
   document.getElementById('dash-recentes').innerHTML = recentes.length
     ? recentes.map(v=>{
         const info = infoComMinha(v);
-        const com  = comissaoMinha(v);
+        const com  = comissaoLiberada(v);
         const isCancelado = v.status==='cancelado';
         return `<tr>
           <td style="font-family:var(--mono);font-size:11px;color:var(--accent2);">${v.os||'—'}</td>
           <td style="color:var(--text-2);font-family:var(--mono);font-size:11px;">${fmtDate(v.data)}</td>
           <td>${v.cliente}</td>
           <td style="color:var(--text-2);">${v.produto}</td>
-          <td>${v.atendente?`<span class="atendente-tag">${nomeAtendente(v.atendente)}</span>`:'<span style="color:var(--text-3);">—</span>'}</td>
           <td style="font-family:var(--mono);">${fmtR(v.valor)}</td>
+          <td style="font-family:var(--mono);color:var(--green);">${fmtR(valorRecebidoVenda(v))}</td>
           <td style="font-family:var(--mono);${info.ajustada?'color:var(--orange);':''}">${isCancelado?'—':fmtR(com)}${info.ajustada&&!isCancelado?'<span class="tag-ajustada">✎</span>':''}</td>
-          <td><span class="badge ${v.status}">${v.status}</span></td>
+          <td><span class="badge ${statusBadgeClass(v)}">${statusLabel(v)}</span></td>
         </tr>`;
       }).join('')
     : '<tr><td colspan="8" class="empty">Nenhuma venda registrada</td></tr>';
@@ -1463,7 +1537,7 @@ function renderDash() {
 // ══════════════════════════════════════════════
 function updatePreview() {
   const val   = parseFloat(document.getElementById('v-valor').value)||0;
-  const atId  = document.getElementById('v-atendente').value;
+  const recebido = Math.min(val, Math.max(0, parseFloat(document.getElementById('v-valor-recebido').value)||0));
   const comStr= document.getElementById('v-com-manual').value;
   const comV  = comStr!==''?parseFloat(comStr):null;
 
@@ -1474,18 +1548,13 @@ function updatePreview() {
   else if(vComTipo==='pct'&&comV!==null&&!isNaN(comV)){ minha=val*comV/100; labelMinha=`${comV}% especial`; }
   else { minha=val*(config.pct||7)/100; labelMinha=`${config.pct||7}%`; }
 
-  let linhaAtend='';
-  if(atId){
-    const at=atendentes.find(a=>a.id==atId);
-    if(at){
-      const comA=at.tipo==='valor'?parseFloat(at.valor)||0:val*(parseFloat(at.valor)||0)/100;
-      linhaAtend=`<br>Com. <strong style="color:var(--text)">${at.nome}</strong>: <strong style="color:var(--purple);">${fmtR(comA)}</strong> (${at.tipo==='valor'?fmtR(at.valor)+'/venda':at.valor+'%'})`;
-    }
-  }
+  const liberada = val>0 ? minha * (recebido / val) : 0;
+  const fixas = val * 0.02;
 
   const ajust = vComTipo!=='off'&&comV!==null&&!isNaN(comV);
   document.getElementById('v-preview').innerHTML=
-    `Minha comissão <span style="color:var(--text-3)">(${labelMinha})</span>: <strong>${fmtR(minha)}</strong>${ajust?'<span class="tag-ajustada">✎ esp.</span>':''}${linhaAtend}`;
+    `Comissão total <span style="color:var(--text-3)">(${labelMinha})</span>: <strong>${fmtR(minha)}</strong>${ajust?'<span class="tag-ajustada">✎ esp.</span>':''}<br>`+
+    `Liberada pelo recebimento: <strong style="color:var(--green);">${fmtR(liberada)}</strong> &nbsp;·&nbsp; Geice + Gabrielle: <strong style="color:var(--purple);">${fmtR(fixas)}</strong>`;
 }
 
 // ══════════════════════════════════════════════
@@ -1496,10 +1565,10 @@ async function salvarVenda() {
   const data     = document.getElementById('v-data').value;
   const cliente  = document.getElementById('v-cliente').value.trim();
   const produto  = document.getElementById('v-produto').value;
-  const atendente= document.getElementById('v-atendente').value||null;
   const pagamento= document.getElementById('v-pagamento').value;
-  const status   = document.getElementById('v-status').value;
+  const statusManual = document.getElementById('v-status').value;
   const valor    = parseFloat(document.getElementById('v-valor').value);
+  const valorRecebido = Math.min(valor||0, Math.max(0, parseFloat(document.getElementById('v-valor-recebido').value)||0));
   const obs      = document.getElementById('v-obs').value.trim();
   const comStr   = document.getElementById('v-com-manual').value;
   const comValor = (vComTipo!=='off'&&comStr!=='')?parseFloat(comStr):null;
@@ -1507,13 +1576,13 @@ async function salvarVenda() {
   const msg      = document.getElementById('v-msg');
 
   if(!data||!cliente||!valor||valor<=0){ msg.className='msg err'; msg.textContent='Preencha data, cliente e valor.'; return; }
-  const novaVenda = { id:Date.now(), os, data, cliente, produto, atendente, pagamento, status, valor, obs, comTipo, comValor, dataBaixaComissao:null, obsBaixa:'' };
+  const novaVenda = normalizarVenda({ id:Date.now(), os, data, cliente, produto, atendente:null, pagamento, status:statusManual==='cancelado'?'cancelado':'pendente', valor, valorRecebido, valorComissaoBaixada:0, obs, comTipo, comValor, dataBaixaComissao:null, obsBaixa:'' });
   try {
     await dbInsert('vendas', novaVenda);
     vendas.push(novaVenda);
     save();
     msg.className='msg ok'; msg.textContent='Venda registrada!';
-    ['v-os','v-cliente','v-valor','v-obs'].forEach(id=>{ document.getElementById(id).value=''; });
+    ['v-os','v-cliente','v-valor','v-valor-recebido','v-obs'].forEach(id=>{ document.getElementById(id).value=''; });
     document.getElementById('v-status').value='pendente';
     setComTipo('v','off');
     updatePreview();
@@ -1533,52 +1602,58 @@ function initFiltroMes() {
 function renderVendas() {
   const fMes    = document.getElementById('f-mes').value;
   const fProd   = document.getElementById('f-prod').value;
-  const fAtend  = document.getElementById('f-atend').value;
   const fStatus = document.getElementById('f-status').value;
   const fSearch = document.getElementById('f-cliente').value.toLowerCase();
 
   let filtered = vendas.filter(v=>
     (!fMes    || mesKey(v.data)===fMes)&&
     (!fProd   || v.produto===fProd)&&
-    (!fAtend  || String(v.atendente)===String(fAtend))&&
-    (!fStatus || v.status===fStatus)&&
+    (!fStatus || statusCalculado(v)===fStatus)&&
     (!fSearch || v.cliente.toLowerCase().includes(fSearch)||(v.os||'').toLowerCase().includes(fSearch))
-  ).sort((a,b)=>b.data.localeCompare(a.data));
+  ).sort((a,b)=>{
+    const osA=parseInt(String(a.os||'').replace(/\D/g,''))||0;
+    const osB=parseInt(String(b.os||'').replace(/\D/g,''))||0;
+    if(osA!==osB) return osB-osA;
+    return b.data.localeCompare(a.data);
+  });
 
   const totalVal  = filtered.filter(v=>v.status!=='cancelado').reduce((s,v)=>s+v.valor,0);
-  const totalCom  = filtered.filter(v=>v.status!=='cancelado').reduce((s,v)=>s+comissaoMinha(v),0);
-  const totalAtend= filtered.filter(v=>v.status!=='cancelado').reduce((s,v)=>s+comissaoAtendente(v),0);
+  const totalRecebido = filtered.filter(v=>v.status!=='cancelado').reduce((s,v)=>s+valorRecebidoVenda(v),0);
+  const totalSaldo = filtered.filter(v=>v.status!=='cancelado').reduce((s,v)=>s+saldoAbertoVenda(v),0);
+  const totalCom  = filtered.filter(v=>v.status!=='cancelado').reduce((s,v)=>s+comissaoLiberada(v),0);
+  const totalBaixado= filtered.filter(v=>v.status!=='cancelado').reduce((s,v)=>s+comissaoBaixada(v),0);
 
   document.getElementById('tabela-vendas').innerHTML = filtered.length
     ? filtered.map(v=>{
         const info   = infoComMinha(v);
-        const comMin = comissaoMinha(v);
-        const comAt  = comissaoAtendente(v);
+        const comLib = comissaoLiberada(v);
+        const comBx  = comissaoBaixada(v);
+        const recebido = valorRecebidoVenda(v);
+        const saldo = saldoAbertoVenda(v);
         const isCancelado = v.status==='cancelado';
-        const isBaixado   = v.status==='baixado';
+        const isBaixado   = statusCalculado(v)==='baixado';
         const dataBaixa   = v.dataBaixaComissao?fmtDate(v.dataBaixaComissao):'—';
         const comCel = isCancelado ? '—' :
-          `<span style="font-family:var(--mono);${info.ajustada?'color:var(--orange);':''}">${fmtR(comMin)}</span>`+
+          `<span style="font-family:var(--mono);${info.ajustada?'color:var(--orange);':''}">${fmtR(comLib)}</span>`+
           `<span style="font-size:10px;color:var(--text-3);margin-left:3px;">(${info.label})</span>`+
           (info.ajustada?'<span class="tag-ajustada">✎</span>':'');
-        const atCel = !v.atendente||isCancelado ? '—' :
-          `<span style="font-family:var(--mono);color:var(--purple);">${fmtR(comAt)}</span>`;
         return `<tr>
-          <td><input type="checkbox" class="venda-chk" data-id="${v.id}" onchange="updateChkAll()" style="accent-color:var(--accent);cursor:pointer;" ${isCancelado||isBaixado?'disabled':''}></td>
+          <td><input type="checkbox" class="venda-chk" data-id="${v.id}" onchange="updateChkAll()" style="accent-color:var(--accent);cursor:pointer;" ${isCancelado||comissaoDisponivelBaixa(v)<=0?'disabled':''}></td>
           <td style="font-family:var(--mono);font-size:11px;color:var(--accent2);">${v.os||'—'}</td>
           <td style="font-family:var(--mono);font-size:11px;color:var(--text-2);">${fmtDate(v.data)}</td>
           <td>${v.cliente}</td>
           <td style="color:var(--text-2);">${v.produto}</td>
-          <td>${v.atendente?`<span class="atendente-tag">${nomeAtendente(v.atendente)}</span>`:'<span style="color:var(--text-3);">—</span>'}</td>
           <td style="color:var(--text-2);">${v.pagamento}</td>
           <td style="font-family:var(--mono);">${fmtR(v.valor)}</td>
+          <td style="font-family:var(--mono);color:var(--green);">${fmtR(recebido)}</td>
+          <td style="font-family:var(--mono);color:${saldo>0?'var(--amber)':'var(--text-3)'};">${fmtR(saldo)}</td>
           <td>${comCel}</td>
-          <td>${atCel}</td>
-          <td><span class="badge ${v.status}">${v.status}</span></td>
-          <td style="font-size:11px;font-family:var(--mono);">${isBaixado?`<span style="color:var(--purple)">${dataBaixa}</span>`:'—'}</td>
+          <td style="font-family:var(--mono);color:var(--purple);">${fmtR(comBx)}</td>
+          <td><span class="badge ${statusBadgeClass(v)}">${statusLabel(v)}</span></td>
+          <td style="font-size:11px;font-family:var(--mono);">${comBx>0?`<span style="color:var(--purple)">${dataBaixa}</span>`:'—'}</td>
           <td><div style="display:flex;gap:4px;">
             <button class="btn-sm" onclick="abrirEditar(${v.id})">Editar</button>
-            ${!isCancelado&&!isBaixado?`<button class="btn-sm purple" onclick="abrirBaixarIndividual(${v.id})">↓</button>`:''}
+            ${!isCancelado&&comissaoDisponivelBaixa(v)>0?`<button class="btn-sm purple" onclick="abrirBaixarIndividual(${v.id})">↓</button>`:''}
             <button class="btn-sm danger" onclick="excluirVenda(${v.id})">✕</button>
           </div></td>
         </tr>`;
@@ -1586,7 +1661,7 @@ function renderVendas() {
     : '<tr><td colspan="13" class="empty">Nenhuma venda encontrada</td></tr>';
 
   document.getElementById('vendas-total').innerHTML =
-    `${filtered.length} venda(s) &nbsp;·&nbsp; Total: <strong>${fmtR(totalVal)}</strong> &nbsp;·&nbsp; Minha comissão: <strong>${fmtR(totalCom)}</strong> &nbsp;·&nbsp; Com. atendentes: <strong>${fmtR(totalAtend)}</strong>`;
+    `${filtered.length} venda(s) &nbsp;·&nbsp; Total: <strong>${fmtR(totalVal)}</strong> &nbsp;·&nbsp; Recebido: <strong>${fmtR(totalRecebido)}</strong> &nbsp;·&nbsp; Saldo aberto: <strong>${fmtR(totalSaldo)}</strong> &nbsp;·&nbsp; Comissão liberada: <strong>${fmtR(totalCom)}</strong> &nbsp;·&nbsp; Baixada: <strong>${fmtR(totalBaixado)}</strong>`;
   document.getElementById('chk-all').checked=false;
 }
 
@@ -1618,12 +1693,11 @@ function abrirEditar(id) {
   popularSelectProdutos('e-produto');
   document.getElementById('e-produto').value  = v.produto;
   document.getElementById('e-pagamento').value= v.pagamento;
-  document.getElementById('e-status').value   = v.status;
+  document.getElementById('e-status').value   = v.status==='cancelado' ? 'cancelado' : 'pendente';
   document.getElementById('e-obs').value      = v.obs||'';
   document.getElementById('e-valor').value    = v.valor;
+  document.getElementById('e-valor-recebido').value = valorRecebidoVenda(v);
   document.getElementById('e-msg').textContent='';
-  popularSelectAtendentes('e-atendente');
-  document.getElementById('e-atendente').value= v.atendente||'';
   const savedTipo = v.comTipo||'off';
   document.getElementById('e-com-manual').value = (v.comValor!=null)?v.comValor:'';
   setComTipo('e', savedTipo);
@@ -1633,7 +1707,7 @@ function abrirEditar(id) {
 
 function updateEditPreview() {
   const val  = parseFloat(document.getElementById('e-valor').value)||0;
-  const atId = document.getElementById('e-atendente').value;
+  const recebido = Math.min(val, Math.max(0, parseFloat(document.getElementById('e-valor-recebido').value)||0));
   const comStr = document.getElementById('e-com-manual').value;
   const comV   = comStr!==''?parseFloat(comStr):null;
   if(val<=0){ document.getElementById('e-preview').innerHTML=''; return; }
@@ -1643,33 +1717,35 @@ function updateEditPreview() {
   else if(eComTipo==='pct'&&comV!==null&&!isNaN(comV)){ minha=val*comV/100; labelMinha=`${comV}% especial`; }
   else { minha=val*(config.pct||7)/100; labelMinha=`${config.pct||7}%`; }
 
-  let linhaAtend='';
-  if(atId){ const at=atendentes.find(a=>a.id==atId); if(at){ const ca=at.tipo==='valor'?parseFloat(at.valor)||0:val*(parseFloat(at.valor)||0)/100; linhaAtend=`<br>Com. <strong>${at.nome}</strong>: <strong style="color:var(--purple);">${fmtR(ca)}</strong>`; } }
+  const liberada = val>0 ? minha * (recebido / val) : 0;
+  const fixas = val * 0.02;
 
   const ajust=eComTipo!=='off'&&comV!==null&&!isNaN(comV);
-  document.getElementById('e-preview').innerHTML=`Minha comissão (${labelMinha}): <strong>${fmtR(minha)}</strong>${ajust?'<span class="tag-ajustada">✎ esp.</span>':''}${linhaAtend}`;
+  document.getElementById('e-preview').innerHTML=`Comissão total (${labelMinha}): <strong>${fmtR(minha)}</strong>${ajust?'<span class="tag-ajustada">✎ esp.</span>':''}<br>Liberada pelo recebimento: <strong style="color:var(--green);">${fmtR(liberada)}</strong> &nbsp;·&nbsp; Geice + Gabrielle: <strong style="color:var(--purple);">${fmtR(fixas)}</strong>`;
 }
 
 async function salvarEdicao() {
   const data    = document.getElementById('e-data').value;
   const cliente = document.getElementById('e-cliente').value.trim();
   const valor   = parseFloat(document.getElementById('e-valor').value);
+  const valorRecebido = Math.min(valor||0, Math.max(0, parseFloat(document.getElementById('e-valor-recebido').value)||0));
   const comStr  = document.getElementById('e-com-manual').value;
   const comValor= (eComTipo!=='off'&&comStr!=='')?parseFloat(comStr):null;
   const comTipo = (eComTipo!=='off'&&comValor!==null)?eComTipo:null;
   const msg     = document.getElementById('e-msg');
   if(!data||!cliente||!valor||valor<=0){ msg.className='msg err'; msg.textContent='Preencha data, cliente e valor.'; return; }
   const idx=vendas.findIndex(x=>x.id===editandoId); if(idx===-1) return;
-  const vendaEditada = { ...vendas[idx],
+  const statusManual = document.getElementById('e-status').value;
+  const vendaEditada = normalizarVenda({ ...vendas[idx],
     os: document.getElementById('e-os').value.trim(),
     data, cliente,
     produto:   document.getElementById('e-produto').value,
-    atendente: document.getElementById('e-atendente').value||null,
+    atendente: null,
     pagamento: document.getElementById('e-pagamento').value,
-    status:    document.getElementById('e-status').value,
+    status:    statusManual==='cancelado'?'cancelado':'pendente',
     obs:       document.getElementById('e-obs').value.trim(),
-    valor, comTipo, comValor
-  };
+    valor, valorRecebido, comTipo, comValor
+  });
   try {
     await dbUpsert('vendas', vendaEditada);
     vendas[idx] = vendaEditada;
@@ -1680,18 +1756,47 @@ async function salvarEdicao() {
 // ══════════════════════════════════════════════
 // BAIXAR COMISSÃO
 // ══════════════════════════════════════════════
+function renderBaixaIndividualInfo(v) {
+  const info=infoComMinha(v);
+  const com=comissaoDisponivelBaixa(v);
+  const liberada=comissaoLiberada(v);
+  const baixada=comissaoBaixada(v);
+  document.getElementById('baixar-info').innerHTML=
+    `<strong style="color:var(--text)">${v.cliente}</strong> ${v.os?`Â· OS <span style="font-family:var(--mono);color:var(--accent2);">${v.os}</span>`:''}Â· ${fmtDate(v.data)}<br>`+
+    `Venda: <span style="font-family:var(--mono)">${fmtR(v.valor)}</span> &nbsp;|&nbsp; Recebido: <span style="font-family:var(--mono);color:var(--green)">${fmtR(valorRecebidoVenda(v))}</span> &nbsp;|&nbsp; Saldo: <span style="font-family:var(--mono);color:var(--amber)">${fmtR(saldoAbertoVenda(v))}</span><br>`+
+    `ComissÃ£o liberada: <span style="color:var(--green);font-family:var(--mono)">${fmtR(liberada)}</span> &nbsp;|&nbsp; Baixada: <span style="color:var(--purple);font-family:var(--mono)">${fmtR(baixada)}</span> &nbsp;|&nbsp; DisponÃ­vel: <span style="color:var(--accent);font-family:var(--mono)">${fmtR(com)}</span> (${info.label})`+
+    (info.ajustada?'<span class="tag-ajustada">âœŽ esp.</span>':'');
+}
+
+function vendaComRecebimentoDaBaixa() {
+  const v=vendas.find(x=>x.id===baixandoId); if(!v) return null;
+  const recebido = Math.min(parseFloat(v.valor)||0, Math.max(0, parseFloat(document.getElementById('bi-valor-recebido').value)||0));
+  return normalizarVenda({ ...v, valorRecebido: recebido });
+}
+
+function atualizarBaixaIndividualPreview() {
+  const v=vendaComRecebimentoDaBaixa(); if(!v) return;
+  renderBaixaIndividualInfo(v);
+  document.getElementById('bi-valor').value=comissaoDisponivelBaixa(v).toFixed(2);
+}
+
 function abrirBaixarIndividual(id) {
   const v=vendas.find(x=>x.id===id); if(!v) return;
   baixandoId=id;
-  const info=infoComMinha(v); const com=comissaoMinha(v);
+  const info=infoComMinha(v);
+  const com=comissaoDisponivelBaixa(v);
+  const liberada=comissaoLiberada(v);
+  const baixada=comissaoBaixada(v);
   document.getElementById('baixar-info').innerHTML=
     `<strong style="color:var(--text)">${v.cliente}</strong> ${v.os?`· OS <span style="font-family:var(--mono);color:var(--accent2);">${v.os}</span>`:''}· ${fmtDate(v.data)}<br>`+
-    `Venda: <span style="font-family:var(--mono)">${fmtR(v.valor)}</span> &nbsp;|&nbsp; `+
-    `Comissão: <span style="color:var(--green);font-family:var(--mono)">${fmtR(com)}</span> (${info.label})`+
+    `Venda: <span style="font-family:var(--mono)">${fmtR(v.valor)}</span> &nbsp;|&nbsp; Recebido: <span style="font-family:var(--mono);color:var(--green)">${fmtR(valorRecebidoVenda(v))}</span> &nbsp;|&nbsp; Saldo: <span style="font-family:var(--mono);color:var(--amber)">${fmtR(saldoAbertoVenda(v))}</span><br>`+
+    `Comissão liberada: <span style="color:var(--green);font-family:var(--mono)">${fmtR(liberada)}</span> &nbsp;|&nbsp; Baixada: <span style="color:var(--purple);font-family:var(--mono)">${fmtR(baixada)}</span> &nbsp;|&nbsp; Disponível: <span style="color:var(--accent);font-family:var(--mono)">${fmtR(com)}</span> (${info.label})`+
     (info.ajustada?'<span class="tag-ajustada">✎ esp.</span>':'');
   document.getElementById('bi-data').value=new Date().toISOString().slice(0,10);
+  document.getElementById('bi-valor-recebido').value=valorRecebidoVenda(v).toFixed(2);
   document.getElementById('bi-valor').value=com.toFixed(2);
   document.getElementById('bi-obs').value='';
+  atualizarBaixaIndividualPreview();
   document.getElementById('modal-baixar-individual').classList.add('open');
 }
 
@@ -1699,7 +1804,11 @@ async function confirmarBaixaIndividual() {
   const data=document.getElementById('bi-data').value;
   if(!data){ alert('Informe a data de pagamento.'); return; }
   const idx=vendas.findIndex(x=>x.id===baixandoId); if(idx===-1) return;
-  const vendaBaixada = { ...vendas[idx], status: 'baixado', dataBaixaComissao: data, obsBaixa: document.getElementById('bi-obs').value.trim() };
+  const vendaAtualizada = vendaComRecebimentoDaBaixa(); if(!vendaAtualizada) return;
+  const valorPago = parseFloat(document.getElementById('bi-valor').value)||0;
+  const disponivel = comissaoDisponivelBaixa(vendaAtualizada);
+  if(valorPago<=0 || valorPago>disponivel+0.009){ alert('Informe um valor de baixa válido, limitado à comissão liberada disponível.'); return; }
+  const vendaBaixada = normalizarVenda({ ...vendaAtualizada, valorComissaoBaixada: comissaoBaixada(vendaAtualizada) + valorPago, dataBaixaComissao: data, obsBaixa: document.getElementById('bi-obs').value.trim() });
   try {
     await dbUpsert('vendas', vendaBaixada);
     vendas[idx] = vendaBaixada;
@@ -1709,9 +1818,9 @@ async function confirmarBaixaIndividual() {
 
 function abrirBaixarMassa() {
   const checked=[...document.querySelectorAll('.venda-chk:checked')].map(c=>parseInt(c.dataset.id));
-  const elegíveis=vendas.filter(v=>v.status!=='cancelado'&&v.status!=='baixado'&&(checked.length===0||checked.includes(v.id)));
+  const elegíveis=vendas.filter(v=>v.status!=='cancelado'&&comissaoDisponivelBaixa(v)>0&&(checked.length===0||checked.includes(v.id)));
   document.getElementById('massa-lista').innerHTML=elegíveis.length
-    ? elegíveis.map(v=>{ const com=comissaoMinha(v); return `<div class="baixar-item"><input type="checkbox" class="massa-chk" data-id="${v.id}" data-com="${com}" onchange="updateMassaSummary()" checked><div class="baixar-item-info"><div class="baixar-item-name">${v.os?`<span style="font-family:var(--mono);font-size:11px;color:var(--accent2);">[${v.os}]</span> `:''} ${v.cliente}</div><div class="baixar-item-sub">${fmtDate(v.data)} · ${v.produto} · ${infoComMinha(v).label}</div></div><div class="baixar-item-val">${fmtR(com)}</div></div>`; }).join('')
+    ? elegíveis.map(v=>{ const com=comissaoDisponivelBaixa(v); return `<div class="baixar-item"><input type="checkbox" class="massa-chk" data-id="${v.id}" data-com="${com}" onchange="updateMassaSummary()" checked><div class="baixar-item-info"><div class="baixar-item-name">${v.os?`<span style="font-family:var(--mono);font-size:11px;color:var(--accent2);">[${v.os}]</span> `:''} ${v.cliente}</div><div class="baixar-item-sub">${fmtDate(v.data)} · recebido ${fmtR(valorRecebidoVenda(v))} · saldo ${fmtR(saldoAbertoVenda(v))}</div></div><div class="baixar-item-val">${fmtR(com)}</div></div>`; }).join('')
     : '<div class="empty" style="padding:24px;">Nenhuma comissão pendente de baixa</div>';
   document.getElementById('massa-all').checked=elegíveis.length>0;
   document.getElementById('bm-data').value=new Date().toISOString().slice(0,10);
@@ -1738,8 +1847,9 @@ async function confirmarBaixaMassa(){
   ids.forEach(id=>{
     const idx=vendas.findIndex(x=>x.id===id);
     if(idx!==-1){
-      const updated = { ...vendas[idx], status: 'baixado', dataBaixaComissao: data, obsBaixa: obs };
-      updates.push(toSnakeCase(updated));
+      const valorBaixa = comissaoDisponivelBaixa(vendas[idx]);
+      const updated = normalizarVenda({ ...vendas[idx], valorComissaoBaixada: comissaoBaixada(vendas[idx]) + valorBaixa, dataBaixaComissao: data, obsBaixa: obs });
+      updates.push(toSupabaseRow('vendas', updated));
       indices.push({ idx, updated });
     }
   });
@@ -1849,17 +1959,17 @@ function mesAnterior(mes){
 function entradasComissaoFluxo(mes){
   const mesVenda=mesAnterior(mes);
   const vendasMes=vendas.filter(v=>mesKey(v.data)===mesVenda&&v.status!=='cancelado');
-  const minha=vendasMes.reduce((s,v)=>s+comissaoMinha(v),0);
-  const atend=vendasMes.reduce((s,v)=>s+comissaoAtendente(v),0);
-  const liquida=minha-atend;
-  if(vendasMes.length===0||liquida===0) return [];
+  const liberada=vendasMes.reduce((s,v)=>s+comissaoLiberada(v),0);
+  const baixada=vendasMes.reduce((s,v)=>s+comissaoBaixada(v),0);
+  const disponivel=Math.max(0,liberada-baixada);
+  if(vendasMes.length===0||disponivel===0) return [];
   return [{
     data: proximoDiaUtil(`${mes}-15`),
     origem: `Comissões ${mesLabel(mesVenda+'-01')}`,
     tipo: 'Comissão mensal',
-    valor: liquida,
+    valor: disponivel,
     grupo: 'comissao',
-    detalhe: `${fmtR(minha)} - ${fmtR(atend)} atendentes`
+    detalhe: `${fmtR(liberada)} liberada - ${fmtR(baixada)} baixada`
   }];
 }
 
@@ -1946,26 +2056,25 @@ function renderComissao(){
   const hoje=new Date().toISOString().slice(0,7);
   const ativas=vendas.filter(v=>v.status!=='cancelado');
   const totalAcum=ativas.reduce((s,v)=>s+comissaoMinha(v),0);
-  const comBaixado=vendas.filter(v=>v.status==='baixado').reduce((s,v)=>s+comissaoMinha(v),0);
-  const pendentes=ativas.filter(v=>v.status!=='baixado');
-  const comPendMinha=pendentes.reduce((s,v)=>s+comissaoMinha(v),0);
-  const comPendAtend=pendentes.reduce((s,v)=>s+comissaoAtendente(v),0);
-  const comPend=comPendMinha-comPendAtend;
-  const comMes=vendas.filter(v=>mesKey(v.data)===hoje&&v.status!=='cancelado').reduce((s,v)=>s+comissaoMinha(v),0);
-  const comAtendMes=vendas.filter(v=>mesKey(v.data)===hoje&&v.status!=='cancelado').reduce((s,v)=>s+comissaoAtendente(v),0);
+  const comBaixado=ativas.reduce((s,v)=>s+comissaoBaixada(v),0);
+  const comLiberada=ativas.reduce((s,v)=>s+comissaoLiberada(v),0);
+  const comDisponivel=Math.max(0,comLiberada-comBaixado);
+  const comPend=ativas.filter(v=>statusCalculado(v)==='pendente').reduce((s,v)=>s+comissaoTotal(v),0);
+  const comMes=vendas.filter(v=>mesKey(v.data)===hoje&&v.status!=='cancelado').reduce((s,v)=>s+comissaoLiberada(v),0);
+  const fixasMes=vendas.filter(v=>mesKey(v.data)===hoje&&v.status!=='cancelado').reduce((s,v)=>s+comissaoAtendente(v),0);
 
   document.getElementById('com-cards').innerHTML=`
     <div class="card"><div class="card-label">Total acumulado</div><div class="card-value">${fmtR(totalAcum)}</div></div>
-    <div class="card accent"><div class="card-label">Este mês</div><div class="card-value">${fmtR(comMes)}</div><div class="card-sub">${config.pct||7}% padrão</div></div>
-    <div class="card purple"><div class="card-label">Atendentes (mês)</div><div class="card-value">${fmtR(comAtendMes)}</div></div>
+    <div class="card accent"><div class="card-label">Liberada este mês</div><div class="card-value">${fmtR(comMes)}</div><div class="card-sub">${config.pct||7}% padrão</div></div>
+    <div class="card purple"><div class="card-label">Geice + Gabrielle (mês)</div><div class="card-value">${fmtR(fixasMes)}</div><div class="card-sub">1% + 1%</div></div>
     <div class="card green"><div class="card-label">Já baixado</div><div class="card-value">${fmtR(comBaixado)}</div></div>
-    <div class="card amber"><div class="card-label">A baixar líquido</div><div class="card-value">${fmtR(comPend)}</div><div class="card-sub">Minha comissão - com. atendente</div></div>
+    <div class="card amber"><div class="card-label">Disponível para baixar</div><div class="card-value">${fmtR(comDisponivel)}</div><div class="card-sub">Liberada - baixada</div></div>
   `;
 
   const meses=[...new Set(vendas.map(v=>mesKey(v.data)))].sort().slice(-6);
   const labels=meses.map(m=>mesLabel(m+'-01'));
-  const dBaixado=meses.map(m=>parseFloat(vendas.filter(v=>mesKey(v.data)===m&&v.status==='baixado').reduce((s,v)=>s+comissaoLiquida(v),0).toFixed(2)));
-  const dPend=meses.map(m=>parseFloat(vendas.filter(v=>mesKey(v.data)===m&&v.status!=='cancelado'&&v.status!=='baixado').reduce((s,v)=>s+comissaoLiquida(v),0).toFixed(2)));
+  const dBaixado=meses.map(m=>parseFloat(vendas.filter(v=>mesKey(v.data)===m&&v.status!=='cancelado').reduce((s,v)=>s+comissaoBaixada(v),0).toFixed(2)));
+  const dPend=meses.map(m=>parseFloat(vendas.filter(v=>mesKey(v.data)===m&&v.status!=='cancelado').reduce((s,v)=>s+comissaoDisponivelBaixa(v),0).toFixed(2)));
   if(chartCom) chartCom.destroy();
   chartCom=new Chart(document.getElementById('chart-com'),{
     type:'bar', data:{ labels, datasets:[{ label:'Baixado', data:dBaixado, backgroundColor:'rgba(192,132,252,.7)', borderRadius:5 },{ label:'Pendente', data:dPend, backgroundColor:'rgba(255,204,77,.6)', borderRadius:5 }]},
@@ -1980,10 +2089,10 @@ function renderHistorico(){
     ? meses.map(m=>{
         const vv=vendas.filter(v=>mesKey(v.data)===m);
         const total=vv.filter(v=>v.status!=='cancelado').reduce((s,v)=>s+v.valor,0);
-        const comM=vv.filter(v=>v.status!=='cancelado').reduce((s,v)=>s+comissaoMinha(v),0);
-        const comA=vv.filter(v=>v.status!=='cancelado').reduce((s,v)=>s+comissaoAtendente(v),0);
-        const todoBaixado=vv.every(v=>v.status==='baixado'||v.status==='cancelado');
-        return `<tr><td style="font-family:var(--mono);">${mesLabel(m+'-01')}</td><td>${vv.length}</td><td style="font-family:var(--mono);">${fmtR(total)}</td><td style="color:var(--green);font-family:var(--mono);">${fmtR(comM)}</td><td style="color:var(--purple);font-family:var(--mono);">${fmtR(comA)}</td><td><span class="badge ${todoBaixado?'baixado':'pendente'}">${todoBaixado?'baixado':'pendente'}</span></td></tr>`;
+        const comM=vv.filter(v=>v.status!=='cancelado').reduce((s,v)=>s+comissaoTotal(v),0);
+        const comB=vv.filter(v=>v.status!=='cancelado').reduce((s,v)=>s+comissaoBaixada(v),0);
+        const todoBaixado=vv.every(v=>statusCalculado(v)==='baixado'||v.status==='cancelado');
+        return `<tr><td style="font-family:var(--mono);">${mesLabel(m+'-01')}</td><td>${vv.length}</td><td style="font-family:var(--mono);">${fmtR(total)}</td><td style="color:var(--green);font-family:var(--mono);">${fmtR(comM)}</td><td style="color:var(--purple);font-family:var(--mono);">${fmtR(comB)}</td><td><span class="badge ${todoBaixado?'baixado':'pendente'}">${todoBaixado?'baixado':'pendente'}</span></td></tr>`;
       }).join('')
     : '<tr><td colspan="6" class="empty">Sem dados</td></tr>';
 }
@@ -2031,11 +2140,15 @@ function gerarRelFinanceiro(){
   const de=document.getElementById('rf-de').value||new Date().toISOString().slice(0,7);
   const ate=document.getElementById('rf-ate').value||de;
   const fStatus=getRfStatusValues();
-  const filtradas=vendas.filter(v=>mesKey(v.data)>=de&&mesKey(v.data)<=ate&&v.status!=='cancelado'&&(!fStatus.length||fStatus.includes(v.status)))
+  const filtradas=vendas.filter(v=>mesKey(v.data)>=de&&mesKey(v.data)<=ate&&v.status!=='cancelado'&&(!fStatus.length||fStatus.includes(statusCalculado(v))))
     .sort((a,b)=>a.data.localeCompare(b.data));
 
   const totalVenda=filtradas.reduce((s,v)=>s+v.valor,0);
-  const totalComissao=filtradas.reduce((s,v)=>s+comissaoMinha(v),0);
+  const totalRecebido=filtradas.reduce((s,v)=>s+valorRecebidoVenda(v),0);
+  const totalSaldo=filtradas.reduce((s,v)=>s+saldoAbertoVenda(v),0);
+  const totalComissao=filtradas.reduce((s,v)=>s+comissaoTotal(v),0);
+  const totalLiberada=filtradas.filter(v=>['recebido','parcial'].includes(statusCalculado(v))).reduce((s,v)=>s+comissaoDisponivelBaixa(v),0);
+  const totalPendente=filtradas.filter(v=>statusCalculado(v)==='pendente').reduce((s,v)=>s+comissaoTotal(v),0);
 
   const deLabel=mesLabel(de+'-01'); const ateLabel=mesLabel(ate+'-01');
   const periodo=de===ate?deLabel:`${deLabel} a ${ateLabel}`;
@@ -2043,7 +2156,7 @@ function gerarRelFinanceiro(){
 
   const linhas=filtradas.map(v=>{
     const info=infoComMinha(v);
-    const com=comissaoMinha(v);
+    const com=comissaoDisponivelBaixa(v);
     return `<tr>
       <td>${v.os||'—'}</td>
       <td>${fmtDate(v.data)}</td>
@@ -2051,8 +2164,10 @@ function gerarRelFinanceiro(){
       <td>${v.produto}</td>
       <td>${esc(v.obs||'—')}</td>
       <td style="text-align:right;">${fmtPrintR(v.valor)}</td>
+      <td style="text-align:right;">${fmtPrintR(valorRecebidoVenda(v))}</td>
+      <td style="text-align:right;">${fmtPrintR(saldoAbertoVenda(v))}</td>
       <td style="text-align:right;color:#16a34a;">${fmtPrintR(com)}${info.ajustada?' *':''}</td>
-      <td style="text-align:center;">${printStatusBadge(v.status)}</td>
+      <td style="text-align:center;">${printStatusBadge(statusBadgeClass(v))}</td>
     </tr>`;
   }).join('');
 
@@ -2067,28 +2182,34 @@ function gerarRelFinanceiro(){
     <div class="print-cards">
       <div class="print-card"><div class="print-card-label">Total de vendas</div><div class="print-card-value">${filtradas.length} pedidos</div></div>
       <div class="print-card"><div class="print-card-label">Valor total</div><div class="print-card-value">${fmtPrintR(totalVenda)}</div></div>
-      <div class="print-card"><div class="print-card-label">Comissão</div><div class="print-card-value green">${fmtPrintR(totalComissao)}</div></div>
+      <div class="print-card"><div class="print-card-label">Valor recebido</div><div class="print-card-value green">${fmtPrintR(totalRecebido)}</div></div>
+      <div class="print-card"><div class="print-card-label">Comissões liberadas</div><div class="print-card-value green">${fmtPrintR(totalLiberada)}</div></div>
+      <div class="print-card"><div class="print-card-label">Comissões pendentes</div><div class="print-card-value">${fmtPrintR(totalPendente)}</div></div>
     </div>
     <div class="print-section-title">Detalhamento por venda</div>
     <table class="print-table">
       <thead><tr>
         <th>OS</th><th>Data</th><th>Cliente</th><th>Produto</th><th>Observação</th>
         <th style="text-align:right;">Valor</th>
-        <th style="text-align:right;">Comissão</th>
+        <th style="text-align:right;">Recebido</th>
+        <th style="text-align:right;">Saldo</th>
+        <th style="text-align:right;">Comissão liberada</th>
         <th style="text-align:center;">Status</th>
       </tr></thead>
-      <tbody>${linhas}${!filtradas.length?'<tr><td colspan="8" style="text-align:center;padding:16px;color:#999;">Nenhuma venda no período</td></tr>':''}</tbody>
+      <tbody>${linhas}${!filtradas.length?'<tr><td colspan="10" style="text-align:center;padding:16px;color:#999;">Nenhuma venda no período</td></tr>':''}</tbody>
       <tfoot><tr style="font-weight:700;background:#f3f4f6;">
         <td colspan="5" style="padding:8px 10px;">TOTAIS</td>
         <td style="padding:8px 10px;text-align:right;">${fmtPrintR(totalVenda)}</td>
-        <td style="padding:8px 10px;text-align:right;color:#16a34a;">${fmtPrintR(totalComissao)}</td>
+        <td style="padding:8px 10px;text-align:right;">${fmtPrintR(totalRecebido)}</td>
+        <td style="padding:8px 10px;text-align:right;">${fmtPrintR(totalSaldo)}</td>
+        <td style="padding:8px 10px;text-align:right;color:#16a34a;">${fmtPrintR(totalLiberada)}</td>
         <td></td>
       </tfoot>
     </table>
     ${filtradas.some(v=>infoComMinha(v).ajustada)?'<p style="font-size:11px;color:#888;margin-top:8px;">* Comissão especial aplicada nesta venda.</p>':''}
     <div class="print-footer">
       <span>Sistema de Comissões &nbsp;·&nbsp; Gerado em ${hoje}</span>
-      <span>Total de comissão: ${fmtPrintR(totalComissao)}</span>
+      <span>Comissões liberadas: ${fmtPrintR(totalLiberada)}</span>
     </div>
     <div class="print-assinatura">
       <div class="print-assinatura-linha">Responsável financeiro</div>
@@ -2382,7 +2503,7 @@ async function carregarDadosDoSupabase() {
     // 2. Carrega vendas
     const { data: vData, error: vError } = await client.from('com_vendas').select('*');
     if (vError) throw vError;
-    vendas = (vData || []).map(toCamelCase);
+    vendas = (vData || []).map(toCamelCase).map(normalizarVenda);
     
     // 3. Carrega recebimentos
     const { data: rData, error: rError } = await client.from('com_recebimentos').select('*');
@@ -2452,7 +2573,6 @@ function aguardarSupabaseSDK(timeout = 6000) {
 
 function inicializarUI() {
   try { document.getElementById('v-data').value = new Date().toISOString().slice(0,10); } catch(e){}
-  try { popularSelectAtendentes('v-atendente'); } catch(e){}
   try { popularSelectProdutos('v-produto'); } catch(e){}
   try { popularSelectProdutos('f-prod'); } catch(e){}
   try { popularSelectProdutos('e-produto'); } catch(e){}
