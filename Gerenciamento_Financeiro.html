@@ -1543,7 +1543,14 @@ function renderVendas() {
     (!fAtend  || String(v.atendente)===String(fAtend))&&
     (!fStatus || v.status===fStatus)&&
     (!fSearch || v.cliente.toLowerCase().includes(fSearch)||(v.os||'').toLowerCase().includes(fSearch))
-  ).sort((a,b)=>b.data.localeCompare(a.data));
+  ).sort((a,b)=>{
+    const osA = a.os ? parseInt(a.os, 10) : NaN;
+    const osB = b.os ? parseInt(b.os, 10) : NaN;
+    if (!isNaN(osA) && !isNaN(osB)) return osB - osA;
+    if (!isNaN(osA)) return -1;
+    if (!isNaN(osB)) return 1;
+    return (b.os||'').localeCompare(a.os||'');
+  });
 
   const totalVal  = filtered.filter(v=>v.status!=='cancelado').reduce((s,v)=>s+v.valor,0);
   const totalCom  = filtered.filter(v=>v.status!=='cancelado').reduce((s,v)=>s+comissaoMinha(v),0);
