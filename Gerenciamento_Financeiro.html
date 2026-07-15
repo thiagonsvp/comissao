@@ -1270,13 +1270,10 @@ function comissaoLiberada(v) {
 }
 
 function comissaoBaixada(v) {
-  const total = comissaoTotal(v);
   if (v.valorComissaoBaixada!=null && v.valorComissaoBaixada!=='') {
-    const baixada = Math.min(total, Math.max(0, parseFloat(v.valorComissaoBaixada)||0));
-    if (baixada===0 && v.status==='baixado') return total;
-    return baixada;
+    return Math.max(0, parseFloat(v.valorComissaoBaixada)||0);
   }
-  if (v.status==='baixado') return total;
+  if (v.status==='baixado') return comissaoTotal(v);
   return 0;
 }
 
@@ -1749,7 +1746,7 @@ async function salvarEdicao() {
   if(!data||!cliente||!valor||valor<=0){ msg.className='msg err'; msg.textContent='Preencha data, cliente e valor.'; return; }
   const idx=vendas.findIndex(x=>x.id===editandoId); if(idx===-1) return;
   const statusManual = document.getElementById('e-status').value;
-  const vendaEditada = normalizarVenda({ ...vendas[idx],
+  const vendaEditadaBase = { ...vendas[idx],
     os: document.getElementById('e-os').value.trim(),
     data, cliente,
     produto:   document.getElementById('e-produto').value,
@@ -1758,7 +1755,15 @@ async function salvarEdicao() {
     status:    statusManual==='cancelado'?'cancelado':'pendente',
     obs:       document.getElementById('e-obs').value.trim(),
     valor, valorRecebido, comTipo, comValor
-  });
+  };
+  const baixadaRegistrada = comissaoBaixada(vendaEditadaBase);
+  const liberadaAposEdicao = comissaoLiberada(vendaEditadaBase);
+  if(baixadaRegistrada>0.009 && liberadaAposEdicao+0.009<baixadaRegistrada){
+    msg.className='msg err';
+    msg.textContent=`Edição bloqueada: já existe baixa de ${fmtR(baixadaRegistrada)}, mas a comissão liberada ficaria em ${fmtR(liberadaAposEdicao)}. Ajuste o valor recebido/comissão ou estorne a baixa antes.`;
+    return;
+  }
+  const vendaEditada = normalizarVenda(vendaEditadaBase);
   try {
     await dbUpsert('vendas', vendaEditada);
     vendas[idx] = vendaEditada;
