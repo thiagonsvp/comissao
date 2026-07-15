@@ -2261,7 +2261,7 @@ function gerarRelSaldoFinanceiro(tipo){
   const isComissao=tipo==='comissao';
   const base=vendas.filter(v=>mesKey(v.data)>=de&&mesKey(v.data)<=ate&&v.status!=='cancelado'&&(!fStatus.length||fStatus.includes(statusCalculado(v))))
     .sort((a,b)=>a.data.localeCompare(b.data));
-  const filtradas=base.filter(v=>isComissao?comissaoDisponivelBaixa(v)>0:saldoAbertoVenda(v)>0);
+  const filtradas=base.filter(v=>isComissao?comissaoDisponivelBaixa(v)>0.009:saldoAbertoVenda(v)>0.009);
 
   const totalVenda=filtradas.reduce((s,v)=>s+v.valor,0);
   const totalRecebido=filtradas.reduce((s,v)=>s+valorRecebidoVenda(v),0);
