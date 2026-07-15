@@ -575,7 +575,8 @@ tr:hover td { background: rgba(255,255,255,.03); }
             <label class="multi-option"><input type="checkbox" class="rf-status-chk" value="baixado" onchange="updateRfStatus()">Baixado</label>
           </div>
         </div>
-        <button class="btn-outline" onclick="gerarRelFinanceiro()">↻ Gerar</button>
+        <button class="btn-outline" onclick="gerarRelSaldoComissao()">Saldo comissão liberado</button>
+        <button class="btn-outline" onclick="gerarRelSaldoCliente()">Saldo pagamento cliente</button>
         <button class="btn-outline" onclick="gerarRelBaixasComissao()">Baixas por data</button>
         <button class="btn-sm accent" onclick="imprimirRel()">🖨 Imprimir / PDF</button>
       </div>
@@ -2235,6 +2236,114 @@ function gerarRelFinanceiro(){
 
 function imprimirRel(){
   gerarRelFinanceiro();
+  setTimeout(()=>window.print(),200);
+}
+
+let relFinanceiroAtual='comissao';
+
+function gerarRelFinanceiro(){
+  gerarRelSaldoComissao();
+}
+
+function gerarRelSaldoComissao(){
+  gerarRelSaldoFinanceiro('comissao');
+}
+
+function gerarRelSaldoCliente(){
+  gerarRelSaldoFinanceiro('cliente');
+}
+
+function gerarRelSaldoFinanceiro(tipo){
+  relFinanceiroAtual=tipo;
+  const de=document.getElementById('rf-de').value||new Date().toISOString().slice(0,7);
+  const ate=document.getElementById('rf-ate').value||de;
+  const fStatus=getRfStatusValues();
+  const isComissao=tipo==='comissao';
+  const base=vendas.filter(v=>mesKey(v.data)>=de&&mesKey(v.data)<=ate&&v.status!=='cancelado'&&(!fStatus.length||fStatus.includes(statusCalculado(v))))
+    .sort((a,b)=>a.data.localeCompare(b.data));
+  const filtradas=base.filter(v=>isComissao?comissaoDisponivelBaixa(v)>0:saldoAbertoVenda(v)>0);
+
+  const totalVenda=filtradas.reduce((s,v)=>s+v.valor,0);
+  const totalRecebido=filtradas.reduce((s,v)=>s+valorRecebidoVenda(v),0);
+  const totalSaldo=filtradas.reduce((s,v)=>s+saldoAbertoVenda(v),0);
+  const totalLiberada=filtradas.filter(v=>['recebido','parcial'].includes(statusCalculado(v))).reduce((s,v)=>s+comissaoDisponivelBaixa(v),0);
+  const titulo=isComissao?'Relatório de Saldo de Comissão Liberado':'Relatório de Saldo de Pagamento do Cliente';
+  const detalheTitulo=isComissao?'Comissões liberadas pendentes de baixa':'Pagamentos de clientes em aberto';
+
+  const deLabel=mesLabel(de+'-01'); const ateLabel=mesLabel(ate+'-01');
+  const periodo=de===ate?deLabel:`${deLabel} a ${ateLabel}`;
+  const hoje=new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric'});
+
+  const linhas=filtradas.map(v=>{
+    const info=infoComMinha(v);
+    const com=comissaoDisponivelBaixa(v);
+    const saldo=saldoAbertoVenda(v);
+    return `<tr>
+      <td>${v.os||'—'}</td>
+      <td>${fmtDate(v.data)}</td>
+      <td>${v.cliente}</td>
+      <td>${v.produto}</td>
+      <td>${esc(v.obs||'—')}</td>
+      <td style="text-align:right;">${fmtPrintR(v.valor)}</td>
+      <td style="text-align:right;">${fmtPrintR(valorRecebidoVenda(v))}</td>
+      <td style="text-align:right;${isComissao?'color:#16a34a;':(saldo>0?'color:#d97706;':'')}">${fmtPrintR(isComissao?com:saldo)}${isComissao&&info.ajustada?' *':''}</td>
+      <td style="text-align:center;">${printStatusBadge(statusBadgeClass(v))}</td>
+    </tr>`;
+  }).join('');
+
+  const html=`<div class="print-doc" id="doc-financeiro">
+    <div class="print-header">
+      <div>
+        <div class="print-title">${titulo}</div>
+        <div class="print-subtitle">Período: ${periodo}</div>
+      </div>
+      <div class="print-meta">Emitido em: ${hoje}<br>Comissão padrão: ${config.pct||7}%</div>
+    </div>
+    <div class="print-cards">
+      <div class="print-card"><div class="print-card-label">Total de vendas</div><div class="print-card-value">${filtradas.length} pedidos</div></div>
+      <div class="print-card"><div class="print-card-label">Valor total</div><div class="print-card-value">${fmtPrintR(totalVenda)}</div></div>
+      <div class="print-card"><div class="print-card-label">Valor recebido</div><div class="print-card-value green">${fmtPrintR(totalRecebido)}</div></div>
+      ${isComissao
+        ? `<div class="print-card"><div class="print-card-label">Saldo comissão liberado</div><div class="print-card-value green">${fmtPrintR(totalLiberada)}</div></div>`
+        : `<div class="print-card"><div class="print-card-label">Saldo pagamento cliente</div><div class="print-card-value">${fmtPrintR(totalSaldo)}</div></div>`}
+    </div>
+    <div class="print-section-title">${detalheTitulo}</div>
+    <table class="print-table">
+      <thead><tr>
+        <th>OS</th><th>Data</th><th>Cliente</th><th>Produto</th><th>Observação</th>
+        <th style="text-align:right;">Valor</th>
+        <th style="text-align:right;">Recebido</th>
+        <th style="text-align:right;">${isComissao?'Saldo comissão':'Saldo cliente'}</th>
+        <th style="text-align:center;">Status</th>
+      </tr></thead>
+      <tbody>${linhas}${!filtradas.length?'<tr><td colspan="9" style="text-align:center;padding:16px;color:#999;">Nenhuma venda no período</td></tr>':''}</tbody>
+      <tfoot><tr style="font-weight:700;background:#f3f4f6;">
+        <td colspan="5" style="padding:8px 10px;">TOTAIS</td>
+        <td style="padding:8px 10px;text-align:right;">${fmtPrintR(totalVenda)}</td>
+        <td style="padding:8px 10px;text-align:right;">${fmtPrintR(totalRecebido)}</td>
+        <td style="padding:8px 10px;text-align:right;${isComissao?'color:#16a34a;':''}">${fmtPrintR(isComissao?totalLiberada:totalSaldo)}</td>
+        <td></td>
+      </tfoot>
+    </table>
+    ${isComissao&&filtradas.some(v=>infoComMinha(v).ajustada)?'<p style="font-size:11px;color:#888;margin-top:8px;">* Comissão especial aplicada nesta venda.</p>':''}
+    <div class="print-footer">
+      <span>Sistema de Comissões &nbsp;·&nbsp; Gerado em ${hoje}</span>
+      <span>${isComissao?'Saldo comissão liberado':'Saldo pagamento cliente'}: ${fmtPrintR(isComissao?totalLiberada:totalSaldo)}</span>
+    </div>
+    <div class="print-assinatura">
+      <div class="print-assinatura-linha">Responsável financeiro</div>
+      <div class="print-assinatura-linha">Vendedor / Comissionado</div>
+    </div>
+  </div>`;
+
+  document.getElementById('rf-preview').innerHTML=html;
+  document.getElementById('print-area').innerHTML=html;
+}
+
+function imprimirRel(){
+  if(!document.getElementById('print-area').innerHTML.trim()){
+    gerarRelSaldoFinanceiro(relFinanceiroAtual);
+  }
   setTimeout(()=>window.print(),200);
 }
 
