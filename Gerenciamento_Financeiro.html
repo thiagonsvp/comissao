@@ -1101,7 +1101,7 @@ async function dbInsert(table, item) {
   const client = getSupabaseClient();
   if (client) {
     const snakeItem = toSupabaseRow(table, item);
-    const { error } = await client.from('com_' + table).insert(snakeItem);
+    const { error } = await client.from('comissao_' + table).insert(snakeItem);
     if (error) {
       alert("Erro ao salvar no Supabase (com_" + table + "): " + error.message);
       throw error;
@@ -1113,7 +1113,7 @@ async function dbUpsert(table, item) {
   const client = getSupabaseClient();
   if (client) {
     const snakeItem = toSupabaseRow(table, item);
-    const { error } = await client.from('com_' + table).upsert(snakeItem);
+    const { error } = await client.from('comissao_' + table).upsert(snakeItem);
     if (error) {
       alert("Erro ao atualizar no Supabase (com_" + table + "): " + error.message);
       throw error;
@@ -1124,7 +1124,7 @@ async function dbUpsert(table, item) {
 async function dbDelete(table, column, val) {
   const client = getSupabaseClient();
   if (client) {
-    const { error } = await client.from('com_' + table).delete().eq(column, val);
+    const { error } = await client.from('comissao_' + table).delete().eq(column, val);
     if (error) {
       alert("Erro ao excluir no Supabase (com_" + table + "): " + error.message);
       throw error;
