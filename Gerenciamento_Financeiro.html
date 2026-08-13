@@ -1113,8 +1113,8 @@ async function dbUpsert(table, item) {
     let { error } = await client.from('com_' + table).upsert(snakeItem);
     // Permite operar com bancos antigos que ainda não receberam a coluna de histórico.
     if (error && table==='vendas' && /historico_baixas.*schema cache|column .*historico_baixas.*does not exist/i.test(error.message||'')) {
-      const legado = { ...snakeItem };
-      delete legado.historico_baixas;
+    const legado = { ...snakeItem };
+    delete legado.historico_baixas;
       ({ error } = await client.from('com_' + table).upsert(legado));
     }
     if (error) {
@@ -1317,13 +1317,16 @@ function normalizarVenda(v) {
 
 function historicoBaixas(v) {
   if (Array.isArray(v.historicoBaixas)) return v.historicoBaixas;
+  const marcador=/\[\[BAIXAS_JSON:(.*?)\]\]/.exec(v.obsBaixa||'');
+  if (marcador) { try { return JSON.parse(marcador[1]); } catch(e) {} }
   if (v.dataBaixaComissao && comissaoBaixada(v) > 0) return [{ data: v.dataBaixaComissao, valor: comissaoBaixada(v), obs: v.obsBaixa || '' }];
   return [];
 }
 
 function registrarBaixa(v, valor, data, obs) {
   const historico = historicoBaixas(v).concat({ data, valor: Number(valor.toFixed(2)), obs: obs || '' });
-  return { ...v, historicoBaixas: historico, valorComissaoBaixada: historico.reduce((s, b) => s + (parseFloat(b.valor) || 0), 0), dataBaixaComissao: data, obsBaixa: obs || '' };
+  const obsTexto=obs || '';
+  return { ...v, historicoBaixas: historico, valorComissaoBaixada: historico.reduce((s, b) => s + (parseFloat(b.valor) || 0), 0), dataBaixaComissao: data, obsBaixa: obsTexto+' [[BAIXAS_JSON:'+JSON.stringify(historico)+']]'};
 }
 
 function infoComMinha(v) {
@@ -1855,7 +1858,8 @@ async function confirmarBaixaIndividual() {
   if (ajustandoBaixa && !recebimentoAumentado) {
     const historico=historicoBaixas(vendaAtualizada).slice();
     historico[historico.length-1]={ data, valor:Number(valorPago.toFixed(2)), obs:document.getElementById('bi-obs').value.trim() };
-    vendaBaixada=normalizarVenda({ ...vendaAtualizada, historicoBaixas:historico, valorComissaoBaixada:historico.reduce((s,b)=>s+(parseFloat(b.valor)||0),0), dataBaixaComissao:data, obsBaixa:document.getElementById('bi-obs').value.trim() });
+    const obsAjuste=document.getElementById('bi-obs').value.trim();
+    vendaBaixada=normalizarVenda({ ...vendaAtualizada, historicoBaixas:historico, valorComissaoBaixada:historico.reduce((s,b)=>s+(parseFloat(b.valor)||0),0), dataBaixaComissao:data, obsBaixa:obsAjuste+' [[BAIXAS_JSON:'+JSON.stringify(historico)+']]' });
   } else {
     vendaBaixada=normalizarVenda(registrarBaixa(vendaAtualizada, valorPago, data, document.getElementById('bi-obs').value.trim()));
   }
