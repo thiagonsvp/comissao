@@ -2834,9 +2834,6 @@ function inicializarUI() {
   try { updatePreview(); } catch(e){}
   try { renderDash(); } catch(e){}
   try { renderConfig(); } catch(e){}
-  document.querySelectorAll('.modal-overlay').forEach(o=>{
-    o.addEventListener('click',e=>{ if(e.target===o) o.classList.remove('open'); });
-  });
   document.addEventListener('click',e=>{
     const wrap=document.getElementById('rf-status-wrap');
     if(wrap&&!wrap.contains(e.target)) wrap.classList.remove('open');
