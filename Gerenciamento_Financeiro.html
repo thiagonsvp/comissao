@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ComissÃƒÂµes</title>
+<title>Comissões</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -64,7 +64,7 @@ body::after {
 
 .shell { display: grid; grid-template-columns: 220px 1fr; min-height: 100vh; position: relative; z-index: 1; }
 
-/* Ã¢â€â‚¬Ã¢â€â‚¬ SIDEBAR Ã¢â€â‚¬Ã¢â€â‚¬ */
+/* ── SIDEBAR ── */
 .sidebar {
   position: sticky; top: 0; height: 100vh;
   display: flex; flex-direction: column; padding: 28px 0;
@@ -86,7 +86,7 @@ body::after {
 .nav-item.active svg { opacity: 1; color: var(--accent); }
 .nav-item.active::before { content:''; position:absolute; left:0; top:5px; bottom:5px; width:3px; background:linear-gradient(180deg,#b8ff6e,#7bec1e); border-radius:0 2px 2px 0; }
 
-/* Ã¢â€â‚¬Ã¢â€â‚¬ MAIN Ã¢â€â‚¬Ã¢â€â‚¬ */
+/* ── MAIN ── */
 .main { padding: 36px 44px; overflow-y: auto; }
 .section { display: none; }
 .section.active { display: block; }
@@ -94,7 +94,7 @@ body::after {
 .page-title { font-size: 26px; font-weight: 700; letter-spacing: -.04em; line-height: 1; }
 .page-sub { font-size: 13px; color: var(--text-2); margin-top: 6px; }
 
-/* Ã¢â€â‚¬Ã¢â€â‚¬ CARDS Ã¢â€â‚¬Ã¢â€â‚¬ */
+/* ── CARDS ── */
 .cards { display: grid; grid-template-columns: repeat(auto-fit,minmax(160px,1fr)); gap: 12px; margin-bottom: 28px; }
 .card { padding: 18px 20px; background: var(--glass); border: 1px solid var(--glass-border); border-radius: var(--radius); backdrop-filter: blur(12px); transition: border-color .2s, transform .2s; position: relative; overflow: hidden; }
 .card::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg,rgba(255,255,255,.03) 0%,transparent 60%); pointer-events:none; }
@@ -111,7 +111,7 @@ body::after {
 .section-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; color: var(--text-3); margin-bottom: 12px; margin-top: 28px; }
 .section-label:first-child { margin-top: 0; }
 
-/* Ã¢â€â‚¬Ã¢â€â‚¬ META BAR Ã¢â€â‚¬Ã¢â€â‚¬ */
+/* ── META BAR ── */
 .meta-wrap { background: var(--glass); border: 1px solid var(--glass-border); border-radius: var(--radius); padding: 20px 22px; margin-bottom: 28px; backdrop-filter: blur(12px); }
 .meta-labels { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 12px; }
 .meta-pct { font-weight: 700; font-family: var(--mono); }
@@ -119,7 +119,7 @@ body::after {
 .meta-track { height: 5px; background: rgba(255,255,255,.06); border-radius: 3px; overflow: hidden; }
 .meta-fill { height: 100%; border-radius: 3px; transition: width .6s cubic-bezier(.4,0,.2,1); }
 
-/* Ã¢â€â‚¬Ã¢â€â‚¬ TABLE Ã¢â€â‚¬Ã¢â€â‚¬ */
+/* ── TABLE ── */
 .table-wrap { overflow-x: auto; border: 1px solid var(--glass-border); border-radius: var(--radius); background: var(--glass); backdrop-filter: blur(12px); }
 table { width: 100%; border-collapse: collapse; font-size: 13px; }
 th { padding: 11px 14px; border-bottom: 1px solid var(--glass-border); font-weight: 700; font-size: 10px; color: var(--text-3); text-transform: uppercase; letter-spacing: .1em; text-align: left; white-space: nowrap; }
@@ -127,7 +127,7 @@ td { padding: 11px 14px; border-bottom: 1px solid rgba(255,255,255,.04); color: 
 tr:last-child td { border-bottom: none; }
 tr:hover td { background: rgba(255,255,255,.03); }
 
-/* Ã¢â€â‚¬Ã¢â€â‚¬ BADGES Ã¢â€â‚¬Ã¢â€â‚¬ */
+/* ── BADGES ── */
 .badge { display: inline-flex; align-items: center; font-size: 10px; font-weight: 700; padding: 3px 9px; border-radius: 20px; letter-spacing: .03em; text-transform: uppercase; }
 .badge.recebido { background: var(--green-dim); color: var(--green); border: 1px solid rgba(77,255,160,.2); }
 .badge.pendente  { background: var(--amber-dim); color: var(--amber); border: 1px solid rgba(255,204,77,.2); }
@@ -139,7 +139,7 @@ tr:hover td { background: rgba(255,255,255,.03); }
 .tag-ajustada { display: inline-flex; align-items: center; font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 4px; background: var(--orange-dim); color: var(--orange); border: 1px solid rgba(251,146,60,.25); vertical-align: middle; margin-left: 4px; letter-spacing: .03em; text-transform: uppercase; }
 .atendente-tag { display: inline-flex; align-items: center; font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 20px; background: rgba(124,107,255,.15); color: var(--accent2); border: 1px solid rgba(124,107,255,.25); }
 
-/* Ã¢â€â‚¬Ã¢â€â‚¬ FORMS Ã¢â€â‚¬Ã¢â€â‚¬ */
+/* ── FORMS ── */
 .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px; }
 .form-group { display: flex; flex-direction: column; gap: 7px; }
 .form-group.full { grid-column: 1/-1; }
@@ -165,7 +165,7 @@ tr:hover td { background: rgba(255,255,255,.03); }
 .preview-box { background: rgba(255,255,255,.03); border: 1px solid var(--glass-border); border-radius: var(--radius-sm); padding: 14px 16px; font-size: 13px; margin-bottom: 16px; color: var(--text-2); line-height: 1.7; }
 .preview-box strong { color: var(--accent); font-family: var(--mono); }
 
-/* Ã¢â€â‚¬Ã¢â€â‚¬ BUTTONS Ã¢â€â‚¬Ã¢â€â‚¬ */
+/* ── BUTTONS ── */
 .btn-primary { background: linear-gradient(135deg,#b8ff6e,#7bec1e); color: #0a0612; border: none; padding: 12px 24px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 700; font-family: var(--font); cursor: pointer; width: 100%; transition: opacity .15s,transform .1s,box-shadow .15s; box-shadow: 0 4px 20px rgba(184,255,110,.2); }
 .btn-primary:hover { opacity: .9; box-shadow: 0 4px 28px rgba(184,255,110,.35); }
 .btn-primary:active { transform: scale(.99); }
@@ -183,12 +183,12 @@ tr:hover td { background: rgba(255,255,255,.03); }
 .msg.ok { color: var(--green); }
 .msg.err { color: var(--red); }
 
-/* Ã¢â€â‚¬Ã¢â€â‚¬ TABS Ã¢â€â‚¬Ã¢â€â‚¬ */
+/* ── TABS ── */
 .tab-bar { display: flex; gap: 2px; margin-bottom: 22px; background: rgba(255,255,255,.03); border: 1px solid var(--glass-border); border-radius: var(--radius-sm); padding: 3px; width: fit-content; }
 .tab-bar button { font-size: 12px; font-weight: 600; font-family: var(--font); padding: 6px 18px; border: none; background: transparent; color: var(--text-2); cursor: pointer; border-radius: 7px; transition: all .15s; }
 .tab-bar button.active { background: rgba(255,255,255,.08); color: var(--text); }
 
-/* Ã¢â€â‚¬Ã¢â€â‚¬ FILTERS Ã¢â€â‚¬Ã¢â€â‚¬ */
+/* ── FILTERS ── */
 .filter-row { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; align-items: center; }
 .filter-row select,.filter-row input { font-size: 12px; font-family: var(--font); padding: 8px 12px; border: 1px solid var(--glass-border); border-radius: var(--radius-sm); background: var(--glass); color: var(--text); outline: none; transition: border-color .15s; backdrop-filter: blur(8px); }
 .filter-row select option { background: #13102a; color: var(--text); }
@@ -205,7 +205,7 @@ tr:hover td { background: rgba(255,255,255,.03); }
 
 .chart-wrap { background: var(--glass); border: 1px solid var(--glass-border); border-radius: var(--radius); padding: 22px; margin-bottom: 20px; backdrop-filter: blur(12px); }
 
-/* Ã¢â€â‚¬Ã¢â€â‚¬ MODAL Ã¢â€â‚¬Ã¢â€â‚¬ */
+/* ── MODAL ── */
 .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(5,3,15,.82); z-index: 100; align-items: center; justify-content: center; backdrop-filter: blur(6px); }
 .modal-overlay.open { display: flex; }
 .modal { background: linear-gradient(145deg,rgba(28,20,58,.97) 0%,rgba(14,11,30,.98) 100%); border: 1px solid var(--glass-border); border-radius: 18px; padding: 30px; width: 100%; max-width: 560px; max-height: 92vh; overflow-y: auto; box-shadow: 0 24px 80px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.04) inset; }
@@ -219,7 +219,7 @@ tr:hover td { background: rgba(255,255,255,.03); }
 .btn-ghost { background: var(--glass); border: 1px solid var(--glass-border); color: var(--text-2); padding: 12px 20px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 600; font-family: var(--font); cursor: pointer; transition: all .15s; flex: 1; }
 .btn-ghost:hover { border-color: var(--glass-border-hover); color: var(--text); }
 
-/* Ã¢â€â‚¬Ã¢â€â‚¬ BAIXAR EM MASSA Ã¢â€â‚¬Ã¢â€â‚¬ */
+/* ── BAIXAR EM MASSA ── */
 .select-all-wrap { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-2); cursor: pointer; user-select: none; font-weight: 500; }
 .select-all-wrap input[type="checkbox"] { accent-color: var(--accent); width: 14px; height: 14px; cursor: pointer; }
 .baixar-list { display: flex; flex-direction: column; gap: 6px; max-height: 280px; overflow-y: auto; }
@@ -233,7 +233,7 @@ tr:hover td { background: rgba(255,255,255,.03); }
 .baixar-summary { background: rgba(77,255,160,.05); border: 1px solid rgba(77,255,160,.15); border-radius: 10px; padding: 12px 14px; font-size: 13px; color: var(--text-2); margin-top: 12px; display: flex; justify-content: space-between; }
 .baixar-summary strong { color: var(--accent); font-family: var(--mono); }
 
-/* Ã¢â€â‚¬Ã¢â€â‚¬ CONFIG Ã¢â€â‚¬Ã¢â€â‚¬ */
+/* ── CONFIG ── */
 .config-block { background: var(--glass); border: 1px solid var(--glass-border); border-radius: var(--radius); overflow: hidden; margin-bottom: 16px; backdrop-filter: blur(12px); }
 .config-block-header { padding: 16px 20px; border-bottom: 1px solid var(--glass-border); display: flex; align-items: center; justify-content: space-between; }
 .config-block-title { font-size: 13px; font-weight: 700; }
@@ -246,7 +246,7 @@ tr:hover td { background: rgba(255,255,255,.03); }
 .config-row input[type="number"]:focus { border-color: rgba(184,255,110,.4); }
 .config-row .pct-symbol { font-size: 13px; color: var(--text-3); font-weight: 700; }
 
-/* Ã¢â€â‚¬Ã¢â€â‚¬ ATENDENTES LIST Ã¢â€â‚¬Ã¢â€â‚¬ */
+/* ── ATENDENTES LIST ── */
 .atendente-row { display: flex; align-items: center; gap: 12px; padding: 13px 20px; border-bottom: 1px solid rgba(255,255,255,.04); }
 .atendente-row:last-child { border-bottom: none; }
 .atendente-avatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg,rgba(124,107,255,.4),rgba(192,132,252,.3)); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: var(--purple); flex-shrink: 0; }
@@ -263,9 +263,9 @@ tr:hover td { background: rgba(255,255,255,.03); }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: rgba(255,255,255,.1); border-radius: 3px; }
 
-/* Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
-   RELATÃƒâ€œRIO PARA IMPRESSÃƒÆ’O
-Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â */
+/* ══════════════════════════════════════════
+   RELATÓRIO PARA IMPRESSÃO
+══════════════════════════════════════════ */
 @media print {
   body { background: #fff !important; color: #000 !important; font-family: var(--font) !important; }
   body::before, body::after { display: none !important; }
@@ -320,7 +320,7 @@ tr:hover td { background: rgba(255,255,255,.03); }
       <div class="logo-mark">
         <svg viewBox="0 0 16 16" fill="none"><path d="M2 12L6 8L9 11L14 4" stroke="#0a0612" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
-      <div class="logo-title">ComissÃƒÂµes</div>
+      <div class="logo-title">Comissões</div>
       <div class="logo-sub">Sistema de vendas</div>
     </div>
 
@@ -339,14 +339,14 @@ tr:hover td { background: rgba(255,255,255,.03); }
     </button>
     <button class="nav-item" onclick="showSection('comissao',this)">
       <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="5" cy="5" r="2"/><circle cx="11" cy="11" r="2"/><path d="M3 13L13 3"/></svg>
-      ComissÃƒÂ£o
+      Comissão
     </button>
     <button class="nav-item" onclick="showSection('recebimentos',this)">
       <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 4h10v8H3z"/><path d="M5 7h6M5 10h3"/><circle cx="12" cy="11" r="2"/></svg>
       Recebimentos
     </button>
 
-    <div class="nav-section">RelatÃƒÂ³rios</div>
+    <div class="nav-section">Relatórios</div>
     <button class="nav-item" onclick="showSection('rel-financeiro',this)">
       <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="12" height="12" rx="1"/><path d="M5 6h6M5 9h4"/></svg>
       Financeiro
@@ -357,27 +357,27 @@ tr:hover td { background: rgba(255,255,255,.03); }
     </button>
     <button class="nav-item" onclick="showSection('relatorios',this)">
       <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 13V7M7 13V4M11 13V9"/></svg>
-      AnÃƒÂ¡lises
+      Análises
     </button>
 
-    <div class="nav-section">ConfiguraÃƒÂ§ÃƒÂµes</div>
+    <div class="nav-section">Configurações</div>
     <button class="nav-item" onclick="showSection('atendentes',this)" style="display:none;">
       <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="5" cy="5" r="2"/><circle cx="11" cy="5" r="2"/><path d="M1 14c0-2.21 1.79-4 4-4M15 14c0-2.21-1.79-4-4-4M8 12v-2M8 10c1.1 0 2-.9 2-2V6H6v2c0 1.1.9 2 2 2z"/></svg>
       Atendentes
     </button>
     <button class="nav-item" onclick="showSection('config',this)">
       <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="2.5"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.05 3.05l1.41 1.41M11.54 11.54l1.41 1.41M11.54 4.46l-1.41 1.41M4.46 11.54l-1.41 1.41"/></svg>
-      ConfiguraÃƒÂ§ÃƒÂµes
+      Configurações
     </button>
   </aside>
 
   <main class="main">
 
-    <!-- Ã¢â€¢ÂÃ¢â€¢Â DASHBOARD Ã¢â€¢ÂÃ¢â€¢Â -->
+    <!-- ══ DASHBOARD ══ -->
     <div id="dashboard" class="section active">
       <div class="page-header">
         <div class="page-title">Dashboard</div>
-        <div class="page-sub">Resumo do mÃƒÂªs atual</div>
+        <div class="page-sub">Resumo do mês atual</div>
       </div>
       <div id="dash-cards" class="cards"></div>
       <div class="section-label">Meta mensal</div>
@@ -385,23 +385,23 @@ tr:hover td { background: rgba(255,255,255,.03); }
       <div class="section-label">Vendas recentes</div>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>OS</th><th>Data</th><th>Cliente</th><th>Produto</th><th>Valor</th><th>Recebido</th><th>ComissÃƒÂ£o</th><th>Status</th></tr></thead>
+          <thead><tr><th>OS</th><th>Data</th><th>Cliente</th><th>Produto</th><th>Valor</th><th>Recebido</th><th>Comissão</th><th>Status</th></tr></thead>
           <tbody id="dash-recentes"></tbody>
         </table>
       </div>
     </div>
 
-    <!-- Ã¢â€¢ÂÃ¢â€¢Â NOVA VENDA Ã¢â€¢ÂÃ¢â€¢Â -->
+    <!-- ══ NOVA VENDA ══ -->
     <div id="nova-venda" class="section">
       <div class="page-header">
         <div class="page-title">Nova venda</div>
         <div class="page-sub">Registre uma nova venda</div>
       </div>
       <div class="form-grid" style="grid-template-columns:1fr 1fr 1fr;">
-        <div class="form-group"><label>NÃ‚Âº OS</label><input type="text" id="v-os" placeholder="Ex: 2024001"></div>
+        <div class="form-group"><label>Nº OS</label><input type="text" id="v-os" placeholder="Ex: 2024001"></div>
         <div class="form-group"><label>Data</label><input type="date" id="v-data"></div>
-        <div class="form-group"><label>SituaÃƒÂ§ÃƒÂ£o</label>
-          <select id="v-status"><option value="pendente">AutomÃƒÂ¡tico</option><option value="cancelado">Cancelado</option></select>
+        <div class="form-group"><label>Situação</label>
+          <select id="v-status"><option value="pendente">Automático</option><option value="cancelado">Cancelado</option></select>
         </div>
       </div>
       <div class="form-grid">
@@ -410,12 +410,12 @@ tr:hover td { background: rgba(255,255,255,.03); }
           <select id="v-produto"><option>Lona / Banner</option><option>Adesivo</option><option>Placa / ACM</option><option>Fachada</option><option>Outros</option></select>
         </div>
         <div class="form-group"><label>Forma de pagamento</label>
-          <select id="v-pagamento"><option>Ãƒâ‚¬ vista</option><option>CartÃƒÂ£o de crÃƒÂ©dito</option><option>Boleto</option><option>Pix</option><option>Parcelado</option></select>
+          <select id="v-pagamento"><option>À vista</option><option>Cartão de crédito</option><option>Boleto</option><option>Pix</option><option>Parcelado</option></select>
         </div>
         <div class="form-group"><label>Valor (R$)</label><input type="number" id="v-valor" placeholder="0,00" min="0" step="0.01" oninput="updatePreview()"></div>
         <div class="form-group"><label>Valor recebido (R$)</label><input type="number" id="v-valor-recebido" placeholder="0,00" min="0" step="0.01" oninput="updatePreview()"></div>
         <div class="form-group">
-          <label>ComissÃƒÂ£o especial <span style="color:var(--orange);font-size:9px;"> OPCIONAL</span></label>
+          <label>Comissão especial <span style="color:var(--orange);font-size:9px;"> OPCIONAL</span></label>
           <div class="com-tipo-toggle">
             <button type="button" class="toggle-btn active" id="v-toggle-off"  onclick="setComTipo('v','off')">Auto</button>
             <button type="button" class="toggle-btn"        id="v-toggle-valor" onclick="setComTipo('v','valor')">R$ Fixo</button>
@@ -425,22 +425,22 @@ tr:hover td { background: rgba(255,255,255,.03); }
             <span class="com-prefix" id="v-com-prefix">R$</span>
             <input type="number" id="v-com-manual" placeholder="0,00" min="0" step="0.01" oninput="updatePreview()">
             <span class="com-suffix" id="v-com-suffix" style="display:none;">%</span>
-            <button class="com-clear" onclick="setComTipo('v','off')">Ãƒâ€”</button>
+            <button class="com-clear" onclick="setComTipo('v','off')">×</button>
           </div>
-          <span class="hint" id="v-com-hint">AutomÃƒÂ¡tico: 7% sobre o valor.</span>
+          <span class="hint" id="v-com-hint">Automático: 7% sobre o valor.</span>
         </div>
-        <div class="form-group full"><label>ObservaÃƒÂ§ÃƒÂ£o</label><input type="text" id="v-obs" placeholder="ObservaÃƒÂ§ÃƒÂµes adicionaisÃ¢â‚¬Â¦"></div>
+        <div class="form-group full"><label>Observação</label><input type="text" id="v-obs" placeholder="Observações adicionais…"></div>
       </div>
       <div class="preview-box" id="v-preview"></div>
       <button class="btn-primary" onclick="salvarVenda()">Registrar venda</button>
       <div class="msg" id="v-msg"></div>
     </div>
 
-    <!-- Ã¢â€¢ÂÃ¢â€¢Â MINHAS VENDAS Ã¢â€¢ÂÃ¢â€¢Â -->
+    <!-- ══ MINHAS VENDAS ══ -->
     <div id="vendas" class="section">
       <div class="page-header">
         <div class="page-title">Minhas vendas</div>
-        <div class="page-sub">HistÃƒÂ³rico completo</div>
+        <div class="page-sub">Histórico completo</div>
       </div>
       <div class="filter-row">
         <select id="f-mes" onchange="renderVendas()"><option value="">Todos os meses</option></select>
@@ -453,14 +453,14 @@ tr:hover td { background: rgba(255,255,255,.03); }
           <option value="recebido">Recebido</option><option value="parcial">Parcial</option><option value="pendente">Pendente</option>
           <option value="baixado">Baixado</option><option value="cancelado">Cancelado</option>
         </select>
-        <input type="text" id="f-cliente" placeholder="OS ou clienteÃ¢â‚¬Â¦" oninput="renderVendas()" style="flex:1;min-width:130px;">
-        <button class="btn-sm purple" onclick="abrirBaixarMassa()">Ã¢â€ â€œ Baixar comissÃƒÂ£o</button>
+        <input type="text" id="f-cliente" placeholder="OS ou cliente…" oninput="renderVendas()" style="flex:1;min-width:130px;">
+        <button class="btn-sm purple" onclick="abrirBaixarMassa()">↓ Baixar comissão</button>
       </div>
       <div class="table-wrap">
         <table>
           <thead><tr>
             <th style="width:32px;"><input type="checkbox" id="chk-all" onchange="toggleAllVendas(this)" style="accent-color:var(--accent);cursor:pointer;"></th>
-            <th>OS</th><th>Data</th><th>Cliente</th><th>Produto</th><th>Pagamento</th><th>Valor</th><th>Recebido</th><th>Saldo aberto</th><th>ComissÃƒÂ£o liberada</th><th>Com. baixada</th><th>Saldo comissÃƒÂ£o</th><th>DisponÃƒÂ­vel baixa</th><th>Status</th><th>Pag. ComissÃƒÂ£o</th><th></th>
+            <th>OS</th><th>Data</th><th>Cliente</th><th>Produto</th><th>Pagamento</th><th>Valor</th><th>Recebido</th><th>Saldo aberto</th><th>Comissão liberada</th><th>Com. baixada</th><th>Saldo comissão</th><th>Disponível baixa</th><th>Status</th><th>Pag. Comissão</th><th></th>
           </tr></thead>
           <tbody id="tabela-vendas"></tbody>
         </table>
@@ -468,38 +468,38 @@ tr:hover td { background: rgba(255,255,255,.03); }
       </div>
     </div>
 
-    <!-- Ã¢â€¢ÂÃ¢â€¢Â COMISSÃƒÆ’O Ã¢â€¢ÂÃ¢â€¢Â -->
+    <!-- ══ COMISSÃO ══ -->
     <div id="comissao" class="section">
       <div class="page-header">
-        <div class="page-title">ComissÃƒÂ£o</div>
-        <div class="page-sub">Acompanhamento de comissÃƒÂµes</div>
+        <div class="page-title">Comissão</div>
+        <div class="page-sub">Acompanhamento de comissões</div>
       </div>
       <div id="com-cards" class="cards"></div>
       <div class="tab-bar">
-        <button class="active" onclick="showComTab('mensal')">Por mÃƒÂªs</button>
-        <button onclick="showComTab('historico')">HistÃƒÂ³rico</button>
+        <button class="active" onclick="showComTab('mensal')">Por mês</button>
+        <button onclick="showComTab('historico')">Histórico</button>
       </div>
       <div id="com-mensal"><div class="chart-wrap" style="height:260px;"><canvas id="chart-com"></canvas></div></div>
       <div id="com-historico" style="display:none;">
         <div class="table-wrap"><table>
-          <thead><tr><th>MÃƒÂªs</th><th>Vendas</th><th>Total vendido</th><th>ComissÃƒÂ£o total</th><th>ComissÃƒÂ£o baixada</th><th>Status</th></tr></thead>
+          <thead><tr><th>Mês</th><th>Vendas</th><th>Total vendido</th><th>Comissão total</th><th>Comissão baixada</th><th>Status</th></tr></thead>
           <tbody id="tabela-historico"></tbody>
         </table></div>
       </div>
     </div>
 
-    <!-- Ã¢â€¢ÂÃ¢â€¢Â RECEBIMENTOS Ã¢â€¢ÂÃ¢â€¢Â -->
+    <!-- ══ RECEBIMENTOS ══ -->
     <div id="recebimentos" class="section">
       <div class="page-header">
         <div class="page-title">Recebimentos</div>
-        <div class="page-sub">SalÃƒÂ¡rios, indicaÃƒÂ§ÃƒÂµes e fluxo de caixa diÃƒÂ¡rio</div>
+        <div class="page-sub">Salários, indicações e fluxo de caixa diário</div>
       </div>
 
       <div class="config-block" style="margin-bottom:20px;">
         <div class="config-block-header">
           <div>
             <div class="config-block-title">Cadastrar recebimento</div>
-            <div class="config-block-sub">Use mensal para salÃƒÂ¡rios e recorrÃƒÂªncias, ou ÃƒÂºnica para recebimentos pontuais</div>
+            <div class="config-block-sub">Use mensal para salários e recorrências, ou única para recebimentos pontuais</div>
           </div>
         </div>
         <div style="padding:18px 20px;">
@@ -508,16 +508,16 @@ tr:hover td { background: rgba(255,255,255,.03); }
             <div class="form-group">
               <label>Tipo</label>
               <select id="rec-tipo">
-                <option>SalÃƒÂ¡rio</option>
-                <option>IndicaÃƒÂ§ÃƒÂ£o Natividade Digital</option>
+                <option>Salário</option>
+                <option>Indicação Natividade Digital</option>
                 <option>Outro recebimento</option>
               </select>
             </div>
             <div class="form-group">
-              <label>RecorrÃƒÂªncia</label>
+              <label>Recorrência</label>
               <select id="rec-recorrencia" onchange="toggleRecorrencia()">
                 <option value="mensal">Mensal</option>
-                <option value="unica">ÃƒÅ¡nica</option>
+                <option value="unica">Única</option>
               </select>
             </div>
           </div>
@@ -533,11 +533,11 @@ tr:hover td { background: rgba(255,255,255,.03); }
 
       <div class="filter-row">
         <input type="month" id="fluxo-mes" onchange="renderRecebimentos()">
-        <button class="btn-outline" onclick="renderRecebimentos()">Ã¢â€ Â» Atualizar fluxo</button>
+        <button class="btn-outline" onclick="renderRecebimentos()">↻ Atualizar fluxo</button>
       </div>
       <div id="fluxo-cards" class="cards"></div>
 
-      <div class="section-label">Fluxo de caixa diÃƒÂ¡rio</div>
+      <div class="section-label">Fluxo de caixa diário</div>
       <div class="table-wrap" style="margin-bottom:20px;">
         <table>
           <thead><tr><th>Data prevista</th><th>Origem</th><th>Tipo</th><th>Valor</th></tr></thead>
@@ -548,24 +548,24 @@ tr:hover td { background: rgba(255,255,255,.03); }
       <div class="section-label">Outros recebimentos cadastrados</div>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Cliente / origem</th><th>Tipo</th><th>RecorrÃƒÂªncia</th><th>Dia previsto</th><th>Valor</th><th></th></tr></thead>
+          <thead><tr><th>Cliente / origem</th><th>Tipo</th><th>Recorrência</th><th>Dia previsto</th><th>Valor</th><th></th></tr></thead>
           <tbody id="tabela-recebimentos"></tbody>
         </table>
       </div>
     </div>
 
-    <!-- Ã¢â€¢ÂÃ¢â€¢Â RELATÃƒâ€œRIO FINANCEIRO Ã¢â€¢ÂÃ¢â€¢Â -->
+    <!-- ══ RELATÓRIO FINANCEIRO ══ -->
     <div id="rel-financeiro" class="section">
       <div class="page-header">
-        <div class="page-title">RelatÃƒÂ³rio Financeiro</div>
-        <div class="page-sub">Preparado para envio ao financeiro e impressÃƒÂ£o</div>
+        <div class="page-title">Relatório Financeiro</div>
+        <div class="page-sub">Preparado para envio ao financeiro e impressão</div>
       </div>
       <div class="filter-row">
         <input type="month" id="rf-de">
         <input type="month" id="rf-ate">
         <div class="multi-select" id="rf-status-wrap">
           <button type="button" class="multi-select-button" onclick="toggleRfStatusMenu()">
-            <span id="rf-status-label">Todos os status</span><span>Ã¢Å’â€ž</span>
+            <span id="rf-status-label">Todos os status</span><span>⌄</span>
           </button>
           <div class="multi-select-menu" id="rf-status-menu">
             <label class="multi-option"><input type="checkbox" id="rf-status-all" onchange="setRfStatusAll()" checked>Todos os status</label>
@@ -575,34 +575,34 @@ tr:hover td { background: rgba(255,255,255,.03); }
             <label class="multi-option"><input type="checkbox" class="rf-status-chk" value="baixado" onchange="updateRfStatus()">Baixado</label>
           </div>
         </div>
-        <button class="btn-outline" onclick="gerarRelSaldoComissao()">Saldo comissÃƒÂ£o liberado</button>
+        <button class="btn-outline" onclick="gerarRelSaldoComissao()">Saldo comissão liberado</button>
         <button class="btn-outline" onclick="gerarRelSaldoCliente()">Saldo pagamento cliente</button>
         <button class="btn-outline" onclick="gerarRelBaixasComissao()">Baixas por data</button>
-        <button class="btn-sm accent" onclick="imprimirRel()">Ã°Å¸â€“Â¨ Imprimir / PDF</button>
+        <button class="btn-sm accent" onclick="imprimirRel()">🖨 Imprimir / PDF</button>
       </div>
       <div id="rf-preview"></div>
     </div>
 
-    <!-- Ã¢â€¢ÂÃ¢â€¢Â RELATÃƒâ€œRIO POR ATENDENTE Ã¢â€¢ÂÃ¢â€¢Â -->
+    <!-- ══ RELATÓRIO POR ATENDENTE ══ -->
     <div id="rel-atendentes" class="section">
       <div class="page-header">
-        <div class="page-title">ComissÃƒÂµes por Atendente</div>
-        <div class="page-sub">Venda e comissÃƒÂ£o de cada atendente</div>
+        <div class="page-title">Comissões por Atendente</div>
+        <div class="page-sub">Venda e comissão de cada atendente</div>
       </div>
       <div class="filter-row">
         <input type="month" id="ra-de">
         <input type="month" id="ra-ate">
         <select id="ra-atend"><option value="">Todos os atendentes</option></select>
-        <button class="btn-outline" onclick="gerarRelAtendentes()">Ã¢â€ Â» Gerar</button>
-        <button class="btn-sm accent" onclick="imprimirRelAtend()">Ã°Å¸â€“Â¨ Imprimir / PDF</button>
+        <button class="btn-outline" onclick="gerarRelAtendentes()">↻ Gerar</button>
+        <button class="btn-sm accent" onclick="imprimirRelAtend()">🖨 Imprimir / PDF</button>
       </div>
       <div id="ra-preview"></div>
     </div>
 
-    <!-- Ã¢â€¢ÂÃ¢â€¢Â ANÃƒÂLISES Ã¢â€¢ÂÃ¢â€¢Â -->
+    <!-- ══ ANÁLISES ══ -->
     <div id="relatorios" class="section">
       <div class="page-header">
-        <div class="page-title">AnÃƒÂ¡lises</div>
+        <div class="page-title">Análises</div>
         <div class="page-sub">Desempenho de vendas</div>
       </div>
       <div class="filter-row" style="margin-top:0;">
@@ -615,11 +615,11 @@ tr:hover td { background: rgba(255,255,255,.03); }
       <div class="chart-wrap" style="height:260px;"><canvas id="chart-produtos"></canvas></div>
     </div>
 
-    <!-- Ã¢â€¢ÂÃ¢â€¢Â ATENDENTES Ã¢â€¢ÂÃ¢â€¢Â -->
+    <!-- ══ ATENDENTES ══ -->
     <div id="atendentes" class="section">
       <div class="page-header">
         <div class="page-title">Atendentes</div>
-        <div class="page-sub">Cadastro e comissÃƒÂµes</div>
+        <div class="page-sub">Cadastro e comissões</div>
       </div>
       <div class="config-block" style="margin-bottom:20px;">
         <div class="config-block-header">
@@ -629,14 +629,14 @@ tr:hover td { background: rgba(255,255,255,.03); }
           <div class="form-grid" style="grid-template-columns:1fr 1fr 1fr;">
             <div class="form-group"><label>Nome</label><input type="text" id="at-nome" placeholder="Nome completo"></div>
             <div class="form-group">
-              <label>Tipo de comissÃƒÂ£o</label>
+              <label>Tipo de comissão</label>
               <select id="at-tipo" onchange="toggleAtTipo()">
                 <option value="pct">% sobre a venda</option>
                 <option value="valor">Valor fixo por venda</option>
               </select>
             </div>
             <div class="form-group" id="at-com-group">
-              <label id="at-com-label">ComissÃƒÂ£o (%)</label>
+              <label id="at-com-label">Comissão (%)</label>
               <div style="position:relative;">
                 <span id="at-com-prefix" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:12px;color:var(--text-3);pointer-events:none;font-family:var(--mono);">%</span>
                 <input type="number" id="at-valor" placeholder="0" min="0" step="0.1" style="padding-left:28px;">
@@ -655,16 +655,16 @@ tr:hover td { background: rgba(255,255,255,.03); }
       </div>
     </div>
 
-    <!-- Ã¢â€¢ÂÃ¢â€¢Â CONFIGURAÃƒâ€¡Ãƒâ€¢ES Ã¢â€¢ÂÃ¢â€¢Â -->
+    <!-- ══ CONFIGURAÇÕES ══ -->
     <div id="config" class="section">
       <div class="page-header">
-        <div class="page-title">ConfiguraÃƒÂ§ÃƒÂµes</div>
-        <div class="page-sub">Percentual de comissÃƒÂ£o e meta</div>
+        <div class="page-title">Configurações</div>
+        <div class="page-sub">Percentual de comissão e meta</div>
       </div>
       <div class="config-block">
-        <div class="config-block-header"><div class="config-block-title">ComissÃƒÂ£o geral</div></div>
+        <div class="config-block-header"><div class="config-block-title">Comissão geral</div></div>
         <div class="config-row">
-          <label>% de comissÃƒÂ£o sobre todas as vendas</label>
+          <label>% de comissão sobre todas as vendas</label>
           <div class="pct-input-wrap">
             <input type="number" id="cfg-pct" min="0" max="100" step="0.1" onchange="salvarConfig()">
             <span class="pct-symbol">%</span>
@@ -686,7 +686,7 @@ tr:hover td { background: rgba(255,255,255,.03); }
         <div class="config-block-header">
           <div>
             <div class="config-block-title">Produtos / categorias</div>
-            <div class="config-block-sub">Cadastre e edite as opÃƒÂ§ÃƒÂµes usadas nas vendas</div>
+            <div class="config-block-sub">Cadastre e edite as opções usadas nas vendas</div>
           </div>
         </div>
         <div style="padding:18px 20px;border-bottom:1px solid var(--glass-border);">
@@ -709,29 +709,29 @@ tr:hover td { background: rgba(255,255,255,.03); }
         </div>
         <div style="padding:18px 20px;">
           <div id="supabase-status-banner" style="margin-bottom:14px; padding:10px 14px; border-radius:6px; font-size:13px; font-weight:600; display:flex; align-items:center; justify-content:space-between; background:var(--amber-dim); color:var(--amber); border:1px solid rgba(255, 204, 77, 0.2);">
-            <span id="supabase-status-text">Sem conexÃƒÂ£o ativa (Offline)</span>
+            <span id="supabase-status-text">Sem conexão ativa (Offline)</span>
             <button id="supabase-disconnect-btn" class="btn-sm danger" style="display:none;" onclick="desconectarSupabase()">Desconectar</button>
           </div>
 
-          <!-- BotÃƒÂ£o de migraÃƒÂ§ÃƒÂ£o Ã¢â‚¬â€ visÃƒÂ­vel quando jÃƒÂ¡ conectado -->
+          <!-- Botão de migração — visível quando já conectado -->
           <div id="supabase-migrar-wrap" style="display:none; margin-bottom:14px;">
             <div style="padding:14px 16px; border-radius:8px; border:1px dashed rgba(184,255,110,0.4); background:rgba(184,255,110,0.04); font-size:12px; color:var(--text-2); margin-bottom:10px; line-height:1.6;">
-              <strong style="color:var(--accent);">Migrar dados locais Ã¢â€ â€™</strong> Envia os dados salvos localmente neste navegador para o Supabase. Use isso se seus dados ainda estiverem apenas no dispositivo.
+              <strong style="color:var(--accent);">Migrar dados locais →</strong> Envia os dados salvos localmente neste navegador para o Supabase. Use isso se seus dados ainda estiverem apenas no dispositivo.
             </div>
-            <button class="btn-sm accent" onclick="migrarDadosLocaisParaSupabase()" style="font-size:12px; padding:8px 16px;">Ã¢Â¬â€  Migrar dados locais para o Supabase</button>
+            <button class="btn-sm accent" onclick="migrarDadosLocaisParaSupabase()" style="font-size:12px; padding:8px 16px;">⬆ Migrar dados locais para o Supabase</button>
           </div>
 
           <div id="supabase-config-fields">
             <div class="form-grid" style="grid-template-columns:1.2fr 1.8fr; margin-bottom:12px;">
               <div class="form-group"><label>URL do Supabase</label><input type="text" id="sb-url" placeholder="https://xxxx.supabase.co"></div>
-              <div class="form-group"><label>Anon Key do Supabase</label><input type="password" id="sb-key" placeholder="Chave anÃƒÂ´nima pÃƒÂºblica (anon key)"></div>
+              <div class="form-group"><label>Anon Key do Supabase</label><input type="password" id="sb-key" placeholder="Chave anônima pública (anon key)"></div>
             </div>
             <div style="display:flex; gap:10px;">
               <button class="btn-primary" onclick="conectarEIniciarSincronismo()" style="width:auto; min-width:180px;">Conectar e Sincronizar</button>
             </div>
           </div>
           <div id="supabase-migration-banner" style="margin-top:14px; padding:12px 16px; border-radius:6px; border:1px dashed var(--accent); background:var(--glass); font-size:12px; line-height:1.6; color:var(--text-2);">
-            <strong>Aviso de Sincronismo:</strong> Ao conectar pela primeira vez, os dados salvos localmente neste navegador serÃƒÂ£o enviados automaticamente para o seu banco de dados Supabase. Certifique-se de ter executado o script SQL no Supabase Dashboard antes de prosseguir!
+            <strong>Aviso de Sincronismo:</strong> Ao conectar pela primeira vez, os dados salvos localmente neste navegador serão enviados automaticamente para o seu banco de dados Supabase. Certifique-se de ter executado o script SQL no Supabase Dashboard antes de prosseguir!
           </div>
           <div class="msg" id="sb-msg"></div>
         </div>
@@ -741,21 +741,21 @@ tr:hover td { background: rgba(255,255,255,.03); }
   </main>
 </div>
 
-<!-- Ã¢â€¢ÂÃ¢â€¢Â ÃƒÂREA DE IMPRESSÃƒÆ’O Ã¢â€¢ÂÃ¢â€¢Â -->
+<!-- ══ ÁREA DE IMPRESSÃO ══ -->
 <div id="print-area"></div>
 
-<!-- Ã¢â€¢ÂÃ¢â€¢Â MODAL EDITAR VENDA Ã¢â€¢ÂÃ¢â€¢Â -->
+<!-- ══ MODAL EDITAR VENDA ══ -->
 <div class="modal-overlay" id="modal-editar">
   <div class="modal">
     <div class="modal-header">
       <div class="modal-title">Editar venda</div>
-      <button class="modal-close" onclick="fecharModal('modal-editar')">Ãƒâ€”</button>
+      <button class="modal-close" onclick="fecharModal('modal-editar')">×</button>
     </div>
     <div class="form-grid" style="grid-template-columns:1fr 1fr 1fr;">
-      <div class="form-group"><label>NÃ‚Âº OS</label><input type="text" id="e-os"></div>
+      <div class="form-group"><label>Nº OS</label><input type="text" id="e-os"></div>
       <div class="form-group"><label>Data</label><input type="date" id="e-data"></div>
-      <div class="form-group"><label>SituaÃƒÂ§ÃƒÂ£o</label>
-        <select id="e-status"><option value="pendente">AutomÃƒÂ¡tico</option><option value="cancelado">Cancelado</option></select>
+      <div class="form-group"><label>Situação</label>
+        <select id="e-status"><option value="pendente">Automático</option><option value="cancelado">Cancelado</option></select>
       </div>
     </div>
     <div class="form-grid">
@@ -764,12 +764,12 @@ tr:hover td { background: rgba(255,255,255,.03); }
         <select id="e-produto"><option>Lona / Banner</option><option>Adesivo</option><option>Placa / ACM</option><option>Fachada</option><option>Outros</option></select>
       </div>
       <div class="form-group"><label>Pagamento</label>
-        <select id="e-pagamento"><option>Ãƒâ‚¬ vista</option><option>CartÃƒÂ£o de crÃƒÂ©dito</option><option>Boleto</option><option>Pix</option><option>Parcelado</option></select>
+        <select id="e-pagamento"><option>À vista</option><option>Cartão de crédito</option><option>Boleto</option><option>Pix</option><option>Parcelado</option></select>
       </div>
       <div class="form-group"><label>Valor (R$)</label><input type="number" id="e-valor" min="0" step="0.01" oninput="updateEditPreview()"></div>
       <div class="form-group"><label>Valor recebido (R$)</label><input type="number" id="e-valor-recebido" min="0" step="0.01" oninput="updateEditPreview()"></div>
       <div class="form-group">
-        <label>ComissÃƒÂ£o especial <span style="color:var(--orange);font-size:9px;"> OPCIONAL</span></label>
+        <label>Comissão especial <span style="color:var(--orange);font-size:9px;"> OPCIONAL</span></label>
         <div class="com-tipo-toggle">
           <button type="button" class="toggle-btn active" id="e-toggle-off"   onclick="setComTipo('e','off')">Auto</button>
           <button type="button" class="toggle-btn"        id="e-toggle-valor" onclick="setComTipo('e','valor')">R$ Fixo</button>
@@ -779,34 +779,34 @@ tr:hover td { background: rgba(255,255,255,.03); }
           <span class="com-prefix" id="e-com-prefix">R$</span>
           <input type="number" id="e-com-manual" placeholder="0,00" min="0" step="0.01" oninput="updateEditPreview()">
           <span class="com-suffix" id="e-com-suffix" style="display:none;">%</span>
-          <button class="com-clear" onclick="setComTipo('e','off')">Ãƒâ€”</button>
+          <button class="com-clear" onclick="setComTipo('e','off')">×</button>
         </div>
       </div>
-      <div class="form-group full"><label>ObservaÃƒÂ§ÃƒÂ£o</label><input type="text" id="e-obs"></div>
+      <div class="form-group full"><label>Observação</label><input type="text" id="e-obs"></div>
     </div>
     <div class="preview-box" id="e-preview"></div>
     <div class="modal-footer">
       <button class="btn-ghost" onclick="fecharModal('modal-editar')">Cancelar</button>
-      <button class="btn-primary" onclick="salvarEdicao()">Salvar alteraÃƒÂ§ÃƒÂµes</button>
+      <button class="btn-primary" onclick="salvarEdicao()">Salvar alterações</button>
     </div>
     <div class="msg" id="e-msg"></div>
   </div>
 </div>
 
-<!-- Ã¢â€¢ÂÃ¢â€¢Â MODAL BAIXAR INDIVIDUAL Ã¢â€¢ÂÃ¢â€¢Â -->
+<!-- ══ MODAL BAIXAR INDIVIDUAL ══ -->
 <div class="modal-overlay" id="modal-baixar-individual">
   <div class="modal">
     <div class="modal-header">
-      <div class="modal-title">Baixar comissÃƒÂ£o</div>
-      <button class="modal-close" onclick="fecharModal('modal-baixar-individual')">Ãƒâ€”</button>
+      <div class="modal-title">Baixar comissão</div>
+      <button class="modal-close" onclick="fecharModal('modal-baixar-individual')">×</button>
     </div>
     <div id="baixar-info" style="font-size:13px;color:var(--text-2);margin-bottom:18px;line-height:1.8;"></div>
     <div class="form-grid">
       <div class="form-group"><label>Novo recebimento do cliente (R$)</label><input type="number" id="bi-valor-recebido" step="0.01" min="0" oninput="atualizarBaixaIndividualPreview()"></div>
       <div class="form-group"><label>Data do recebimento</label><input type="date" id="bi-data-recebimento"></div>
-      <div class="form-group"><label>Data da baixa da comissÃƒÂ£o</label><input type="date" id="bi-data"></div>
+      <div class="form-group"><label>Data da baixa da comissão</label><input type="date" id="bi-data"></div>
       <div class="form-group"><label>Valor da comissao baixada (R$)</label><input type="number" id="bi-valor" step="0.01" min="0"></div>
-      <div class="form-group full"><label>ObservaÃƒÂ§ÃƒÂ£o</label><input type="text" id="bi-obs" placeholder="Ex: Pix, transferÃƒÂªnciaÃ¢â‚¬Â¦"></div>
+      <div class="form-group full"><label>Observação</label><input type="text" id="bi-obs" placeholder="Ex: Pix, transferência…"></div>
     </div>
     <div class="modal-footer">
       <button class="btn-ghost" onclick="fecharModal('modal-baixar-individual')">Cancelar</button>
@@ -815,22 +815,22 @@ tr:hover td { background: rgba(255,255,255,.03); }
   </div>
 </div>
 
-<!-- Ã¢â€¢ÂÃ¢â€¢Â MODAL BAIXAR EM MASSA Ã¢â€¢ÂÃ¢â€¢Â -->
+<!-- ══ MODAL BAIXAR EM MASSA ══ -->
 <div class="modal-overlay" id="modal-baixar-massa">
   <div class="modal">
     <div class="modal-header">
-      <div class="modal-title">Baixar comissÃƒÂµes em massa</div>
-      <button class="modal-close" onclick="fecharModal('modal-baixar-massa')">Ãƒâ€”</button>
+      <div class="modal-title">Baixar comissões em massa</div>
+      <button class="modal-close" onclick="fecharModal('modal-baixar-massa')">×</button>
     </div>
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-      <span style="font-size:12px;color:var(--text-2);font-weight:500;">Selecione as comissÃƒÂµes a baixar</span>
+      <span style="font-size:12px;color:var(--text-2);font-weight:500;">Selecione as comissões a baixar</span>
       <label class="select-all-wrap"><input type="checkbox" id="massa-all" onchange="toggleMassaAll(this)"> Selecionar todas</label>
     </div>
     <div class="baixar-list" id="massa-lista"></div>
     <div class="baixar-summary"><span>Selecionadas: <strong id="massa-count">0</strong></span><span>Total: <strong id="massa-total">R$ 0,00</strong></span></div>
     <div class="form-grid" style="margin-top:16px;margin-bottom:0;">
       <div class="form-group"><label>Data de pagamento</label><input type="date" id="bm-data"></div>
-      <div class="form-group"><label>ObservaÃƒÂ§ÃƒÂ£o</label><input type="text" id="bm-obs" placeholder="Ex: Repasse mensalÃ¢â‚¬Â¦"></div>
+      <div class="form-group"><label>Observação</label><input type="text" id="bm-obs" placeholder="Ex: Repasse mensal…"></div>
     </div>
     <div class="modal-footer">
       <button class="btn-ghost" onclick="fecharModal('modal-baixar-massa')">Cancelar</button>
@@ -839,23 +839,23 @@ tr:hover td { background: rgba(255,255,255,.03); }
   </div>
 </div>
 
-<!-- Ã¢â€¢ÂÃ¢â€¢Â MODAL EDITAR ATENDENTE Ã¢â€¢ÂÃ¢â€¢Â -->
+<!-- ══ MODAL EDITAR ATENDENTE ══ -->
 <div class="modal-overlay" id="modal-edit-atend">
   <div class="modal">
     <div class="modal-header">
       <div class="modal-title">Editar atendente</div>
-      <button class="modal-close" onclick="fecharModal('modal-edit-atend')">Ãƒâ€”</button>
+      <button class="modal-close" onclick="fecharModal('modal-edit-atend')">×</button>
     </div>
     <div class="form-grid" style="grid-template-columns:1fr 1fr 1fr;">
       <div class="form-group"><label>Nome</label><input type="text" id="ea-nome"></div>
-      <div class="form-group"><label>Tipo de comissÃƒÂ£o</label>
+      <div class="form-group"><label>Tipo de comissão</label>
         <select id="ea-tipo" onchange="toggleAtTipoEdit()">
           <option value="pct">% sobre a venda</option>
           <option value="valor">Valor fixo por venda</option>
         </select>
       </div>
       <div class="form-group">
-        <label id="ea-com-label">ComissÃƒÂ£o (%)</label>
+        <label id="ea-com-label">Comissão (%)</label>
         <div style="position:relative;">
           <span id="ea-com-prefix" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:12px;color:var(--text-3);pointer-events:none;font-family:var(--mono);">%</span>
           <input type="number" id="ea-valor" min="0" step="0.1" style="padding-left:28px;">
@@ -870,9 +870,9 @@ tr:hover td { background: rgba(255,255,255,.03); }
 </div>
 
 <script>
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// ══════════════════════════════════════════════
 // ESTADO
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// ══════════════════════════════════════════════
 let vendas     = JSON.parse(localStorage.getItem('cv_vendas_v5')  || '[]');
 let atendentes = JSON.parse(localStorage.getItem('cv_atend_v5')   || '[]');
 let recebimentos = JSON.parse(localStorage.getItem('cv_recebimentos_v1') || '[]');
@@ -881,7 +881,7 @@ if (config.pct === undefined) config.pct = 7;
 
 let supabaseClient = null;
 
-// ConversÃƒÂ£o de nomenclatura (JS camelCase Ã¢â€ â€ Supabase snake_case)
+// Conversão de nomenclatura (JS camelCase ↔ Supabase snake_case)
 function toSnakeCase(obj) {
   if (!obj) return obj;
   const mapping = {
@@ -992,16 +992,16 @@ async function enviarDadosLocaisParaSupabase(client, dadosLocais) {
     .from('comissao_config')
     .upsert({ key: 'main_config', value: dadosLocais.config }, { onConflict: 'key' });
   if (errCfg) throw new Error('Config: ' + errCfg.message);
-  relatorio.push('configuraÃƒÂ§ÃƒÂµes');
+  relatorio.push('configurações');
 
   return relatorio;
 }
 
-// Ã¢â€â‚¬Ã¢â€â‚¬ Credenciais padrÃƒÂ£o do projeto Supabase Ã¢â€â‚¬Ã¢â€â‚¬
+// ── Credenciais padrão do projeto Supabase ──
 const SUPABASE_URL_PADRAO = 'https://npucmharmyozegwrwopx.supabase.co';
 const SUPABASE_KEY_PADRAO = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5wdWNtaGFybXlvemVnd3J3b3B4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY4ODEyOTEsImV4cCI6MjA5MjQ1NzI5MX0.HmE-YHI4Fae4bhV79wjXq7_smlqrY7vxQt0lB6k8o0U';
 
-// Garante que as credenciais corretas estÃƒÂ£o salvas (corrige URLs invÃƒÂ¡lidas)
+// Garante que as credenciais corretas estão salvas (corrige URLs inválidas)
 try {
   const urlSalva = localStorage.getItem('supabase_url');
   if (!urlSalva || !urlSalva.startsWith('https://') || urlSalva !== SUPABASE_URL_PADRAO) {
@@ -1010,10 +1010,10 @@ try {
   }
 } catch(e) { console.warn('Erro ao acessar localStorage:', e); }
 
-// InicializaÃƒÂ§ÃƒÂ£o do Supabase Client (segura - nunca trava o app)
+// Inicialização do Supabase Client (segura - nunca trava o app)
 function getSupabaseClient() {
   if (supabaseClient) return supabaseClient;
-  // Verifica se o SDK jÃƒÂ¡ foi carregado
+  // Verifica se o SDK já foi carregado
   if (typeof window.supabase === 'undefined' || typeof window.supabase.createClient !== 'function') {
     return null;
   }
@@ -1030,7 +1030,7 @@ function getSupabaseClient() {
   return null;
 }
 
-// Atualiza o painel de status do Supabase nas configuraÃƒÂ§ÃƒÂµes
+// Atualiza o painel de status do Supabase nas configurações
 function atualizarSupabaseUI() {
   const url = localStorage.getItem('supabase_url');
   const key = localStorage.getItem('supabase_key');
@@ -1043,16 +1043,16 @@ function atualizarSupabaseUI() {
   
   if (statusBanner && statusText && disconnectBtn && configFields && migrationBanner) {
     if (url && key && url.startsWith('https://')) {
-      statusText.textContent = 'Ã¢Å“â€¦ Nuvem Supabase Conectada';
+      statusText.textContent = '✅ Nuvem Supabase Conectada';
       statusBanner.style.background = 'var(--green-dim)';
       statusBanner.style.color = 'var(--green)';
       statusBanner.style.border = '1px solid rgba(77, 255, 160, 0.2)';
       disconnectBtn.style.display = 'block';
       configFields.style.display = 'none';
       migrationBanner.style.display = 'none';
-      if (migrarWrap) migrarWrap.style.display = 'block'; // mostra botÃƒÂ£o de migraÃƒÂ§ÃƒÂ£o
+      if (migrarWrap) migrarWrap.style.display = 'block'; // mostra botão de migração
     } else {
-      statusText.textContent = 'Sem conexÃƒÂ£o ativa (Armazenamento Local Offline)';
+      statusText.textContent = 'Sem conexão ativa (Armazenamento Local Offline)';
       statusBanner.style.background = 'var(--amber-dim)';
       statusBanner.style.color = 'var(--amber)';
       statusBanner.style.border = '1px solid rgba(255, 204, 77, 0.2)';
@@ -1065,16 +1065,16 @@ function atualizarSupabaseUI() {
 }
 
 // Migra dados do localStorage backup diretamente para o Supabase
-// (leia do backup raw, nÃƒÂ£o da memÃƒÂ³ria Ã¢â‚¬â€ resolve race condition de inicializaÃƒÂ§ÃƒÂ£o)
+// (leia do backup raw, não da memória — resolve race condition de inicialização)
 async function migrarDadosLocaisParaSupabase() {
   const msg = document.getElementById('sb-msg');
   const client = getSupabaseClient();
   if (!client) {
-    if (msg) { msg.className = 'msg err'; msg.textContent = 'Sem conexÃƒÂ£o com o Supabase. Recarregue a pÃƒÂ¡gina.'; }
+    if (msg) { msg.className = 'msg err'; msg.textContent = 'Sem conexão com o Supabase. Recarregue a página.'; }
     return;
   }
 
-  if (!confirm('Isso vai enviar os dados salvos localmente neste navegador para o Supabase.\n\nDados jÃƒÂ¡ existentes no Supabase serÃƒÂ£o mantidos (operaÃƒÂ§ÃƒÂ£o de upsert).\n\nDeseja continuar?')) return;
+  if (!confirm('Isso vai enviar os dados salvos localmente neste navegador para o Supabase.\n\nDados já existentes no Supabase serão mantidos (operação de upsert).\n\nDeseja continuar?')) return;
 
   if (msg) { msg.className = 'msg'; msg.textContent = 'Migrando dados... aguarde.'; }
 
@@ -1086,17 +1086,17 @@ async function migrarDadosLocaisParaSupabase() {
 
     if (msg) {
       msg.className = 'msg ok';
-      msg.textContent = 'MigraÃƒÂ§ÃƒÂ£o concluÃƒÂ­da! ' + relatorio.join(' Ã‚Â· ') + '. Recarregando...';
+      msg.textContent = 'Migração concluída! ' + relatorio.join(' · ') + '. Recarregando...';
     }
     setTimeout(() => window.location.reload(), 2000);
 
   } catch(err) {
-    console.error('Erro na migraÃƒÂ§ÃƒÂ£o:', err);
+    console.error('Erro na migração:', err);
     if (msg) { msg.className = 'msg err'; msg.textContent = 'Erro: ' + err.message; }
   }
 }
 
-// Helpers de gravaÃƒÂ§ÃƒÂ£o no Supabase
+// Helpers de gravação no Supabase
 async function dbInsert(table, item) {
   const client = getSupabaseClient();
   if (client) {
@@ -1132,7 +1132,7 @@ async function dbDelete(table, column, val) {
   }
 }
 
-// Conectar ao Supabase e realizar migraÃƒÂ§ÃƒÂ£o inicial
+// Conectar ao Supabase e realizar migração inicial
 async function conectarEIniciarSincronismo() {
   const url = document.getElementById('sb-url').value.trim();
   const key = document.getElementById('sb-key').value.trim();
@@ -1145,11 +1145,11 @@ async function conectarEIniciarSincronismo() {
   }
   
   msg.className = "msg";
-  msg.textContent = "Testando conexÃƒÂ£o com o Supabase...";
+  msg.textContent = "Testando conexão com o Supabase...";
   
   try {
     const tempClient = window.supabase.createClient(url, key);
-    // Testa a conexÃƒÂ£o realizando uma query simples na tabela atendentes
+    // Testa a conexão realizando uma query simples na tabela atendentes
     const { data, error } = await tempClient.from('comissao_atendentes').select('count', { count: 'exact', head: true });
     
     if (error) {
@@ -1157,7 +1157,7 @@ async function conectarEIniciarSincronismo() {
     }
     
     msg.className = "msg ok";
-    msg.textContent = "Conectado! Iniciando migraÃƒÂ§ÃƒÂ£o dos dados locais...";
+    msg.textContent = "Conectado! Iniciando migração dos dados locais...";
     
     await enviarDadosLocaisParaSupabase(tempClient, lerDadosLocais());
     
@@ -1168,7 +1168,7 @@ async function conectarEIniciarSincronismo() {
     supabaseClient = tempClient;
     
     msg.className = "msg ok";
-    msg.textContent = "SincronizaÃƒÂ§ÃƒÂ£o concluÃƒÂ­da com sucesso! Recarregando aplicaÃƒÂ§ÃƒÂ£o...";
+    msg.textContent = "Sincronização concluída com sucesso! Recarregando aplicação...";
     setTimeout(() => {
       window.location.reload();
     }, 1500);
@@ -1182,7 +1182,7 @@ async function conectarEIniciarSincronismo() {
 
 // Desconectar o Supabase e retornar ao armazenamento local
 function desconectarSupabase() {
-  if (confirm("Deseja realmente desconectar do Supabase? Seus dados permanecerÃƒÂ£o na nuvem, e o app voltarÃƒÂ¡ a usar os dados locais salvos neste navegador.")) {
+  if (confirm("Deseja realmente desconectar do Supabase? Seus dados permanecerão na nuvem, e o app voltará a usar os dados locais salvos neste navegador.")) {
     localStorage.removeItem('supabase_url');
     localStorage.removeItem('supabase_key');
     supabaseClient = null;
@@ -1199,7 +1199,7 @@ const DEFAULT_PRODS = ['Lona / Banner','Adesivo','Placa / ACM','Fachada','Outros
 let produtos = JSON.parse(localStorage.getItem('cv_produtos_v1') || 'null') || [...DEFAULT_PRODS];
 produtos = [...new Set([...produtos, ...vendas.map(v=>v.produto).filter(Boolean)])];
 
-// Ã¢â€â‚¬Ã¢â€â‚¬ PERSISTÃƒÅ NCIA Ã¢â€â‚¬Ã¢â€â‚¬
+// ── PERSISTÊNCIA ──
 function save() {
   localStorage.setItem('cv_vendas_v5',  JSON.stringify(vendas));
   localStorage.setItem('cv_atend_v5',   JSON.stringify(atendentes));
@@ -1208,10 +1208,10 @@ function save() {
   localStorage.setItem('cv_config_v5b', JSON.stringify(config));
 }
 
-// Ã¢â€â‚¬Ã¢â€â‚¬ FORMATAÃƒâ€¡ÃƒÆ’O Ã¢â€â‚¬Ã¢â€â‚¬
+// ── FORMATAÇÃO ──
 function fmtR(v) { return 'R$\u00a0'+Number(v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}); }
 function fmtPrintR(v) { return 'R$ '+Number(v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}); }
-function fmtDate(d) { if(!d) return 'Ã¢â‚¬â€'; const p=d.split('-'); return p[2]+'/'+p[1]+'/'+p[0]; }
+function fmtDate(d) { if(!d) return '—'; const p=d.split('-'); return p[2]+'/'+p[1]+'/'+p[0]; }
 function mesLabel(d) { const p=d.split('-'); const meses=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez']; return meses[parseInt(p[1])-1]+'/'+p[0].slice(2); }
 function mesKey(d) { return d?d.slice(0,7):''; }
 function nomeIniciais(nome) { return nome.split(' ').map(p=>p[0]).join('').toUpperCase().slice(0,2); }
@@ -1233,7 +1233,7 @@ function proximoDiaUtil(dataISO) {
   return toISODate(dt);
 }
 
-// Ã¢â€â‚¬Ã¢â€â‚¬ CÃƒÂLCULO COMISSÃƒÆ’O Ã¢â€â‚¬Ã¢â€â‚¬
+// ── CÁLCULO COMISSÃO ──
 function comissaoMinha(v) {
   if (v.comTipo==='valor' && v.comValor!=null && v.comValor!=='') return parseFloat(v.comValor);
   if (v.comTipo==='pct'   && v.comValor!=null && v.comValor!=='') return v.valor * parseFloat(v.comValor) / 100;
@@ -1351,9 +1351,9 @@ function infoComMinha(v) {
 }
 
 function nomeAtendente(id) {
-  if (!id) return 'Ã¢â‚¬â€';
+  if (!id) return '—';
   const at = atendentes.find(a=>String(a.id)===String(id));
-  return at ? at.nome : 'Ã¢â‚¬â€';
+  return at ? at.nome : '—';
 }
 
 function printStatusStyle(status) {
@@ -1373,9 +1373,9 @@ function printStatusBadge(status) {
   return `<span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;background:${st.bg};color:${st.fg};">${String(label).toUpperCase()}</span>`;
 }
 
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
-// NAVEGAÃƒâ€¡ÃƒÆ’O
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// ══════════════════════════════════════════════
+// NAVEGAÇÃO
+// ══════════════════════════════════════════════
 function showSection(id, el) {
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
@@ -1394,19 +1394,19 @@ function showSection(id, el) {
 }
 function fecharModal(id) { document.getElementById(id).classList.remove('open'); }
 
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// ══════════════════════════════════════════════
 // ATENDENTES
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// ══════════════════════════════════════════════
 function toggleAtTipo() {
   const tipo = document.getElementById('at-tipo').value;
   document.getElementById('at-com-prefix').textContent = tipo==='valor' ? 'R$' : '%';
-  document.getElementById('at-com-label').textContent  = tipo==='valor' ? 'Valor fixo (R$)' : 'ComissÃƒÂ£o (%)';
+  document.getElementById('at-com-label').textContent  = tipo==='valor' ? 'Valor fixo (R$)' : 'Comissão (%)';
   document.getElementById('at-valor').step = tipo==='valor' ? '0.01' : '0.1';
 }
 function toggleAtTipoEdit() {
   const tipo = document.getElementById('ea-tipo').value;
   document.getElementById('ea-com-prefix').textContent = tipo==='valor' ? 'R$' : '%';
-  document.getElementById('ea-com-label').textContent  = tipo==='valor' ? 'Valor fixo (R$)' : 'ComissÃƒÂ£o (%)';
+  document.getElementById('ea-com-label').textContent  = tipo==='valor' ? 'Valor fixo (R$)' : 'Comissão (%)';
   document.getElementById('ea-valor').step = tipo==='valor' ? '0.01' : '0.1';
 }
 
@@ -1415,7 +1415,7 @@ async function salvarAtendente() {
   const tipo  = document.getElementById('at-tipo').value;
   const valor = parseFloat(document.getElementById('at-valor').value);
   const msg   = document.getElementById('at-msg');
-  if (!nome || isNaN(valor) || valor < 0) { msg.className='msg err'; msg.textContent='Preencha nome e comissÃƒÂ£o.'; return; }
+  if (!nome || isNaN(valor) || valor < 0) { msg.className='msg err'; msg.textContent='Preencha nome e comissão.'; return; }
   const novoAtendente = { id: Date.now(), nome, tipo, valor };
   try {
     await dbInsert('atendentes', novoAtendente);
@@ -1439,7 +1439,7 @@ function renderListaAtendentes() {
       <div class="atendente-avatar">${nomeIniciais(at.nome)}</div>
       <div class="atendente-info">
         <div class="atendente-nome">${at.nome}</div>
-        <div class="atendente-com">${lbl} &nbsp;Ã‚Â·&nbsp; ${qtd} venda(s) &nbsp;Ã‚Â·&nbsp; Total comissÃƒÂ£o: <span style="color:var(--green);font-family:var(--mono);">${fmtR(totalCom)}</span></div>
+        <div class="atendente-com">${lbl} &nbsp;·&nbsp; ${qtd} venda(s) &nbsp;·&nbsp; Total comissão: <span style="color:var(--green);font-family:var(--mono);">${fmtR(totalCom)}</span></div>
       </div>
       <div style="display:flex;gap:6px;">
         <button class="btn-sm accent" onclick="editarAtendente(${at.id})">Editar</button>
@@ -1483,7 +1483,7 @@ async function excluirAtendente(id) {
 function popularSelectAtendentes(selectId) {
   const el = document.getElementById(selectId); if(!el) return;
   const cur = el.value;
-  const base = selectId.startsWith('f-')||selectId.startsWith('ra-') ? '<option value="">Todos os atendentes</option>' : '<option value="">Ã¢â‚¬â€ Sem atendente Ã¢â‚¬â€</option>';
+  const base = selectId.startsWith('f-')||selectId.startsWith('ra-') ? '<option value="">Todos os atendentes</option>' : '<option value="">— Sem atendente —</option>';
   el.innerHTML = base + atendentes.map(a=>`<option value="${a.id}" ${a.id==cur?'selected':''}>${a.nome}</option>`).join('');
 }
 
@@ -1497,9 +1497,9 @@ function popularSelectProdutos(selectId) {
   if(cur && lista.includes(cur)) el.value = cur;
 }
 
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// ══════════════════════════════════════════════
 // COM ESPECIAL TOGGLE
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// ══════════════════════════════════════════════
 function setComTipo(prefix, tipo) {
   if(prefix==='v') vComTipo=tipo; else eComTipo=tipo;
   const wrap   = document.getElementById(prefix+'-com-wrap');
@@ -1510,11 +1510,11 @@ function setComTipo(prefix, tipo) {
   ['off','valor','pct'].forEach(t=>document.getElementById(prefix+'-toggle-'+t).classList.toggle('active',t===tipo));
   if (tipo==='off') {
     wrap.style.display='none'; input.value='';
-    if(hint) hint.textContent='AutomÃƒÂ¡tico: '+(config.pct||7)+'% sobre o valor.';
+    if(hint) hint.textContent='Automático: '+(config.pct||7)+'% sobre o valor.';
   } else if (tipo==='valor') {
     wrap.style.display='block'; pfx.textContent='R$'; pfx.style.display='block'; sfx.style.display='none';
     input.placeholder='0,00'; input.step='0.01';
-    if(hint) hint.textContent='Valor fixo em R$ Ã¢â‚¬â€ ignora o % configurado.';
+    if(hint) hint.textContent='Valor fixo em R$ — ignora o % configurado.';
   } else {
     wrap.style.display='block'; pfx.style.display='none'; sfx.style.display='block';
     input.placeholder='0,0'; input.step='0.1';
@@ -1523,9 +1523,9 @@ function setComTipo(prefix, tipo) {
   if(prefix==='v') updatePreview(); else updateEditPreview();
 }
 
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// ══════════════════════════════════════════════
 // DASHBOARD
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// ══════════════════════════════════════════════
 function renderDash() {
   const hoje = new Date().toISOString().slice(0,7);
   const vMes = vendas.filter(v=>mesKey(v.data)===hoje);
@@ -1538,11 +1538,11 @@ function renderDash() {
   const comPend   = ativas.filter(v=>statusCalculado(v)==='pendente').reduce((s,v)=>s+comissaoTotal(v),0);
 
   document.getElementById('dash-cards').innerHTML = `
-    <div class="card"><div class="card-label">Vendas no mÃƒÂªs</div><div class="card-value">${fmtR(totalMes)}</div><div class="card-sub">${ativas.length} pedido(s)</div></div>
-    <div class="card accent"><div class="card-label">Recebido no mÃƒÂªs</div><div class="card-value">${fmtR(recebidoMes)}</div></div>
-    <div class="card purple"><div class="card-label">ComissÃƒÂ£o total</div><div class="card-value">${fmtR(comMinha)}</div><div class="card-sub">Inclui Geice 1% + Gabrielle 1%</div></div>
-    <div class="card green"><div class="card-label">ComissÃƒÂ£o liberada</div><div class="card-value">${fmtR(comLiberada)}</div></div>
-    <div class="card amber"><div class="card-label">ComissÃƒÂµes pendentes</div><div class="card-value">${fmtR(comPend)}</div><div class="card-sub">Status pendente</div></div>
+    <div class="card"><div class="card-label">Vendas no mês</div><div class="card-value">${fmtR(totalMes)}</div><div class="card-sub">${ativas.length} pedido(s)</div></div>
+    <div class="card accent"><div class="card-label">Recebido no mês</div><div class="card-value">${fmtR(recebidoMes)}</div></div>
+    <div class="card purple"><div class="card-label">Comissão total</div><div class="card-value">${fmtR(comMinha)}</div><div class="card-sub">Inclui Geice 1% + Gabrielle 1%</div></div>
+    <div class="card green"><div class="card-label">Comissão liberada</div><div class="card-value">${fmtR(comLiberada)}</div></div>
+    <div class="card amber"><div class="card-label">Comissões pendentes</div><div class="card-value">${fmtR(comPend)}</div><div class="card-sub">Status pendente</div></div>
   `;
 
   const pctMeta = config.meta>0?Math.min(100,Math.round(totalMes/config.meta*100)):0;
@@ -1563,29 +1563,29 @@ function renderDash() {
         const com  = comissaoLiberada(v);
         const isCancelado = v.status==='cancelado';
         return `<tr>
-          <td style="font-family:var(--mono);font-size:11px;color:var(--accent2);">${v.os||'Ã¢â‚¬â€'}</td>
+          <td style="font-family:var(--mono);font-size:11px;color:var(--accent2);">${v.os||'—'}</td>
           <td style="color:var(--text-2);font-family:var(--mono);font-size:11px;">${fmtDate(v.data)}</td>
           <td>${v.cliente}</td>
           <td style="color:var(--text-2);">${v.produto}</td>
           <td style="font-family:var(--mono);">${fmtR(v.valor)}</td>
           <td style="font-family:var(--mono);color:var(--green);">${fmtR(valorRecebidoVenda(v))}</td>
-          <td style="font-family:var(--mono);${info.ajustada?'color:var(--orange);':''}">${isCancelado?'Ã¢â‚¬â€':fmtR(com)}${info.ajustada&&!isCancelado?'<span class="tag-ajustada">Ã¢Å“Å½</span>':''}</td>
+          <td style="font-family:var(--mono);${info.ajustada?'color:var(--orange);':''}">${isCancelado?'—':fmtR(com)}${info.ajustada&&!isCancelado?'<span class="tag-ajustada">✎</span>':''}</td>
           <td><span class="badge ${statusBadgeClass(v)}">${statusLabel(v)}</span></td>
         </tr>`;
       }).join('')
     : '<tr><td colspan="8" class="empty">Nenhuma venda registrada</td></tr>';
 }
 
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// ══════════════════════════════════════════════
 // PREVIEW NOVA VENDA
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// ══════════════════════════════════════════════
 function updatePreview() {
   const val   = parseFloat(document.getElementById('v-valor').value)||0;
   const recebido = Math.min(val, Math.max(0, parseFloat(document.getElementById('v-valor-recebido').value)||0));
   const comStr= document.getElementById('v-com-manual').value;
   const comV  = comStr!==''?parseFloat(comStr):null;
 
-  if(val<=0){ document.getElementById('v-preview').innerHTML='<span style="color:var(--text-3)">Preencha o valor para ver a comissÃƒÂ£o estimada</span>'; return; }
+  if(val<=0){ document.getElementById('v-preview').innerHTML='<span style="color:var(--text-3)">Preencha o valor para ver a comissão estimada</span>'; return; }
 
   let minha, labelMinha;
   if(vComTipo==='valor'&&comV!==null&&!isNaN(comV)){ minha=comV; labelMinha=`R$ fixo especial`; }
@@ -1597,13 +1597,13 @@ function updatePreview() {
 
   const ajust = vComTipo!=='off'&&comV!==null&&!isNaN(comV);
   document.getElementById('v-preview').innerHTML=
-    `ComissÃƒÂ£o total <span style="color:var(--text-3)">(${labelMinha})</span>: <strong>${fmtR(minha)}</strong>${ajust?'<span class="tag-ajustada">Ã¢Å“Å½ esp.</span>':''}<br>`+
-    `Liberada pelo recebimento: <strong style="color:var(--green);">${fmtR(liberada)}</strong> &nbsp;Ã‚Â·&nbsp; Geice + Gabrielle: <strong style="color:var(--purple);">${fmtR(fixas)}</strong>`;
+    `Comissão total <span style="color:var(--text-3)">(${labelMinha})</span>: <strong>${fmtR(minha)}</strong>${ajust?'<span class="tag-ajustada">✎ esp.</span>':''}<br>`+
+    `Liberada pelo recebimento: <strong style="color:var(--green);">${fmtR(liberada)}</strong> &nbsp;·&nbsp; Geice + Gabrielle: <strong style="color:var(--purple);">${fmtR(fixas)}</strong>`;
 }
 
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// ══════════════════════════════════════════════
 // SALVAR NOVA VENDA
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// ══════════════════════════════════════════════
 async function salvarVenda() {
   const os       = document.getElementById('v-os').value.trim();
   const data     = document.getElementById('v-data').value;
@@ -1634,9 +1634,9 @@ async function salvarVenda() {
   } catch(e) {}
 }
 
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// ══════════════════════════════════════════════
 // TABELA VENDAS
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// ══════════════════════════════════════════════
 function initFiltroMes() {
   const meses=[...new Set(vendas.map(v=>mesKey(v.data)))].sort().reverse();
   const sel=document.getElementById('f-mes'); const cur=sel.value;
@@ -1680,14 +1680,14 @@ function renderVendas() {
         const saldo = saldoAbertoVenda(v);
         const isCancelado = v.status==='cancelado';
         const isBaixado   = statusCalculado(v)==='baixado';
-        const dataBaixa   = v.dataBaixaComissao?fmtDate(v.dataBaixaComissao):'Ã¢â‚¬â€';
-        const comCel = isCancelado ? 'Ã¢â‚¬â€' :
+        const dataBaixa   = v.dataBaixaComissao?fmtDate(v.dataBaixaComissao):'—';
+        const comCel = isCancelado ? '—' :
           `<span style="font-family:var(--mono);${info.ajustada?'color:var(--orange);':''}">${fmtR(comLib)}</span>`+
           `<span style="font-size:10px;color:var(--text-3);margin-left:3px;">(${info.label})</span>`+
-          (info.ajustada?'<span class="tag-ajustada">Ã¢Å“Å½</span>':'');
+          (info.ajustada?'<span class="tag-ajustada">✎</span>':'');
         return `<tr>
           <td><input type="checkbox" class="venda-chk" data-id="${v.id}" onchange="updateChkAll()" style="accent-color:var(--accent);cursor:pointer;" ${isCancelado||comissaoDisponivelBaixa(v)<=0?'disabled':''}></td>
-          <td style="font-family:var(--mono);font-size:11px;color:var(--accent2);">${v.os||'Ã¢â‚¬â€'}</td>
+          <td style="font-family:var(--mono);font-size:11px;color:var(--accent2);">${v.os||'—'}</td>
           <td style="font-family:var(--mono);font-size:11px;color:var(--text-2);">${fmtDate(v.data)}</td>
           <td>${v.cliente}</td>
           <td style="color:var(--text-2);">${v.produto}</td>
@@ -1700,19 +1700,19 @@ function renderVendas() {
           <td style="font-family:var(--mono);color:${comSaldoTotal>0?'var(--amber)':'var(--text-3)'};">${fmtR(comSaldoTotal)}</td>
           <td style="font-family:var(--mono);color:${comSaldo>0?'var(--green)':'var(--text-3)'};">${fmtR(comSaldo)}</td>
           <td><span class="badge ${statusBadgeClass(v)}">${statusLabel(v)}</span></td>
-          <td style="font-size:11px;font-family:var(--mono);">${comBx>0?`<span style="color:var(--purple)">${dataBaixa}</span>`:'Ã¢â‚¬â€'}</td>
+          <td style="font-size:11px;font-family:var(--mono);">${comBx>0?`<span style="color:var(--purple)">${dataBaixa}</span>`:'—'}</td>
           <td><div style="display:flex;gap:4px;">
             <button class="btn-sm" onclick="abrirEditar(${v.id})">Editar</button>
-            ${!isCancelado&&(saldoAbertoVenda(v)>0||comissaoDisponivelBaixa(v)>0)?`<button class="btn-sm purple" onclick="abrirBaixarIndividual(${v.id},'nova')" title="Registrar novo recebimento e baixa">Ã¢â€ â€œ</button>`:''}
-            ${!isCancelado&&comissaoBaixada(v)>0?`<button class="btn-sm" onclick="abrirBaixarIndividual(${v.id},'ajustar')" title="Ajustar ÃƒÂºltima baixa">Ã¢â€ Âº</button>`:''}
-            <button class="btn-sm danger" onclick="excluirVenda(${v.id})">Ã¢Å“â€¢</button>
+            ${!isCancelado&&(saldoAbertoVenda(v)>0||comissaoDisponivelBaixa(v)>0)?`<button class="btn-sm purple" onclick="abrirBaixarIndividual(${v.id},'nova')" title="Registrar novo recebimento e baixa">↓</button>`:''}
+            ${!isCancelado&&comissaoBaixada(v)>0?`<button class="btn-sm" onclick="abrirBaixarIndividual(${v.id},'ajustar')" title="Ajustar última baixa">↺</button>`:''}
+            <button class="btn-sm danger" onclick="excluirVenda(${v.id})">✕</button>
           </div></td>
         </tr>`;
       }).join('')
     : '<tr><td colspan="16" class="empty">Nenhuma venda encontrada</td></tr>';
 
   document.getElementById('vendas-total').innerHTML =
-    `${filtered.length} venda(s) &nbsp;Ã‚Â·&nbsp; Total: <strong>${fmtR(totalVal)}</strong> &nbsp;Ã‚Â·&nbsp; Recebido: <strong>${fmtR(totalRecebido)}</strong> &nbsp;Ã‚Â·&nbsp; Saldo aberto: <strong>${fmtR(totalSaldo)}</strong> &nbsp;Ã‚Â·&nbsp; ComissÃƒÂ£o liberada: <strong>${fmtR(totalCom)}</strong> &nbsp;Ã‚Â·&nbsp; Baixada: <strong>${fmtR(totalBaixado)}</strong> &nbsp;Ã‚Â·&nbsp; Saldo comissÃƒÂ£o: <strong>${fmtR(totalSaldoComissaoGeral)}</strong> &nbsp;Ã‚Â·&nbsp; DisponÃƒÂ­vel baixa: <strong>${fmtR(totalSaldoComissao)}</strong>`;
+    `${filtered.length} venda(s) &nbsp;·&nbsp; Total: <strong>${fmtR(totalVal)}</strong> &nbsp;·&nbsp; Recebido: <strong>${fmtR(totalRecebido)}</strong> &nbsp;·&nbsp; Saldo aberto: <strong>${fmtR(totalSaldo)}</strong> &nbsp;·&nbsp; Comissão liberada: <strong>${fmtR(totalCom)}</strong> &nbsp;·&nbsp; Baixada: <strong>${fmtR(totalBaixado)}</strong> &nbsp;·&nbsp; Saldo comissão: <strong>${fmtR(totalSaldoComissaoGeral)}</strong> &nbsp;·&nbsp; Disponível baixa: <strong>${fmtR(totalSaldoComissao)}</strong>`;
   document.getElementById('chk-all').checked=false;
 }
 
@@ -1732,9 +1732,9 @@ async function excluirVenda(id){
   } catch(e) {}
 }
 
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// ══════════════════════════════════════════════
 // EDITAR VENDA
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// ══════════════════════════════════════════════
 function abrirEditar(id) {
   const v=vendas.find(x=>x.id===id); if(!v) return;
   editandoId=id;
@@ -1772,7 +1772,7 @@ function updateEditPreview() {
   const fixas = val * 0.02;
 
   const ajust=eComTipo!=='off'&&comV!==null&&!isNaN(comV);
-  document.getElementById('e-preview').innerHTML=`ComissÃƒÂ£o total (${labelMinha}): <strong>${fmtR(minha)}</strong>${ajust?'<span class="tag-ajustada">Ã¢Å“Å½ esp.</span>':''}<br>Liberada pelo recebimento: <strong style="color:var(--green);">${fmtR(liberada)}</strong> &nbsp;Ã‚Â·&nbsp; Geice + Gabrielle: <strong style="color:var(--purple);">${fmtR(fixas)}</strong>`;
+  document.getElementById('e-preview').innerHTML=`Comissão total (${labelMinha}): <strong>${fmtR(minha)}</strong>${ajust?'<span class="tag-ajustada">✎ esp.</span>':''}<br>Liberada pelo recebimento: <strong style="color:var(--green);">${fmtR(liberada)}</strong> &nbsp;·&nbsp; Geice + Gabrielle: <strong style="color:var(--purple);">${fmtR(fixas)}</strong>`;
 }
 
 async function salvarEdicao() {
@@ -1801,7 +1801,7 @@ async function salvarEdicao() {
   const liberadaAposEdicao = comissaoLiberada(vendaEditadaBase);
   if(baixadaRegistrada>0.009 && liberadaAposEdicao+0.009<baixadaRegistrada){
     msg.className='msg err';
-    msg.textContent=`EdiÃƒÂ§ÃƒÂ£o bloqueada: jÃƒÂ¡ existe baixa de ${fmtR(baixadaRegistrada)}, mas a comissÃƒÂ£o liberada ficaria em ${fmtR(liberadaAposEdicao)}. Ajuste o valor recebido/comissÃƒÂ£o ou estorne a baixa antes.`;
+    msg.textContent=`Edição bloqueada: já existe baixa de ${fmtR(baixadaRegistrada)}, mas a comissão liberada ficaria em ${fmtR(liberadaAposEdicao)}. Ajuste o valor recebido/comissão ou estorne a baixa antes.`;
     return;
   }
   const vendaEditada = normalizarVenda(vendaEditadaBase);
@@ -1812,19 +1812,19 @@ async function salvarEdicao() {
   } catch(e) {}
 }
 
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
-// BAIXAR COMISSÃƒÆ’O
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// ══════════════════════════════════════════════
+// BAIXAR COMISSÃO
+// ══════════════════════════════════════════════
 function renderBaixaIndividualInfo(v) {
   const info=infoComMinha(v);
   const com=comissaoDisponivelBaixa(v);
   const liberada=comissaoLiberada(v);
   const baixada=comissaoBaixada(v);
   document.getElementById('baixar-info').innerHTML=
-    `<strong style="color:var(--text)">${v.cliente}</strong> ${v.os?`Ãƒâ€šÃ‚Â· OS <span style="font-family:var(--mono);color:var(--accent2);">${v.os}</span>`:''}Ãƒâ€šÃ‚Â· ${fmtDate(v.data)}<br>`+
+    `<strong style="color:var(--text)">${v.cliente}</strong> ${v.os?`· OS <span style="font-family:var(--mono);color:var(--accent2);">${v.os}</span>`:''}· ${fmtDate(v.data)}<br>`+
     `Venda: <span style="font-family:var(--mono)">${fmtR(v.valor)}</span> &nbsp;|&nbsp; Recebido: <span style="font-family:var(--mono);color:var(--green)">${fmtR(valorRecebidoVenda(v))}</span> &nbsp;|&nbsp; Saldo: <span style="font-family:var(--mono);color:var(--amber)">${fmtR(saldoAbertoVenda(v))}</span><br>`+
-    `ComissÃƒÆ’Ã‚Â£o liberada: <span style="color:var(--green);font-family:var(--mono)">${fmtR(liberada)}</span> &nbsp;|&nbsp; Baixada: <span style="color:var(--purple);font-family:var(--mono)">${fmtR(baixada)}</span> &nbsp;|&nbsp; DisponÃƒÆ’Ã‚Â­vel: <span style="color:var(--accent);font-family:var(--mono)">${fmtR(com)}</span> (${info.label})`+
-    (info.ajustada?'<span class="tag-ajustada">ÃƒÂ¢Ã…â€œÃ…Â½ esp.</span>':'');
+    `Comissão liberada: <span style="color:var(--green);font-family:var(--mono)">${fmtR(liberada)}</span> &nbsp;|&nbsp; Baixada: <span style="color:var(--purple);font-family:var(--mono)">${fmtR(baixada)}</span> &nbsp;|&nbsp; Disponível: <span style="color:var(--accent);font-family:var(--mono)">${fmtR(com)}</span> (${info.label})`+
+    (info.ajustada?'<span class="tag-ajustada">✓ esp.</span>':'');
 }
 
 function vendaComRecebimentoDaBaixa() {
@@ -1846,16 +1846,16 @@ function abrirBaixarIndividual(id, modo='nova') {
   const v=vendas.find(x=>x.id===id); if(!v) return;
   baixandoId=id;
   ajustandoBaixa=modo==='ajustar';
-  document.querySelector('#modal-baixar-individual .modal-title').textContent=ajustandoBaixa?'Ajustar ÃƒÂºltima baixa':'Registrar nova baixa';
+  document.querySelector('#modal-baixar-individual .modal-title').textContent=ajustandoBaixa?'Ajustar última baixa':'Registrar nova baixa';
   const info=infoComMinha(v);
   const com=comissaoDisponivelBaixa(v);
   const liberada=comissaoLiberada(v);
   const baixada=comissaoBaixada(v);
   document.getElementById('baixar-info').innerHTML=
-    `<strong style="color:var(--text)">${v.cliente}</strong> ${v.os?`Ã‚Â· OS <span style="font-family:var(--mono);color:var(--accent2);">${v.os}</span>`:''}Ã‚Â· ${fmtDate(v.data)}<br>`+
+    `<strong style="color:var(--text)">${v.cliente}</strong> ${v.os?`· OS <span style="font-family:var(--mono);color:var(--accent2);">${v.os}</span>`:''}· ${fmtDate(v.data)}<br>`+
     `Venda: <span style="font-family:var(--mono)">${fmtR(v.valor)}</span> &nbsp;|&nbsp; Recebido: <span style="font-family:var(--mono);color:var(--green)">${fmtR(valorRecebidoVenda(v))}</span> &nbsp;|&nbsp; Saldo: <span style="font-family:var(--mono);color:var(--amber)">${fmtR(saldoAbertoVenda(v))}</span><br>`+
-    `ComissÃƒÂ£o liberada: <span style="color:var(--green);font-family:var(--mono)">${fmtR(liberada)}</span> &nbsp;|&nbsp; Baixada: <span style="color:var(--purple);font-family:var(--mono)">${fmtR(baixada)}</span> &nbsp;|&nbsp; DisponÃƒÂ­vel: <span style="color:var(--accent);font-family:var(--mono)">${fmtR(com)}</span> (${info.label})`+
-    (info.ajustada?'<span class="tag-ajustada">Ã¢Å“Å½ esp.</span>':'');
+    `Comissão liberada: <span style="color:var(--green);font-family:var(--mono)">${fmtR(liberada)}</span> &nbsp;|&nbsp; Baixada: <span style="color:var(--purple);font-family:var(--mono)">${fmtR(baixada)}</span> &nbsp;|&nbsp; Disponível: <span style="color:var(--accent);font-family:var(--mono)">${fmtR(com)}</span> (${info.label})`+
+    (info.ajustada?'<span class="tag-ajustada">✎ esp.</span>':'');
   document.getElementById('bi-data').value=new Date().toISOString().slice(0,10);
   document.getElementById('bi-data-recebimento').value=new Date().toISOString().slice(0,10);
   document.getElementById('bi-valor-recebido').value='';
@@ -1879,7 +1879,7 @@ async function confirmarBaixaIndividual() {
   const recebimentoAumentado = valorRecebidoVenda(vendaAtualizada) > recebimentoAnterior + 0.009;
   const valorPago = parseFloat(document.getElementById('bi-valor').value)||0;
   const disponivel = comissaoDisponivelBaixa(vendaAtualizada);
-  if(valorPago<=0 || ((!ajustandoBaixa || recebimentoAumentado) && valorPago>disponivel+0.009) || (ajustandoBaixa && !recebimentoAumentado && valorPago>comissaoLiberada(vendaAtualizada)+0.009)){ alert('Informe um valor de baixa vÃƒÂ¡lido, limitado ÃƒÂ  comissÃƒÂ£o liberada.'); return; }
+  if(valorPago<=0 || ((!ajustandoBaixa || recebimentoAumentado) && valorPago>disponivel+0.009) || (ajustandoBaixa && !recebimentoAumentado && valorPago>comissaoLiberada(vendaAtualizada)+0.009)){ alert('Informe um valor de baixa válido, limitado à comissão liberada.'); return; }
   let vendaBaixada;
   if (ajustandoBaixa && !recebimentoAumentado) {
     const historico=historicoBaixas(vendaAtualizada).slice();
@@ -1900,8 +1900,8 @@ function abrirBaixarMassa() {
   const checked=[...document.querySelectorAll('.venda-chk:checked')].map(c=>parseInt(c.dataset.id));
   const elegiveis=vendas.filter(v=>v.status!=='cancelado'&&comissaoDisponivelBaixa(v)>0&&(checked.length===0||checked.includes(v.id)));
   document.getElementById('massa-lista').innerHTML=elegiveis.length
-    ? elegiveis.map(v=>{ const com=comissaoDisponivelBaixa(v); return `<div class="baixar-item"><input type="checkbox" class="massa-chk" data-id="${v.id}" data-com="${com}" onchange="updateMassaSummary()" checked><div class="baixar-item-info"><div class="baixar-item-name">${v.os?`<span style="font-family:var(--mono);font-size:11px;color:var(--accent2);">[${v.os}]</span> `:''} ${v.cliente}</div><div class="baixar-item-sub">${fmtDate(v.data)} Ã‚Â· recebido ${fmtR(valorRecebidoVenda(v))} Ã‚Â· saldo ${fmtR(saldoAbertoVenda(v))}</div></div><div class="baixar-item-val">${fmtR(com)}</div></div>`; }).join('')
-    : '<div class="empty" style="padding:24px;">Nenhuma comissÃƒÂ£o pendente de baixa</div>';
+    ? elegiveis.map(v=>{ const com=comissaoDisponivelBaixa(v); return `<div class="baixar-item"><input type="checkbox" class="massa-chk" data-id="${v.id}" data-com="${com}" onchange="updateMassaSummary()" checked><div class="baixar-item-info"><div class="baixar-item-name">${v.os?`<span style="font-family:var(--mono);font-size:11px;color:var(--accent2);">[${v.os}]</span> `:''} ${v.cliente}</div><div class="baixar-item-sub">${fmtDate(v.data)} · recebido ${fmtR(valorRecebidoVenda(v))} · saldo ${fmtR(saldoAbertoVenda(v))}</div></div><div class="baixar-item-val">${fmtR(com)}</div></div>`; }).join('')
+    : '<div class="empty" style="padding:24px;">Nenhuma comissão pendente de baixa</div>';
   document.getElementById('massa-all').checked=elegiveis.length>0;
   document.getElementById('bm-data').value=new Date().toISOString().slice(0,10);
   document.getElementById('bm-obs').value='';
@@ -1940,7 +1940,7 @@ async function confirmarBaixaMassa(){
       try {
         const { error } = await client.from('comissao_vendas').upsert(updates);
         if (error) {
-          alert("Erro ao baixar comissÃƒÂµes no Supabase: " + error.message);
+          alert("Erro ao baixar comissões no Supabase: " + error.message);
           return;
         }
       } catch(err) {
@@ -1954,13 +1954,13 @@ async function confirmarBaixaMassa(){
     save();
     fecharModal('modal-baixar-massa');
     renderVendas();
-    alert(`${ids.length} comissÃƒÂ£o(ÃƒÂµes) baixada(s)!`);
+    alert(`${ids.length} comissão(ões) baixada(s)!`);
   }
 }
 
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// ══════════════════════════════════════════════
 // RECEBIMENTOS E FLUXO DE CAIXA
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// ══════════════════════════════════════════════
 function initFluxoMes(){
   const mesAtual=toISODate(new Date()).slice(0,7);
   const fluxo=document.getElementById('fluxo-mes');
@@ -2045,8 +2045,8 @@ function entradasComissaoFluxo(mes){
   if(vendasMes.length===0||disponivel===0) return [];
   return [{
     data: proximoDiaUtil(`${mes}-15`),
-    origem: `ComissÃƒÂµes ${mesLabel(mesVenda+'-01')}`,
-    tipo: 'ComissÃƒÂ£o mensal',
+    origem: `Comissões ${mesLabel(mesVenda+'-01')}`,
+    tipo: 'Comissão mensal',
     valor: disponivel,
     grupo: 'comissao',
     detalhe: `${fmtR(liberada)} liberada - ${fmtR(baixada)} baixada`
@@ -2080,8 +2080,8 @@ function renderRecebimentos(){
   const totalOutros=entradas.filter(e=>e.grupo==='outros').reduce((s,e)=>s+e.valor,0);
 
   document.getElementById('fluxo-cards').innerHTML=`
-    <div class="card"><div class="card-label">Previsto no mÃƒÂªs</div><div class="card-value">${fmtR(total)}</div><div class="card-sub">${entradas.length} entrada(s)</div></div>
-    <div class="card accent"><div class="card-label">ComissÃƒÂµes</div><div class="card-value">${fmtR(totalCom)}</div><div class="card-sub">Recebe dia 15 ÃƒÂºtil subsequente</div></div>
+    <div class="card"><div class="card-label">Previsto no mês</div><div class="card-value">${fmtR(total)}</div><div class="card-sub">${entradas.length} entrada(s)</div></div>
+    <div class="card accent"><div class="card-label">Comissões</div><div class="card-value">${fmtR(totalCom)}</div><div class="card-sub">Recebe dia 15 útil subsequente</div></div>
     <div class="card green"><div class="card-label">Outros recebimentos</div><div class="card-value">${fmtR(totalOutros)}</div></div>
   `;
 
@@ -2092,11 +2092,11 @@ function renderRecebimentos(){
         <td><span class="badge ${e.grupo==='comissao'?'baixado':'recebido'}">${e.tipo}</span></td>
         <td style="font-family:var(--mono);color:var(--green);">${fmtR(e.valor)}</td>
       </tr>`).join('')
-    : '<tr><td colspan="4" class="empty">Nenhum recebimento previsto para este mÃƒÂªs</td></tr>';
+    : '<tr><td colspan="4" class="empty">Nenhum recebimento previsto para este mês</td></tr>';
 
   document.getElementById('tabela-recebimentos').innerHTML=recebimentos.length
     ? recebimentos.map(r=>{
-        const recorrencia=r.recorrencia==='mensal'?'Mensal':'ÃƒÅ¡nica';
+        const recorrencia=r.recorrencia==='mensal'?'Mensal':'Única';
         const dia=r.recorrencia==='mensal'?`Dia ${r.dia}`:fmtDate(r.dataPrevista);
         const detalhe=r.recorrencia==='mensal'&&r.inicio?`<div style="font-size:11px;color:var(--text-3);margin-top:2px;">A partir de ${mesLabel(r.inicio+'-01')}</div>`:'';
         return `<tr>
@@ -2121,9 +2121,9 @@ async function excluirRecebimento(id){
   } catch(e) {}
 }
 
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
-// COMISSÃƒÆ’O (mensal)
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// ══════════════════════════════════════════════
+// COMISSÃO (mensal)
+// ══════════════════════════════════════════════
 function showComTab(t){
   comTab=t;
   document.querySelectorAll('#comissao .tab-bar button').forEach((b,i)=>b.classList.toggle('active',['mensal','historico'][i]===t));
@@ -2145,10 +2145,10 @@ function renderComissao(){
 
   document.getElementById('com-cards').innerHTML=`
     <div class="card"><div class="card-label">Total acumulado</div><div class="card-value">${fmtR(totalAcum)}</div></div>
-    <div class="card accent"><div class="card-label">Liberada este mÃƒÂªs</div><div class="card-value">${fmtR(comMes)}</div><div class="card-sub">${config.pct||7}% padrÃƒÂ£o</div></div>
-    <div class="card purple"><div class="card-label">Geice + Gabrielle (mÃƒÂªs)</div><div class="card-value">${fmtR(fixasMes)}</div><div class="card-sub">1% + 1%</div></div>
-    <div class="card green"><div class="card-label">JÃƒÂ¡ baixado</div><div class="card-value">${fmtR(comBaixado)}</div></div>
-    <div class="card amber"><div class="card-label">DisponÃƒÂ­vel para baixar</div><div class="card-value">${fmtR(comDisponivel)}</div><div class="card-sub">Liberada - baixada</div></div>
+    <div class="card accent"><div class="card-label">Liberada este mês</div><div class="card-value">${fmtR(comMes)}</div><div class="card-sub">${config.pct||7}% padrão</div></div>
+    <div class="card purple"><div class="card-label">Geice + Gabrielle (mês)</div><div class="card-value">${fmtR(fixasMes)}</div><div class="card-sub">1% + 1%</div></div>
+    <div class="card green"><div class="card-label">Já baixado</div><div class="card-value">${fmtR(comBaixado)}</div></div>
+    <div class="card amber"><div class="card-label">Disponível para baixar</div><div class="card-value">${fmtR(comDisponivel)}</div><div class="card-sub">Liberada - baixada</div></div>
   `;
 
   const meses=[...new Set(vendas.map(v=>mesKey(v.data)))].sort().slice(-6);
@@ -2177,9 +2177,9 @@ function renderHistorico(){
     : '<tr><td colspan="6" class="empty">Sem dados</td></tr>';
 }
 
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
-// RELATÃƒâ€œRIO FINANCEIRO (IMPRESSÃƒÆ’O)
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// ══════════════════════════════════════════════
+// RELATÓRIO FINANCEIRO (IMPRESSÃO)
+// ══════════════════════════════════════════════
 function initRelDatas(prefix){
   const hoje=new Date().toISOString().slice(0,7);
   const tres=new Date(new Date().getFullYear(),new Date().getMonth()-2,1).toISOString().slice(0,7);
@@ -2238,11 +2238,11 @@ function gerarRelFinanceiro(){
     const info=infoComMinha(v);
     const com=comissaoDisponivelBaixa(v);
     return `<tr>
-      <td>${v.os||'Ã¢â‚¬â€'}</td>
+      <td>${v.os||'—'}</td>
       <td>${fmtDate(v.data)}</td>
       <td>${v.cliente}</td>
       <td>${v.produto}</td>
-      <td>${esc(v.obs||'Ã¢â‚¬â€')}</td>
+      <td>${esc(v.obs||'—')}</td>
       <td style="text-align:right;">${fmtPrintR(v.valor)}</td>
       <td style="text-align:right;">${fmtPrintR(valorRecebidoVenda(v))}</td>
       <td style="text-align:right;">${fmtPrintR(saldoAbertoVenda(v))}</td>
@@ -2254,29 +2254,29 @@ function gerarRelFinanceiro(){
   const html=`<div class="print-doc" id="doc-financeiro">
     <div class="print-header">
       <div>
-        <div class="print-title">RelatÃƒÂ³rio de ComissÃƒÂµes</div>
-        <div class="print-subtitle">PerÃƒÂ­odo: ${periodo}</div>
+        <div class="print-title">Relatório de Comissões</div>
+        <div class="print-subtitle">Período: ${periodo}</div>
       </div>
-      <div class="print-meta">Emitido em: ${hoje}<br>ComissÃƒÂ£o padrÃƒÂ£o: ${config.pct||7}%</div>
+      <div class="print-meta">Emitido em: ${hoje}<br>Comissão padrão: ${config.pct||7}%</div>
     </div>
     <div class="print-cards">
       <div class="print-card"><div class="print-card-label">Total de vendas</div><div class="print-card-value">${filtradas.length} pedidos</div></div>
       <div class="print-card"><div class="print-card-label">Valor total</div><div class="print-card-value">${fmtPrintR(totalVenda)}</div></div>
       <div class="print-card"><div class="print-card-label">Valor recebido</div><div class="print-card-value green">${fmtPrintR(totalRecebido)}</div></div>
-      <div class="print-card"><div class="print-card-label">ComissÃƒÂµes liberadas</div><div class="print-card-value green">${fmtPrintR(totalLiberada)}</div></div>
-      <div class="print-card"><div class="print-card-label">ComissÃƒÂµes pendentes</div><div class="print-card-value">${fmtPrintR(totalPendente)}</div></div>
+      <div class="print-card"><div class="print-card-label">Comissões liberadas</div><div class="print-card-value green">${fmtPrintR(totalLiberada)}</div></div>
+      <div class="print-card"><div class="print-card-label">Comissões pendentes</div><div class="print-card-value">${fmtPrintR(totalPendente)}</div></div>
     </div>
     <div class="print-section-title">Detalhamento por venda</div>
     <table class="print-table">
       <thead><tr>
-        <th>OS</th><th>Data</th><th>Cliente</th><th>Produto</th><th>ObservaÃƒÂ§ÃƒÂ£o</th>
+        <th>OS</th><th>Data</th><th>Cliente</th><th>Produto</th><th>Observação</th>
         <th style="text-align:right;">Valor</th>
         <th style="text-align:right;">Recebido</th>
         <th style="text-align:right;">Saldo</th>
-        <th style="text-align:right;">ComissÃƒÂ£o liberada</th>
+        <th style="text-align:right;">Comissão liberada</th>
         <th style="text-align:center;">Status</th>
       </tr></thead>
-      <tbody>${linhas}${!filtradas.length?'<tr><td colspan="10" style="text-align:center;padding:16px;color:#999;">Nenhuma venda no perÃƒÂ­odo</td></tr>':''}</tbody>
+      <tbody>${linhas}${!filtradas.length?'<tr><td colspan="10" style="text-align:center;padding:16px;color:#999;">Nenhuma venda no período</td></tr>':''}</tbody>
       <tfoot><tr style="font-weight:700;background:#f3f4f6;">
         <td colspan="5" style="padding:8px 10px;">TOTAIS</td>
         <td style="padding:8px 10px;text-align:right;">${fmtPrintR(totalVenda)}</td>
@@ -2286,13 +2286,13 @@ function gerarRelFinanceiro(){
         <td></td>
       </tfoot>
     </table>
-    ${filtradas.some(v=>infoComMinha(v).ajustada)?'<p style="font-size:11px;color:#888;margin-top:8px;">* ComissÃƒÂ£o especial aplicada nesta venda.</p>':''}
+    ${filtradas.some(v=>infoComMinha(v).ajustada)?'<p style="font-size:11px;color:#888;margin-top:8px;">* Comissão especial aplicada nesta venda.</p>':''}
     <div class="print-footer">
-      <span>Sistema de ComissÃƒÂµes &nbsp;Ã‚Â·&nbsp; Gerado em ${hoje}</span>
-      <span>ComissÃƒÂµes liberadas: ${fmtPrintR(totalLiberada)}</span>
+      <span>Sistema de Comissões &nbsp;·&nbsp; Gerado em ${hoje}</span>
+      <span>Comissões liberadas: ${fmtPrintR(totalLiberada)}</span>
     </div>
     <div class="print-assinatura">
-      <div class="print-assinatura-linha">ResponsÃƒÂ¡vel financeiro</div>
+      <div class="print-assinatura-linha">Responsável financeiro</div>
       <div class="print-assinatura-linha">Vendedor / Comissionado</div>
     </div>
   </div>`;
@@ -2334,8 +2334,8 @@ function gerarRelSaldoFinanceiro(tipo){
   const totalRecebido=filtradas.reduce((s,v)=>s+valorRecebidoVenda(v),0);
   const totalSaldo=filtradas.reduce((s,v)=>s+saldoAbertoVenda(v),0);
   const totalLiberada=filtradas.filter(v=>['recebido','parcial'].includes(statusCalculado(v))).reduce((s,v)=>s+comissaoDisponivelBaixa(v),0);
-  const titulo=isComissao?'RelatÃƒÂ³rio de Saldo de ComissÃƒÂ£o Liberado':'RelatÃƒÂ³rio de Saldo de Pagamento do Cliente';
-  const detalheTitulo=isComissao?'ComissÃƒÂµes liberadas pendentes de baixa':'Pagamentos de clientes em aberto';
+  const titulo=isComissao?'Relatório de Saldo de Comissão Liberado':'Relatório de Saldo de Pagamento do Cliente';
+  const detalheTitulo=isComissao?'Comissões liberadas pendentes de baixa':'Pagamentos de clientes em aberto';
 
   const deLabel=mesLabel(de+'-01'); const ateLabel=mesLabel(ate+'-01');
   const periodo=de===ate?deLabel:`${deLabel} a ${ateLabel}`;
@@ -2346,11 +2346,11 @@ function gerarRelSaldoFinanceiro(tipo){
     const com=comissaoDisponivelBaixa(v);
     const saldo=saldoAbertoVenda(v);
     return `<tr>
-      <td>${v.os||'Ã¢â‚¬â€'}</td>
+      <td>${v.os||'—'}</td>
       <td>${fmtDate(v.data)}</td>
       <td>${v.cliente}</td>
       <td>${v.produto}</td>
-      <td>${esc(v.obs||'Ã¢â‚¬â€')}</td>
+      <td>${esc(v.obs||'—')}</td>
       <td style="text-align:right;">${fmtPrintR(v.valor)}</td>
       <td style="text-align:right;">${fmtPrintR(valorRecebidoVenda(v))}</td>
       <td style="text-align:right;${isComissao?'color:#16a34a;':(saldo>0?'color:#d97706;':'')}">${fmtPrintR(isComissao?com:saldo)}${isComissao&&info.ajustada?' *':''}</td>
@@ -2362,28 +2362,28 @@ function gerarRelSaldoFinanceiro(tipo){
     <div class="print-header">
       <div>
         <div class="print-title">${titulo}</div>
-        <div class="print-subtitle">PerÃƒÂ­odo: ${periodo}</div>
+        <div class="print-subtitle">Período: ${periodo}</div>
       </div>
-      <div class="print-meta">Emitido em: ${hoje}<br>ComissÃƒÂ£o padrÃƒÂ£o: ${config.pct||7}%</div>
+      <div class="print-meta">Emitido em: ${hoje}<br>Comissão padrão: ${config.pct||7}%</div>
     </div>
     <div class="print-cards">
       <div class="print-card"><div class="print-card-label">Total de vendas</div><div class="print-card-value">${filtradas.length} pedidos</div></div>
       <div class="print-card"><div class="print-card-label">Valor total</div><div class="print-card-value">${fmtPrintR(totalVenda)}</div></div>
       <div class="print-card"><div class="print-card-label">Valor recebido</div><div class="print-card-value green">${fmtPrintR(totalRecebido)}</div></div>
       ${isComissao
-        ? `<div class="print-card"><div class="print-card-label">Saldo comissÃƒÂ£o liberado</div><div class="print-card-value green">${fmtPrintR(totalLiberada)}</div></div>`
+        ? `<div class="print-card"><div class="print-card-label">Saldo comissão liberado</div><div class="print-card-value green">${fmtPrintR(totalLiberada)}</div></div>`
         : `<div class="print-card"><div class="print-card-label">Saldo pagamento cliente</div><div class="print-card-value">${fmtPrintR(totalSaldo)}</div></div>`}
     </div>
     <div class="print-section-title">${detalheTitulo}</div>
     <table class="print-table">
       <thead><tr>
-        <th>OS</th><th>Data</th><th>Cliente</th><th>Produto</th><th>ObservaÃƒÂ§ÃƒÂ£o</th>
+        <th>OS</th><th>Data</th><th>Cliente</th><th>Produto</th><th>Observação</th>
         <th style="text-align:right;">Valor</th>
         <th style="text-align:right;">Recebido</th>
-        <th style="text-align:right;">${isComissao?'Saldo comissÃƒÂ£o':'Saldo cliente'}</th>
+        <th style="text-align:right;">${isComissao?'Saldo comissão':'Saldo cliente'}</th>
         <th style="text-align:center;">Status</th>
       </tr></thead>
-      <tbody>${linhas}${!filtradas.length?'<tr><td colspan="9" style="text-align:center;padding:16px;color:#999;">Nenhuma venda no perÃƒÂ­odo</td></tr>':''}</tbody>
+      <tbody>${linhas}${!filtradas.length?'<tr><td colspan="9" style="text-align:center;padding:16px;color:#999;">Nenhuma venda no período</td></tr>':''}</tbody>
       <tfoot><tr style="font-weight:700;background:#f3f4f6;">
         <td colspan="5" style="padding:8px 10px;">TOTAIS</td>
         <td style="padding:8px 10px;text-align:right;">${fmtPrintR(totalVenda)}</td>
@@ -2392,13 +2392,13 @@ function gerarRelSaldoFinanceiro(tipo){
         <td></td>
       </tfoot>
     </table>
-    ${isComissao&&filtradas.some(v=>infoComMinha(v).ajustada)?'<p style="font-size:11px;color:#888;margin-top:8px;">* ComissÃƒÂ£o especial aplicada nesta venda.</p>':''}
+    ${isComissao&&filtradas.some(v=>infoComMinha(v).ajustada)?'<p style="font-size:11px;color:#888;margin-top:8px;">* Comissão especial aplicada nesta venda.</p>':''}
     <div class="print-footer">
-      <span>Sistema de ComissÃƒÂµes &nbsp;Ã‚Â·&nbsp; Gerado em ${hoje}</span>
-      <span>${isComissao?'Saldo comissÃƒÂ£o liberado':'Saldo pagamento cliente'}: ${fmtPrintR(isComissao?totalLiberada:totalSaldo)}</span>
+      <span>Sistema de Comissões &nbsp;·&nbsp; Gerado em ${hoje}</span>
+      <span>${isComissao?'Saldo comissão liberado':'Saldo pagamento cliente'}: ${fmtPrintR(isComissao?totalLiberada:totalSaldo)}</span>
     </div>
     <div class="print-assinatura">
-      <div class="print-assinatura-linha">ResponsÃƒÂ¡vel financeiro</div>
+      <div class="print-assinatura-linha">Responsável financeiro</div>
       <div class="print-assinatura-linha">Vendedor / Comissionado</div>
     </div>
   </div>`;
@@ -2436,13 +2436,13 @@ function gerarRelBaixasComissao(){
     const itens=porData[data];
     const subtotal=itens.reduce((s,v)=>s+v._valorBaixa,0);
     const linhas=itens.map(v=>`<tr>
-      <td>${v.os||'Ã¢â‚¬â€'}</td>
+      <td>${v.os||'—'}</td>
       <td>${v.cliente}</td>
       <td>${v.produto}</td>
       <td style="text-align:right;">${fmtPrintR(v.valor)}</td>
       <td style="text-align:right;">${fmtPrintR(valorRecebidoVenda(v))}</td>
       <td style="text-align:right;color:#7e22ce;font-weight:600;">${fmtPrintR(v._valorBaixa)}</td>
-      <td>${esc(v.obsBaixa||'Ã¢â‚¬â€')}</td>
+      <td>${esc(v.obsBaixa||'—')}</td>
     </tr>`).join('');
     return `<div style="margin-bottom:22px;">
       <div style="display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #e5e7eb;padding-bottom:8px;margin-bottom:10px;">
@@ -2460,8 +2460,8 @@ function gerarRelBaixasComissao(){
   const html=`<div class="print-doc" id="doc-baixas-comissao">
     <div class="print-header">
       <div>
-        <div class="print-title">ComissÃƒÂµes Baixadas por Data</div>
-        <div class="print-subtitle">PerÃƒÂ­odo de pagamento: ${periodo}</div>
+        <div class="print-title">Comissões Baixadas por Data</div>
+        <div class="print-subtitle">Período de pagamento: ${periodo}</div>
       </div>
       <div class="print-meta">Emitido em: ${hoje}</div>
     </div>
@@ -2470,9 +2470,9 @@ function gerarRelBaixasComissao(){
       <div class="print-card"><div class="print-card-label">Itens baixados</div><div class="print-card-value">${baixas.length}</div></div>
       <div class="print-card"><div class="print-card-label">Total baixado</div><div class="print-card-value blue">${fmtPrintR(total)}</div></div>
     </div>
-    ${grupos||'<p style="color:#999;font-size:12px;padding:12px 0;">Nenhuma comissÃƒÂ£o baixada no perÃƒÂ­odo selecionado.</p>'}
+    ${grupos||'<p style="color:#999;font-size:12px;padding:12px 0;">Nenhuma comissão baixada no período selecionado.</p>'}
     <div class="print-footer">
-      <span>Sistema de ComissÃƒÂµes &nbsp;Ã‚Â·&nbsp; Gerado em ${hoje}</span>
+      <span>Sistema de Comissões &nbsp;·&nbsp; Gerado em ${hoje}</span>
       <span>Total baixado: ${fmtPrintR(total)}</span>
     </div>
   </div>`;
@@ -2481,9 +2481,9 @@ function gerarRelBaixasComissao(){
   document.getElementById('print-area').innerHTML=html;
 }
 
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
-// RELATÃƒâ€œRIO POR ATENDENTE (IMPRESSÃƒÆ’O)
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// ══════════════════════════════════════════════
+// RELATÓRIO POR ATENDENTE (IMPRESSÃO)
+// ══════════════════════════════════════════════
 function gerarRelAtendentes(){
   const de=document.getElementById('ra-de').value||new Date().toISOString().slice(0,7);
   const ate=document.getElementById('ra-ate').value||de;
@@ -2511,7 +2511,7 @@ function gerarRelAtendentes(){
     const lblCom=at.tipo==='valor'?fmtR(at.valor)+'/venda':at.valor+'% da venda';
 
     const linhas=vAt.map(v=>`<tr>
-      <td>${v.os||'Ã¢â‚¬â€'}</td>
+      <td>${v.os||'—'}</td>
       <td>${fmtDate(v.data)}</td>
       <td>${v.cliente}</td>
       <td>${v.produto}</td>
@@ -2525,11 +2525,11 @@ function gerarRelAtendentes(){
         <div style="display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #e5e7eb;padding-bottom:10px;margin-bottom:14px;">
           <div>
             <div style="font-size:15px;font-weight:700;color:#111;">${at.nome}</div>
-            <div style="font-size:12px;color:#666;margin-top:3px;">ComissÃƒÂ£o: ${lblCom} &nbsp;Ã‚Â·&nbsp; ${vAt.length} venda(s) no perÃƒÂ­odo</div>
+            <div style="font-size:12px;color:#666;margin-top:3px;">Comissão: ${lblCom} &nbsp;·&nbsp; ${vAt.length} venda(s) no período</div>
           </div>
           <div style="text-align:right;">
             <div style="font-size:12px;color:#555;">Total vendido: <strong>${fmtPrintR(totalVenda)}</strong></div>
-            <div style="font-size:14px;font-weight:700;color:#2563eb;">ComissÃƒÂ£o a pagar: ${fmtPrintR(totalCom)}</div>
+            <div style="font-size:14px;font-weight:700;color:#2563eb;">Comissão a pagar: ${fmtPrintR(totalCom)}</div>
           </div>
         </div>
         ${vAt.length?`<table class="print-table">
@@ -2541,13 +2541,13 @@ function gerarRelAtendentes(){
             <td style="padding:8px 10px;text-align:right;color:#2563eb;">${fmtPrintR(totalCom)}</td>
             <td></td>
           </tfoot>
-        </table>`:'<p style="color:#999;font-size:12px;padding:8px 0;">Sem vendas no perÃƒÂ­odo selecionado.</p>'}
+        </table>`:'<p style="color:#999;font-size:12px;padding:8px 0;">Sem vendas no período selecionado.</p>'}
       </div>`;
   });
 
   const html=`<div class="print-doc" id="doc-atendentes">
     <div class="print-header">
-      <div><div class="print-title">RelatÃƒÂ³rio de ComissÃƒÂµes por Atendente</div><div class="print-subtitle">PerÃƒÂ­odo: ${periodo}</div></div>
+      <div><div class="print-title">Relatório de Comissões por Atendente</div><div class="print-subtitle">Período: ${periodo}</div></div>
       <div class="print-meta">Emitido em: ${hoje}</div>
     </div>
     <div class="print-cards" style="grid-template-columns:repeat(3,1fr);">
@@ -2557,12 +2557,12 @@ function gerarRelAtendentes(){
     </div>
     ${htmlGlobal}
     <div class="print-footer">
-      <span>Sistema de ComissÃƒÂµes &nbsp;Ã‚Â·&nbsp; Gerado em ${hoje}</span>
+      <span>Sistema de Comissões &nbsp;·&nbsp; Gerado em ${hoje}</span>
       <span>Total a pagar aos atendentes: ${fmtPrintR(totalGeralCom)}</span>
     </div>
     <div class="print-assinatura">
-      <div class="print-assinatura-linha">ResponsÃƒÂ¡vel financeiro</div>
-      <div class="print-assinatura-linha">AprovaÃƒÂ§ÃƒÂ£o</div>
+      <div class="print-assinatura-linha">Responsável financeiro</div>
+      <div class="print-assinatura-linha">Aprovação</div>
     </div>
   </div>`;
 
@@ -2575,17 +2575,17 @@ function imprimirRelAtend(){
   setTimeout(()=>window.print(),200);
 }
 
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
-// ANÃƒÂLISES
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// ══════════════════════════════════════════════
+// ANÁLISES
+// ══════════════════════════════════════════════
 function renderRel(){
   const de=document.getElementById('rel-de').value; const ate=document.getElementById('rel-ate').value;
   const filtrados=vendas.filter(v=>mesKey(v.data)>=de&&mesKey(v.data)<=ate&&v.status!=='cancelado');
   const total=filtrados.reduce((s,v)=>s+v.valor,0); const com=filtrados.reduce((s,v)=>s+comissaoMinha(v),0); const qtd=filtrados.length;
   document.getElementById('rel-period-cards').innerHTML=`
-    <div class="card"><div class="card-label">Vendas no perÃƒÂ­odo</div><div class="card-value">${fmtR(total)}</div><div class="card-sub">${qtd} pedidos</div></div>
-    <div class="card green"><div class="card-label">Minha comissÃƒÂ£o</div><div class="card-value">${fmtR(com)}</div></div>
-    <div class="card"><div class="card-label">Ticket mÃƒÂ©dio</div><div class="card-value">${fmtR(qtd>0?total/qtd:0)}</div></div>
+    <div class="card"><div class="card-label">Vendas no período</div><div class="card-value">${fmtR(total)}</div><div class="card-sub">${qtd} pedidos</div></div>
+    <div class="card green"><div class="card-label">Minha comissão</div><div class="card-value">${fmtR(com)}</div></div>
+    <div class="card"><div class="card-label">Ticket médio</div><div class="card-value">${fmtR(qtd>0?total/qtd:0)}</div></div>
   `;
   const meses=[]; let cur=new Date(de+'-01'); const fim=new Date(ate+'-01');
   while(cur<=fim){ meses.push(cur.toISOString().slice(0,7)); cur.setMonth(cur.getMonth()+1); }
@@ -2612,9 +2612,9 @@ function renderProdutos(){
   });
 }
 
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
-// CONFIGURAÃƒâ€¡Ãƒâ€¢ES
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// ══════════════════════════════════════════════
+// CONFIGURAÇÕES
+// ══════════════════════════════════════════════
 function renderListaProdutos(){
   const el=document.getElementById('lista-produtos'); if(!el) return;
   if(!produtos.length){ el.innerHTML='<div class="empty">Nenhum produto cadastrado</div>'; return; }
@@ -2635,7 +2635,7 @@ async function salvarProduto(){
   const msg=document.getElementById('prod-msg');
   const nome=input.value.trim();
   if(!nome){ msg.className='msg err'; msg.textContent='Informe o nome do produto.'; return; }
-  if(produtos.some(p=>p.toLowerCase()===nome.toLowerCase())){ msg.className='msg err'; msg.textContent='Este produto jÃƒÂ¡ existe.'; return; }
+  if(produtos.some(p=>p.toLowerCase()===nome.toLowerCase())){ msg.className='msg err'; msg.textContent='Este produto já existe.'; return; }
   try {
     await dbInsert('produtos', { nome });
     produtos.push(nome);
@@ -2653,7 +2653,7 @@ async function editarProduto(i){
   if(novo===null) return;
   const nome=novo.trim();
   if(!nome) return alert('Informe o nome do produto.');
-  if(produtos.some((p,idx)=>idx!==i&&p.toLowerCase()===nome.toLowerCase())) return alert('Este produto jÃƒÂ¡ existe.');
+  if(produtos.some((p,idx)=>idx!==i&&p.toLowerCase()===nome.toLowerCase())) return alert('Este produto já existe.');
   
   const client = getSupabaseClient();
   if (client) {
@@ -2690,7 +2690,7 @@ async function editarProduto(i){
 async function excluirProduto(i){
   const nome=produtos[i]; if(!nome) return;
   const emUso=vendas.some(v=>v.produto===nome);
-  if(emUso){ alert('Este produto possui vendas vinculadas. Edite o nome se quiser renomear o histÃƒÂ³rico.'); return; }
+  if(emUso){ alert('Este produto possui vendas vinculadas. Edite o nome se quiser renomear o histórico.'); return; }
   if(!confirm('Excluir este produto?')) return;
   
   try {
@@ -2731,7 +2731,7 @@ async function salvarConfig(){
     try {
       const { error } = await client.from('comissao_config').upsert({ key: 'main_config', value: newConfig });
       if (error) {
-        alert("Erro ao salvar configuraÃƒÂ§ÃƒÂµes no Supabase: " + error.message);
+        alert("Erro ao salvar configurações no Supabase: " + error.message);
         return;
       }
     } catch(err) {
@@ -2785,16 +2785,16 @@ async function carregarDadosDoSupabase() {
     return true;
   } catch (err) {
     console.error("Erro ao carregar dados do Supabase:", err);
-    alert("Erro ao carregar dados do Supabase. Usando armazenamento local temporÃƒÂ¡rio. Detalhes: " + err.message);
+    alert("Erro ao carregar dados do Supabase. Usando armazenamento local temporário. Detalhes: " + err.message);
     return false;
   }
 }
 
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// ══════════════════════════════════════════════
 // INIT
-// Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+// ══════════════════════════════════════════════
 
-// Aguarda o SDK do Supabase (carregado de forma assÃƒÂ­ncrona) por atÃƒÂ© 6 segundos
+// Aguarda o SDK do Supabase (carregado de forma assíncrona) por até 6 segundos
 function aguardarSupabaseSDK(timeout = 6000) {
   return new Promise(resolve => {
     if (typeof window.supabase !== 'undefined' && typeof window.supabase.createClient === 'function') {
@@ -2851,9 +2851,9 @@ document.addEventListener('DOMContentLoaded', async ()=>{
       sbKeyInput.value = localStorage.getItem('supabase_key') || '';
     }
 
-    // Aguarda o SDK do Supabase estar disponÃƒÂ­vel
+    // Aguarda o SDK do Supabase estar disponível
     const sdkOk = await aguardarSupabaseSDK(5000);
-    console.log('[Init] SDK Supabase disponÃƒÂ­vel:', sdkOk);
+    console.log('[Init] SDK Supabase disponível:', sdkOk);
 
     atualizarSupabaseUI();
 
@@ -2865,7 +2865,7 @@ document.addEventListener('DOMContentLoaded', async ()=>{
         const url = localStorage.getItem('supabase_url') || SUPABASE_URL_PADRAO;
         const chaveMigracao = chaveMigracaoSupabase(url);
 
-        // Na primeira execuÃƒÂ§ÃƒÂ£o desta versÃƒÂ£o, envia o backup local antes de carregar a nuvem.
+        // Na primeira execução desta versão, envia o backup local antes de carregar a nuvem.
         if (localStorage.getItem(chaveMigracao) !== 'ok') {
           console.log('[Init] Migrando backup local para o Supabase...');
           await enviarDadosLocaisParaSupabase(client, lerDadosLocais());
@@ -2877,16 +2877,16 @@ document.addEventListener('DOMContentLoaded', async ()=>{
         if (carregou) save();
       } catch(e) {
         console.error('[Init] Erro ao migrar/carregar Supabase, usando dados locais:', e);
-        alert('NÃƒÂ£o foi possÃƒÂ­vel transferir os dados locais para o Supabase. O backup local foi preservado. Detalhes: ' + e.message);
+        alert('Não foi possível transferir os dados locais para o Supabase. O backup local foi preservado. Detalhes: ' + e.message);
       }
     } else if (!sdkOk) {
-      console.warn('[Init] SDK nÃƒÂ£o disponÃƒÂ­vel. Usando armazenamento local.');
+      console.warn('[Init] SDK não disponível. Usando armazenamento local.');
     }
 
     inicializarUI();
 
   } catch(fatal) {
-    console.error('[Init] Erro fatal na inicializaÃƒÂ§ÃƒÂ£o:', fatal);
+    console.error('[Init] Erro fatal na inicialização:', fatal);
     // Garante que a UI seja inicializada mesmo com erro
     try { inicializarUI(); } catch(e2) {}
   }
