@@ -890,6 +890,7 @@ function toSnakeCase(obj) {
     obsBaixa: 'obs_baixa',
     valorRecebido: 'valor_recebido',
     valorComissaoBaixada: 'valor_comissao_baixada',
+    historicoBaixas: 'historico_baixas',
     dataPrevista: 'data_prevista'
   };
   const res = {};
@@ -902,7 +903,7 @@ function toSnakeCase(obj) {
 
 const SUPABASE_COLUMNS = {
   atendentes: ['id', 'nome', 'tipo', 'valor', 'created_at'],
-  vendas: ['id', 'data', 'os', 'cliente', 'produto', 'atendente', 'valor', 'pagamento', 'status', 'obs', 'com_tipo', 'com_valor', 'data_baixa_comissao', 'obs_baixa', 'valor_recebido', 'valor_comissao_baixada', 'created_at'],
+  vendas: ['id', 'data', 'os', 'cliente', 'produto', 'atendente', 'valor', 'pagamento', 'status', 'obs', 'com_tipo', 'com_valor', 'data_baixa_comissao', 'obs_baixa', 'valor_recebido', 'valor_comissao_baixada', 'historico_baixas', 'created_at'],
   recebimentos: ['id', 'cliente', 'tipo', 'recorrencia', 'valor', 'data_prevista', 'dia', 'inicio', 'created_at'],
   produtos: ['nome', 'created_at']
 };
@@ -926,6 +927,7 @@ function toCamelCase(obj) {
     obs_baixa: 'obsBaixa',
     valor_recebido: 'valorRecebido',
     valor_comissao_baixada: 'valorComissaoBaixada',
+    historico_baixas: 'historicoBaixas',
     data_prevista: 'dataPrevista'
   };
   const res = {};
@@ -1187,7 +1189,7 @@ function desconectarSupabase() {
 
 let chartCom=null, chartPeriodo=null, chartProdutos=null;
 let comTab='mensal';
-let editandoId=null, baixandoId=null, editandoAtendId=null;
+let editandoId=null, baixandoId=null, editandoAtendId=null, ajustandoBaixa=false;
 let vComTipo='off', eComTipo='off';
 
 const DEFAULT_PRODS = ['Lona / Banner','Adesivo','Placa / ACM','Fachada','Outros'];
@@ -1305,6 +1307,17 @@ function statusLabel(v) {
 function normalizarVenda(v) {
   const status = statusCalculado(v);
   return { ...v, status };
+}
+
+function historicoBaixas(v) {
+  if (Array.isArray(v.historicoBaixas)) return v.historicoBaixas;
+  if (v.dataBaixaComissao && comissaoBaixada(v) > 0) return [{ data: v.dataBaixaComissao, valor: comissaoBaixada(v), obs: v.obsBaixa || '' }];
+  return [];
+}
+
+function registrarBaixa(v, valor, data, obs) {
+  const historico = historicoBaixas(v).concat({ data, valor: Number(valor.toFixed(2)), obs: obs || '' });
+  return { ...v, historicoBaixas: historico, valorComissaoBaixada: historico.reduce((s, b) => s + (parseFloat(b.valor) || 0), 0), dataBaixaComissao: data, obsBaixa: obs || '' };
 }
 
 function infoComMinha(v) {
@@ -1663,7 +1676,7 @@ function renderVendas() {
           <td style="font-size:11px;font-family:var(--mono);">${comBx>0?`<span style="color:var(--purple)">${dataBaixa}</span>`:'—'}</td>
           <td><div style="display:flex;gap:4px;">
             <button class="btn-sm" onclick="abrirEditar(${v.id})">Editar</button>
-            ${!isCancelado&&comissaoDisponivelBaixa(v)>0?`<button class="btn-sm purple" onclick="abrirBaixarIndividual(${v.id})">↓</button>`:''}
+            ${!isCancelado&&(comissaoDisponivelBaixa(v)>0||comissaoBaixada(v)>0)?`<button class="btn-sm purple" onclick="abrirBaixarIndividual(${v.id})" title="${comissaoBaixada(v)>0?'Ajustar baixa':'Baixar comissão'}">${comissaoBaixada(v)>0?'↺':'↓'}</button>`:''}
             <button class="btn-sm danger" onclick="excluirVenda(${v.id})">✕</button>
           </div></td>
         </tr>`;
@@ -1795,12 +1808,13 @@ function vendaComRecebimentoDaBaixa() {
 function atualizarBaixaIndividualPreview() {
   const v=vendaComRecebimentoDaBaixa(); if(!v) return;
   renderBaixaIndividualInfo(v);
-  document.getElementById('bi-valor').value=comissaoDisponivelBaixa(v).toFixed(2);
+  if (!ajustandoBaixa) document.getElementById('bi-valor').value=comissaoDisponivelBaixa(v).toFixed(2);
 }
 
 function abrirBaixarIndividual(id) {
   const v=vendas.find(x=>x.id===id); if(!v) return;
   baixandoId=id;
+  ajustandoBaixa=comissaoBaixada(v)>0;
   const info=infoComMinha(v);
   const com=comissaoDisponivelBaixa(v);
   const liberada=comissaoLiberada(v);
@@ -1812,7 +1826,8 @@ function abrirBaixarIndividual(id) {
     (info.ajustada?'<span class="tag-ajustada">✎ esp.</span>':'');
   document.getElementById('bi-data').value=new Date().toISOString().slice(0,10);
   document.getElementById('bi-valor-recebido').value=valorRecebidoVenda(v).toFixed(2);
-  document.getElementById('bi-valor').value=com.toFixed(2);
+  const historico=historicoBaixas(v);
+  document.getElementById('bi-valor').value=(ajustandoBaixa ? historico[historico.length-1].valor : com).toFixed(2);
   document.getElementById('bi-obs').value='';
   atualizarBaixaIndividualPreview();
   document.getElementById('modal-baixar-individual').classList.add('open');
@@ -1825,8 +1840,15 @@ async function confirmarBaixaIndividual() {
   const vendaAtualizada = vendaComRecebimentoDaBaixa(); if(!vendaAtualizada) return;
   const valorPago = parseFloat(document.getElementById('bi-valor').value)||0;
   const disponivel = comissaoDisponivelBaixa(vendaAtualizada);
-  if(valorPago<=0 || valorPago>disponivel+0.009){ alert('Informe um valor de baixa válido, limitado à comissão liberada disponível.'); return; }
-  const vendaBaixada = normalizarVenda({ ...vendaAtualizada, valorComissaoBaixada: comissaoBaixada(vendaAtualizada) + valorPago, dataBaixaComissao: data, obsBaixa: document.getElementById('bi-obs').value.trim() });
+  if(valorPago<=0 || (!ajustandoBaixa && valorPago>disponivel+0.009) || (ajustandoBaixa && valorPago>comissaoLiberada(vendaAtualizada)+0.009)){ alert('Informe um valor de baixa válido, limitado à comissão liberada.'); return; }
+  let vendaBaixada;
+  if (ajustandoBaixa) {
+    const historico=historicoBaixas(vendaAtualizada).slice();
+    historico[historico.length-1]={ data, valor:Number(valorPago.toFixed(2)), obs:document.getElementById('bi-obs').value.trim() };
+    vendaBaixada=normalizarVenda({ ...vendaAtualizada, historicoBaixas:historico, valorComissaoBaixada:historico.reduce((s,b)=>s+(parseFloat(b.valor)||0),0), dataBaixaComissao:data, obsBaixa:document.getElementById('bi-obs').value.trim() });
+  } else {
+    vendaBaixada=normalizarVenda(registrarBaixa(vendaAtualizada, valorPago, data, document.getElementById('bi-obs').value.trim()));
+  }
   try {
     await dbUpsert('vendas', vendaBaixada);
     vendas[idx] = vendaBaixada;
@@ -1866,7 +1888,7 @@ async function confirmarBaixaMassa(){
     const idx=vendas.findIndex(x=>x.id===id);
     if(idx!==-1){
       const valorBaixa = comissaoDisponivelBaixa(vendas[idx]);
-      const updated = normalizarVenda({ ...vendas[idx], valorComissaoBaixada: comissaoBaixada(vendas[idx]) + valorBaixa, dataBaixaComissao: data, obsBaixa: obs });
+      const updated = normalizarVenda(registrarBaixa(vendas[idx], valorBaixa, data, obs));
       updates.push(toSupabaseRow('vendas', updated));
       indices.push({ idx, updated });
     }
@@ -2355,12 +2377,12 @@ function imprimirRel(){
 function gerarRelBaixasComissao(){
   const de=document.getElementById('rf-de').value||new Date().toISOString().slice(0,7);
   const ate=document.getElementById('rf-ate').value||de;
-  const baixas=vendas
-    .filter(v=>v.status!=='cancelado'&&v.dataBaixaComissao&&mesKey(v.dataBaixaComissao)>=de&&mesKey(v.dataBaixaComissao)<=ate&&comissaoBaixada(v)>0)
-    .sort((a,b)=>a.dataBaixaComissao.localeCompare(b.dataBaixaComissao)||String(a.os||'').localeCompare(String(b.os||'')));
-  const total=baixas.reduce((s,v)=>s+comissaoBaixada(v),0);
+  const baixas=vendas.flatMap(v=>historicoBaixas(v).map(b=>({ ...v, _dataBaixa:b.data, _valorBaixa:parseFloat(b.valor)||0, _obsBaixa:b.obs||'' })))
+    .filter(v=>v.status!=='cancelado'&&v._dataBaixa&&mesKey(v._dataBaixa)>=de&&mesKey(v._dataBaixa)<=ate&&v._valorBaixa>0)
+    .sort((a,b)=>a._dataBaixa.localeCompare(b._dataBaixa)||String(a.os||'').localeCompare(String(b.os||'')));
+  const total=baixas.reduce((s,v)=>s+v._valorBaixa,0);
   const porData=baixas.reduce((acc,v)=>{
-    const data=v.dataBaixaComissao;
+    const data=v._dataBaixa;
     if(!acc[data]) acc[data]=[];
     acc[data].push(v);
     return acc;
@@ -2372,14 +2394,14 @@ function gerarRelBaixasComissao(){
 
   const grupos=datas.map(data=>{
     const itens=porData[data];
-    const subtotal=itens.reduce((s,v)=>s+comissaoBaixada(v),0);
+    const subtotal=itens.reduce((s,v)=>s+v._valorBaixa,0);
     const linhas=itens.map(v=>`<tr>
       <td>${v.os||'—'}</td>
       <td>${v.cliente}</td>
       <td>${v.produto}</td>
       <td style="text-align:right;">${fmtPrintR(v.valor)}</td>
       <td style="text-align:right;">${fmtPrintR(valorRecebidoVenda(v))}</td>
-      <td style="text-align:right;color:#7e22ce;font-weight:600;">${fmtPrintR(comissaoBaixada(v))}</td>
+      <td style="text-align:right;color:#7e22ce;font-weight:600;">${fmtPrintR(v._valorBaixa)}</td>
       <td>${esc(v.obsBaixa||'—')}</td>
     </tr>`).join('');
     return `<div style="margin-bottom:22px;">
