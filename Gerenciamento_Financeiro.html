@@ -802,7 +802,7 @@ tr:hover td { background: rgba(255,255,255,.03); }
     </div>
     <div id="baixar-info" style="font-size:13px;color:var(--text-2);margin-bottom:18px;line-height:1.8;"></div>
     <div class="form-grid">
-      <div class="form-group"><label>Valor total recebido acumulado (R$)</label><input type="number" id="bi-valor-recebido" step="0.01" min="0" oninput="atualizarBaixaIndividualPreview()"></div>
+      <div class="form-group"><label>Novo recebimento do cliente (R$)</label><input type="number" id="bi-valor-recebido" step="0.01" min="0" oninput="atualizarBaixaIndividualPreview()"></div>
       <div class="form-group"><label>Data do recebimento</label><input type="date" id="bi-data-recebimento"></div>
       <div class="form-group"><label>Data da baixa da comissão</label><input type="date" id="bi-data"></div>
       <div class="form-group"><label>Valor da comissao baixada (R$)</label><input type="number" id="bi-valor" step="0.01" min="0"></div>
@@ -1829,7 +1829,8 @@ function renderBaixaIndividualInfo(v) {
 
 function vendaComRecebimentoDaBaixa() {
   const v=vendas.find(x=>x.id===baixandoId); if(!v) return null;
-  const recebido = Math.min(parseFloat(v.valor)||0, Math.max(0, parseFloat(document.getElementById('bi-valor-recebido').value)||0));
+  const novoRecebimento=Math.max(0, parseFloat(document.getElementById('bi-valor-recebido').value)||0);
+  const recebido = Math.min(parseFloat(v.valor)||0, valorRecebidoVenda(v)+(ajustandoBaixa?0:novoRecebimento));
   return normalizarVenda({ ...v, valorRecebido: recebido });
 }
 
@@ -1857,7 +1858,7 @@ function abrirBaixarIndividual(id, modo='nova') {
     (info.ajustada?'<span class="tag-ajustada">✎ esp.</span>':'');
   document.getElementById('bi-data').value=new Date().toISOString().slice(0,10);
   document.getElementById('bi-data-recebimento').value=new Date().toISOString().slice(0,10);
-  document.getElementById('bi-valor-recebido').value=valorRecebidoVenda(v).toFixed(2);
+  document.getElementById('bi-valor-recebido').value='';
   const historico=historicoBaixas(v);
   document.getElementById('bi-valor').value=(ajustandoBaixa && historico.length ? historico[historico.length-1].valor : com).toFixed(2);
   document.getElementById('bi-obs').value='';
