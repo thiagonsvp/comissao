@@ -998,13 +998,13 @@ async function enviarDadosLocaisParaSupabase(client, dadosLocais) {
 }
 
 // â”€â”€ Credenciais padrÃ£o do projeto Supabase â”€â”€
-const SUPABASE_URL_PADRAO = 'https://xhgdqygaludojwxmclym.supabase.co';
-const SUPABASE_KEY_PADRAO = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhoZ2RxeWdhbHVkb2p3eG1jbHltIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEyMjI0NTYsImV4cCI6MjA4Njc5ODQ1Nn0.GENh7pIxBnkUqkr5_rvPFLl7yWODOvkCkbVXql0l56o';
+const SUPABASE_URL_PADRAO = 'https://npucmharmyozegwrwopx.supabase.co';
+const SUPABASE_KEY_PADRAO = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5wdWNtaGFybXlvemVnd3J3b3B4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY4ODEyOTEsImV4cCI6MjA5MjQ1NzI5MX0.HmE-YHI4Fae4bhV79wjXq7_smlqrY7vxQt0lB6k8o0U';
 
 // Garante que as credenciais corretas estÃ£o salvas (corrige URLs invÃ¡lidas)
 try {
   const urlSalva = localStorage.getItem('supabase_url');
-  if (!urlSalva || !urlSalva.startsWith('https://')) {
+  if (!urlSalva || !urlSalva.startsWith('https://') || urlSalva !== SUPABASE_URL_PADRAO) {
     localStorage.setItem('supabase_url', SUPABASE_URL_PADRAO);
     localStorage.setItem('supabase_key', SUPABASE_KEY_PADRAO);
   }
