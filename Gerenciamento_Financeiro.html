@@ -1110,7 +1110,13 @@ async function dbUpsert(table, item) {
   const client = getSupabaseClient();
   if (client) {
     const snakeItem = toSupabaseRow(table, item);
-    const { error } = await client.from('com_' + table).upsert(snakeItem);
+    let { error } = await client.from('com_' + table).upsert(snakeItem);
+    // Permite operar com bancos antigos que ainda não receberam a coluna de histórico.
+    if (error && table==='vendas' && /historico_baixas.*schema cache|column .*historico_baixas.*does not exist/i.test(error.message||'')) {
+      const legado = { ...snakeItem };
+      delete legado.historico_baixas;
+      ({ error } = await client.from('com_' + table).upsert(legado));
+    }
     if (error) {
       alert("Erro ao atualizar no Supabase (com_" + table + "): " + error.message);
       throw error;
