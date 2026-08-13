@@ -1320,14 +1320,17 @@ function historicoBaixas(v) {
   if (Array.isArray(v.historicoBaixas)) return v.historicoBaixas;
   const marcador=/\[\[BAIXAS_JSON:(.*?)\]\]/.exec(v.obsBaixa||'');
   if (marcador) { try { return JSON.parse(marcador[1]); } catch(e) {} }
-  if (v.dataBaixaComissao && comissaoBaixada(v) > 0) return [{ data: v.dataBaixaComissao, valor: comissaoBaixada(v), obs: v.obsBaixa || '' }];
+  if (v.dataBaixaComissao && comissaoBaixada(v) > 0) return [{ data: v.dataBaixaComissao, valor: comissaoBaixada(v), obs: limparMarcadorHistorico(v.obsBaixa) }];
   return [];
+}
+
+function limparMarcadorHistorico(obs) {
+  return String(obs || '').replace(/\s*\[\[BAIXAS_JSON:[\s\S]*?\]\]/g, '').trim();
 }
 
 function registrarBaixa(v, valor, data, obs) {
   const historico = historicoBaixas(v).concat({ data, valor: Number(valor.toFixed(2)), obs: obs || '' });
-  const obsTexto=obs || '';
-  return { ...v, historicoBaixas: historico, valorComissaoBaixada: historico.reduce((s, b) => s + (parseFloat(b.valor) || 0), 0), dataBaixaComissao: data, obsBaixa: obsTexto+' [[BAIXAS_JSON:'+JSON.stringify(historico)+']]'};
+  return { ...v, historicoBaixas: historico, valorComissaoBaixada: historico.reduce((s, b) => s + (parseFloat(b.valor) || 0), 0), dataBaixaComissao: data, obsBaixa: obs || '' };
 }
 
 function historicoRecebimentos(v) {
@@ -1884,8 +1887,7 @@ async function confirmarBaixaIndividual() {
   if (ajustandoBaixa && !recebimentoAumentado) {
     const historico=historicoBaixas(vendaAtualizada).slice();
     historico[historico.length-1]={ data, valor:Number(valorPago.toFixed(2)), obs };
-    const obsAjuste=obs;
-    vendaBaixada=normalizarVenda({ ...vendaAtualizada, historicoBaixas:historico, valorComissaoBaixada:historico.reduce((s,b)=>s+(parseFloat(b.valor)||0),0), dataBaixaComissao:data, obsBaixa:obsAjuste+' [[BAIXAS_JSON:'+JSON.stringify(historico)+']]' });
+    vendaBaixada=normalizarVenda({ ...vendaAtualizada, historicoBaixas:historico, valorComissaoBaixada:historico.reduce((s,b)=>s+(parseFloat(b.valor)||0),0), dataBaixaComissao:data, obsBaixa:obs });
   } else {
     vendaBaixada=normalizarVenda(registrarBaixa(vendaAtualizada, valorPago, data, obs));
   }
