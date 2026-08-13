@@ -802,8 +802,9 @@ tr:hover td { background: rgba(255,255,255,.03); }
     </div>
     <div id="baixar-info" style="font-size:13px;color:var(--text-2);margin-bottom:18px;line-height:1.8;"></div>
     <div class="form-grid">
-      <div class="form-group"><label>Valor recebido do cliente (R$)</label><input type="number" id="bi-valor-recebido" step="0.01" min="0" oninput="atualizarBaixaIndividualPreview()"></div>
-      <div class="form-group"><label>Data de pagamento</label><input type="date" id="bi-data"></div>
+      <div class="form-group"><label>Valor total recebido acumulado (R$)</label><input type="number" id="bi-valor-recebido" step="0.01" min="0" oninput="atualizarBaixaIndividualPreview()"></div>
+      <div class="form-group"><label>Data do recebimento</label><input type="date" id="bi-data-recebimento"></div>
+      <div class="form-group"><label>Data da baixa da comissão</label><input type="date" id="bi-data"></div>
       <div class="form-group"><label>Valor da comissao baixada (R$)</label><input type="number" id="bi-valor" step="0.01" min="0"></div>
       <div class="form-group full"><label>Observação</label><input type="text" id="bi-obs" placeholder="Ex: Pix, transferência…"></div>
     </div>
@@ -891,6 +892,7 @@ function toSnakeCase(obj) {
     valorRecebido: 'valor_recebido',
     valorComissaoBaixada: 'valor_comissao_baixada',
     historicoBaixas: 'historico_baixas',
+    historicoRecebimentos: 'historico_recebimentos',
     dataPrevista: 'data_prevista'
   };
   const res = {};
@@ -903,7 +905,7 @@ function toSnakeCase(obj) {
 
 const SUPABASE_COLUMNS = {
   atendentes: ['id', 'nome', 'tipo', 'valor', 'created_at'],
-  vendas: ['id', 'data', 'os', 'cliente', 'produto', 'atendente', 'valor', 'pagamento', 'status', 'obs', 'com_tipo', 'com_valor', 'data_baixa_comissao', 'obs_baixa', 'valor_recebido', 'valor_comissao_baixada', 'historico_baixas', 'created_at'],
+  vendas: ['id', 'data', 'os', 'cliente', 'produto', 'atendente', 'valor', 'pagamento', 'status', 'obs', 'com_tipo', 'com_valor', 'data_baixa_comissao', 'obs_baixa', 'valor_recebido', 'valor_comissao_baixada', 'historico_baixas', 'historico_recebimentos', 'created_at'],
   recebimentos: ['id', 'cliente', 'tipo', 'recorrencia', 'valor', 'data_prevista', 'dia', 'inicio', 'created_at'],
   produtos: ['nome', 'created_at']
 };
@@ -928,6 +930,7 @@ function toCamelCase(obj) {
     valor_recebido: 'valorRecebido',
     valor_comissao_baixada: 'valorComissaoBaixada',
     historico_baixas: 'historicoBaixas',
+    historico_recebimentos: 'historicoRecebimentos',
     data_prevista: 'dataPrevista'
   };
   const res = {};
@@ -1110,13 +1113,7 @@ async function dbUpsert(table, item) {
   const client = getSupabaseClient();
   if (client) {
     const snakeItem = toSupabaseRow(table, item);
-    let { error } = await client.from('com_' + table).upsert(snakeItem);
-    // Permite operar com bancos antigos que ainda não receberam a coluna de histórico.
-    if (error && table==='vendas' && /historico_baixas.*schema cache|column .*historico_baixas.*does not exist/i.test(error.message||'')) {
-    const legado = { ...snakeItem };
-    delete legado.historico_baixas;
-      ({ error } = await client.from('com_' + table).upsert(legado));
-    }
+    const { error } = await client.from('com_' + table).upsert(snakeItem);
     if (error) {
       alert("Erro ao atualizar no Supabase (com_" + table + "): " + error.message);
       throw error;
@@ -1331,6 +1328,20 @@ function registrarBaixa(v, valor, data, obs) {
   const historico = historicoBaixas(v).concat({ data, valor: Number(valor.toFixed(2)), obs: obs || '' });
   const obsTexto=obs || '';
   return { ...v, historicoBaixas: historico, valorComissaoBaixada: historico.reduce((s, b) => s + (parseFloat(b.valor) || 0), 0), dataBaixaComissao: data, obsBaixa: obsTexto+' [[BAIXAS_JSON:'+JSON.stringify(historico)+']]'};
+}
+
+function historicoRecebimentos(v) {
+  if (Array.isArray(v.historicoRecebimentos)) return v.historicoRecebimentos;
+  const recebido=valorRecebidoVenda(v);
+  return recebido>0 ? [{ data:v.dataBaixaComissao||v.data, valor:recebido, obs:'' }] : [];
+}
+
+function registrarRecebimento(v, totalRecebido, data, obs) {
+  const anterior=valorRecebidoVenda(v);
+  const acrescimo=Math.max(0, totalRecebido-anterior);
+  if (acrescimo<0.009) return { ...v, valorRecebido:totalRecebido };
+  const historico=historicoRecebimentos(v).concat({ data, valor:Number(acrescimo.toFixed(2)), obs:obs||'' });
+  return { ...v, valorRecebido:totalRecebido, historicoRecebimentos:historico };
 }
 
 function infoComMinha(v) {
@@ -1692,7 +1703,8 @@ function renderVendas() {
           <td style="font-size:11px;font-family:var(--mono);">${comBx>0?`<span style="color:var(--purple)">${dataBaixa}</span>`:'—'}</td>
           <td><div style="display:flex;gap:4px;">
             <button class="btn-sm" onclick="abrirEditar(${v.id})">Editar</button>
-            ${!isCancelado&&(comissaoDisponivelBaixa(v)>0||comissaoBaixada(v)>0)?`<button class="btn-sm purple" onclick="abrirBaixarIndividual(${v.id})" title="${comissaoBaixada(v)>0?'Ajustar baixa':'Baixar comissão'}">${comissaoBaixada(v)>0?'↺':'↓'}</button>`:''}
+            ${!isCancelado&&(saldoAbertoVenda(v)>0||comissaoDisponivelBaixa(v)>0)?`<button class="btn-sm purple" onclick="abrirBaixarIndividual(${v.id},'nova')" title="Registrar novo recebimento e baixa">↓</button>`:''}
+            ${!isCancelado&&comissaoBaixada(v)>0?`<button class="btn-sm" onclick="abrirBaixarIndividual(${v.id},'ajustar')" title="Ajustar última baixa">↺</button>`:''}
             <button class="btn-sm danger" onclick="excluirVenda(${v.id})">✕</button>
           </div></td>
         </tr>`;
@@ -1829,10 +1841,11 @@ function atualizarBaixaIndividualPreview() {
   if (!ajustandoBaixa || recebimentoAumentado) document.getElementById('bi-valor').value=comissaoDisponivelBaixa(v).toFixed(2);
 }
 
-function abrirBaixarIndividual(id) {
+function abrirBaixarIndividual(id, modo='nova') {
   const v=vendas.find(x=>x.id===id); if(!v) return;
   baixandoId=id;
-  ajustandoBaixa=comissaoBaixada(v)>0;
+  ajustandoBaixa=modo==='ajustar';
+  document.querySelector('#modal-baixar-individual .modal-title').textContent=ajustandoBaixa?'Ajustar última baixa':'Registrar nova baixa';
   const info=infoComMinha(v);
   const com=comissaoDisponivelBaixa(v);
   const liberada=comissaoLiberada(v);
@@ -1843,9 +1856,10 @@ function abrirBaixarIndividual(id) {
     `Comissão liberada: <span style="color:var(--green);font-family:var(--mono)">${fmtR(liberada)}</span> &nbsp;|&nbsp; Baixada: <span style="color:var(--purple);font-family:var(--mono)">${fmtR(baixada)}</span> &nbsp;|&nbsp; Disponível: <span style="color:var(--accent);font-family:var(--mono)">${fmtR(com)}</span> (${info.label})`+
     (info.ajustada?'<span class="tag-ajustada">✎ esp.</span>':'');
   document.getElementById('bi-data').value=new Date().toISOString().slice(0,10);
+  document.getElementById('bi-data-recebimento').value=new Date().toISOString().slice(0,10);
   document.getElementById('bi-valor-recebido').value=valorRecebidoVenda(v).toFixed(2);
   const historico=historicoBaixas(v);
-  document.getElementById('bi-valor').value=(ajustandoBaixa ? historico[historico.length-1].valor : com).toFixed(2);
+  document.getElementById('bi-valor').value=(ajustandoBaixa && historico.length ? historico[historico.length-1].valor : com).toFixed(2);
   document.getElementById('bi-obs').value='';
   atualizarBaixaIndividualPreview();
   document.getElementById('modal-baixar-individual').classList.add('open');
@@ -1854,8 +1868,12 @@ function abrirBaixarIndividual(id) {
 async function confirmarBaixaIndividual() {
   const data=document.getElementById('bi-data').value;
   if(!data){ alert('Informe a data de pagamento.'); return; }
+  const dataRecebimento=document.getElementById('bi-data-recebimento').value;
+  if(!dataRecebimento){ alert('Informe a data do recebimento do cliente.'); return; }
   const idx=vendas.findIndex(x=>x.id===baixandoId); if(idx===-1) return;
-  const vendaAtualizada = vendaComRecebimentoDaBaixa(); if(!vendaAtualizada) return;
+  const vendaPreview = vendaComRecebimentoDaBaixa(); if(!vendaPreview) return;
+  const obs=document.getElementById('bi-obs').value.trim();
+  const vendaAtualizada=normalizarVenda(registrarRecebimento(vendas[idx], valorRecebidoVenda(vendaPreview), dataRecebimento, obs));
   const recebimentoAnterior = valorRecebidoVenda(vendas[idx]);
   const recebimentoAumentado = valorRecebidoVenda(vendaAtualizada) > recebimentoAnterior + 0.009;
   const valorPago = parseFloat(document.getElementById('bi-valor').value)||0;
@@ -1864,11 +1882,11 @@ async function confirmarBaixaIndividual() {
   let vendaBaixada;
   if (ajustandoBaixa && !recebimentoAumentado) {
     const historico=historicoBaixas(vendaAtualizada).slice();
-    historico[historico.length-1]={ data, valor:Number(valorPago.toFixed(2)), obs:document.getElementById('bi-obs').value.trim() };
-    const obsAjuste=document.getElementById('bi-obs').value.trim();
+    historico[historico.length-1]={ data, valor:Number(valorPago.toFixed(2)), obs };
+    const obsAjuste=obs;
     vendaBaixada=normalizarVenda({ ...vendaAtualizada, historicoBaixas:historico, valorComissaoBaixada:historico.reduce((s,b)=>s+(parseFloat(b.valor)||0),0), dataBaixaComissao:data, obsBaixa:obsAjuste+' [[BAIXAS_JSON:'+JSON.stringify(historico)+']]' });
   } else {
-    vendaBaixada=normalizarVenda(registrarBaixa(vendaAtualizada, valorPago, data, document.getElementById('bi-obs').value.trim()));
+    vendaBaixada=normalizarVenda(registrarBaixa(vendaAtualizada, valorPago, data, obs));
   }
   try {
     await dbUpsert('vendas', vendaBaixada);

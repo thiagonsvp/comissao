@@ -31,12 +31,14 @@ CREATE TABLE IF NOT EXISTS com_vendas (
   data_baixa_comissao DATE DEFAULT NULL,
   obs_baixa TEXT DEFAULT '',
   historico_baixas JSONB NOT NULL DEFAULT '[]'::jsonb,
+  historico_recebimentos JSONB NOT NULL DEFAULT '[]'::jsonb,
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
 ALTER TABLE com_vendas ADD COLUMN IF NOT EXISTS valor_recebido NUMERIC(10,2) DEFAULT 0;
 ALTER TABLE com_vendas ADD COLUMN IF NOT EXISTS valor_comissao_baixada NUMERIC(10,2) DEFAULT 0;
 ALTER TABLE com_vendas ADD COLUMN IF NOT EXISTS historico_baixas JSONB NOT NULL DEFAULT '[]'::jsonb;
+ALTER TABLE com_vendas ADD COLUMN IF NOT EXISTS historico_recebimentos JSONB NOT NULL DEFAULT '[]'::jsonb;
 
 -- 3. Tabela de recebimentos
 CREATE TABLE IF NOT EXISTS com_recebimentos (
