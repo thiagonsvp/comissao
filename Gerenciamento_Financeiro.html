@@ -1255,6 +1255,9 @@ function comissaoTotal(v) {
 
 function valorRecebidoVenda(v) {
   const valor = parseFloat(v.valor)||0;
+  if (Array.isArray(v.historicoRecebimentos) && v.historicoRecebimentos.length) {
+    return Math.min(valor, Math.max(0, v.historicoRecebimentos.reduce((s, r) => s + (parseFloat(r.valor)||0), 0)));
+  }
   if (v.valorRecebido!=null && v.valorRecebido!=='') {
     const recebido = Math.min(valor, Math.max(0, parseFloat(v.valorRecebido)||0));
     if (recebido===0 && (v.status==='recebido'||v.status==='baixado')) return valor;
@@ -1275,6 +1278,9 @@ function comissaoLiberada(v) {
 }
 
 function comissaoBaixada(v) {
+  if (Array.isArray(v.historicoBaixas) && v.historicoBaixas.length) {
+    return Math.max(0, v.historicoBaixas.reduce((s, b) => s + (parseFloat(b.valor)||0), 0));
+  }
   if (v.valorComissaoBaixada!=null && v.valorComissaoBaixada!=='') {
     return Math.max(0, parseFloat(v.valorComissaoBaixada)||0);
   }
