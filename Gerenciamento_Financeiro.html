@@ -1814,7 +1814,9 @@ function vendaComRecebimentoDaBaixa() {
 function atualizarBaixaIndividualPreview() {
   const v=vendaComRecebimentoDaBaixa(); if(!v) return;
   renderBaixaIndividualInfo(v);
-  if (!ajustandoBaixa) document.getElementById('bi-valor').value=comissaoDisponivelBaixa(v).toFixed(2);
+  const original=vendas.find(x=>x.id===baixandoId);
+  const recebimentoAumentado=original&&valorRecebidoVenda(v)>valorRecebidoVenda(original)+0.009;
+  if (!ajustandoBaixa || recebimentoAumentado) document.getElementById('bi-valor').value=comissaoDisponivelBaixa(v).toFixed(2);
 }
 
 function abrirBaixarIndividual(id) {
@@ -1844,11 +1846,13 @@ async function confirmarBaixaIndividual() {
   if(!data){ alert('Informe a data de pagamento.'); return; }
   const idx=vendas.findIndex(x=>x.id===baixandoId); if(idx===-1) return;
   const vendaAtualizada = vendaComRecebimentoDaBaixa(); if(!vendaAtualizada) return;
+  const recebimentoAnterior = valorRecebidoVenda(vendas[idx]);
+  const recebimentoAumentado = valorRecebidoVenda(vendaAtualizada) > recebimentoAnterior + 0.009;
   const valorPago = parseFloat(document.getElementById('bi-valor').value)||0;
   const disponivel = comissaoDisponivelBaixa(vendaAtualizada);
-  if(valorPago<=0 || (!ajustandoBaixa && valorPago>disponivel+0.009) || (ajustandoBaixa && valorPago>comissaoLiberada(vendaAtualizada)+0.009)){ alert('Informe um valor de baixa válido, limitado à comissão liberada.'); return; }
+  if(valorPago<=0 || ((!ajustandoBaixa || recebimentoAumentado) && valorPago>disponivel+0.009) || (ajustandoBaixa && !recebimentoAumentado && valorPago>comissaoLiberada(vendaAtualizada)+0.009)){ alert('Informe um valor de baixa válido, limitado à comissão liberada.'); return; }
   let vendaBaixada;
-  if (ajustandoBaixa) {
+  if (ajustandoBaixa && !recebimentoAumentado) {
     const historico=historicoBaixas(vendaAtualizada).slice();
     historico[historico.length-1]={ data, valor:Number(valorPago.toFixed(2)), obs:document.getElementById('bi-obs').value.trim() };
     vendaBaixada=normalizarVenda({ ...vendaAtualizada, historicoBaixas:historico, valorComissaoBaixada:historico.reduce((s,b)=>s+(parseFloat(b.valor)||0),0), dataBaixaComissao:data, obsBaixa:document.getElementById('bi-obs').value.trim() });
