@@ -6,7 +6,7 @@ if (!$url -or !$key) { throw 'Não foi possível localizar a conexão do Supabas
 $headers = @{ apikey = $key; Authorization = "Bearer $key" }
 
 function SqlValue($value, $json = $false) {
-  if ($null -eq $value) { return 'NULL' }
+  if ($null -eq $value) { return $(if ($json) { "'[]'::jsonb" } else { 'NULL' }) }
   if ($json) { return "'" + (($value | ConvertTo-Json -Compress -Depth 20) -replace "'", "''") + "'::jsonb" }
   if ($value -is [bool]) { return $value.ToString().ToUpperInvariant() }
   if ($value -is [byte] -or $value -is [int] -or $value -is [long] -or $value -is [decimal] -or $value -is [double]) { return [Convert]::ToString($value, [Globalization.CultureInfo]::InvariantCulture) }
