@@ -1851,7 +1851,7 @@ function atualizarBaixaIndividualPreview() {
   const recebimentoAumentado=original&&valorRecebidoVenda(v)>valorRecebidoVenda(original)+0.009;
   if (!document.getElementById('bi-somente-recebivel').checked && (!ajustandoBaixa || recebimentoAumentado)) document.getElementById('bi-valor').value=comissaoDisponivelBaixa(v).toFixed(2);
 }
- function alternarSomenteRecebivel(){ const s=document.getElementById('bi-somente-recebivel').checked; document.getElementById('bi-valor').disabled=s; if(s) document.getElementById('bi-valor').value='0.01'; else atualizarBaixaIndividualPreview(); }
+ function alternarSomenteRecebivel(){ const s=document.getElementById('bi-somente-recebivel').checked; document.getElementById('bi-valor').disabled=s; if(s) document.getElementById('bi-valor').value='0.00'; else atualizarBaixaIndividualPreview(); }
 
 function abrirBaixarIndividual(id, modo='nova') {
   const v=vendas.find(x=>x.id===id); if(!v) return;
@@ -1880,7 +1880,8 @@ function abrirBaixarIndividual(id, modo='nova') {
 
 async function confirmarBaixaIndividual() {
   const data=document.getElementById('bi-data').value;
-  if(!data){ alert('Informe a data de pagamento.'); return; }
+  const somenteRecebivel=document.getElementById('bi-somente-recebivel').checked;
+  if(!somenteRecebivel && !data){ alert('Informe a data de pagamento.'); return; }
   const dataRecebimento=document.getElementById('bi-data-recebimento').value;
   if(!dataRecebimento){ alert('Informe a data do recebimento do cliente.'); return; }
   const idx=vendas.findIndex(x=>x.id===baixandoId); if(idx===-1) return;
@@ -1889,8 +1890,7 @@ async function confirmarBaixaIndividual() {
   const vendaAtualizada=normalizarVenda(registrarRecebimento(vendas[idx], valorRecebidoVenda(vendaPreview), dataRecebimento, obs));
   const recebimentoAnterior = valorRecebidoVenda(vendas[idx]);
   const recebimentoAumentado = valorRecebidoVenda(vendaAtualizada) > recebimentoAnterior + 0.009;
-  const valorPago = parseFloat(document.getElementById('bi-valor').value)||0;
-  const somenteRecebivel=document.getElementById('bi-somente-recebivel').checked;
+  const valorPago = somenteRecebivel ? 0.01 : (parseFloat(document.getElementById('bi-valor').value)||0);
   const disponivel = comissaoDisponivelBaixa(vendaAtualizada);
   if(valorPago<=0 || ((!ajustandoBaixa || recebimentoAumentado) && valorPago>disponivel+0.009) || (ajustandoBaixa && !recebimentoAumentado && valorPago>comissaoLiberada(vendaAtualizada)+0.009)){ alert('Informe um valor de baixa válido, limitado à comissão liberada.'); return; }
   let vendaBaixada;
