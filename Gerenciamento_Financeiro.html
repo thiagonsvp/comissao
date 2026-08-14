@@ -2349,6 +2349,7 @@ function gerarRelSaldoFinanceiro(tipo){
   const totalVenda=filtradas.reduce((s,v)=>s+v.valor,0);
   const totalRecebido=filtradas.reduce((s,v)=>s+valorRecebidoVenda(v),0);
   const totalSaldo=filtradas.reduce((s,v)=>s+saldoAbertoVenda(v),0);
+  const totalRecebidoComissao=filtradas.reduce((s,v)=>s+(comissaoTotal(v)>0?(comissaoDisponivelBaixa(v)/comissaoTotal(v))*(parseFloat(v.valor)||0):0),0);
   const totalLiberada=filtradas.filter(v=>['recebido','parcial'].includes(statusCalculado(v))).reduce((s,v)=>s+comissaoDisponivelBaixa(v),0);
   const titulo=isComissao?'Relatório de Saldo de Comissão Liberado':'Relatório de Saldo de Pagamento do Cliente';
   const detalheTitulo=isComissao?'Comissões liberadas pendentes de baixa':'Pagamentos de clientes em aberto';
@@ -2361,6 +2362,7 @@ function gerarRelSaldoFinanceiro(tipo){
     const info=infoComMinha(v);
     const com=comissaoDisponivelBaixa(v);
     const saldo=saldoAbertoVenda(v);
+    const recebidoComissao=comissaoTotal(v)>0?(com/comissaoTotal(v))*(parseFloat(v.valor)||0):0;
     return `<tr>
       <td>${v.os||'—'}</td>
       <td>${fmtDate(v.data)}</td>
@@ -2369,6 +2371,7 @@ function gerarRelSaldoFinanceiro(tipo){
       <td>${esc(v.obs||'—')}</td>
       <td style="text-align:right;">${fmtPrintR(v.valor)}</td>
       <td style="text-align:right;">${fmtPrintR(valorRecebidoVenda(v))}</td>
+      ${isComissao?`<td style="text-align:right;color:#2563eb;">${fmtPrintR(recebidoComissao)}</td>`:''}
       <td style="text-align:right;${isComissao?'color:#16a34a;':(saldo>0?'color:#d97706;':'')}">${fmtPrintR(isComissao?com:saldo)}${isComissao&&info.ajustada?' *':''}</td>
       <td style="text-align:center;">${printStatusBadge(statusBadgeClass(v))}</td>
     </tr>`;
@@ -2396,6 +2399,7 @@ function gerarRelSaldoFinanceiro(tipo){
         <th>OS</th><th>Data</th><th>Cliente</th><th>Produto</th><th>Observação</th>
         <th style="text-align:right;">Valor</th>
         <th style="text-align:right;">Recebido</th>
+        ${isComissao?'<th style="text-align:right;">Recebido p/ comissão</th>':''}
         <th style="text-align:right;">${isComissao?'Saldo comissão':'Saldo cliente'}</th>
         <th style="text-align:center;">Status</th>
       </tr></thead>
@@ -2404,6 +2408,7 @@ function gerarRelSaldoFinanceiro(tipo){
         <td colspan="5" style="padding:8px 10px;">TOTAIS</td>
         <td style="padding:8px 10px;text-align:right;">${fmtPrintR(totalVenda)}</td>
         <td style="padding:8px 10px;text-align:right;">${fmtPrintR(totalRecebido)}</td>
+        ${isComissao?`<td style="padding:8px 10px;text-align:right;color:#2563eb;">${fmtPrintR(totalRecebidoComissao)}</td>`:''}
         <td style="padding:8px 10px;text-align:right;${isComissao?'color:#16a34a;':''}">${fmtPrintR(isComissao?totalLiberada:totalSaldo)}</td>
         <td></td>
       </tfoot>
