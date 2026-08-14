@@ -809,6 +809,7 @@ tr:hover td { background: rgba(255,255,255,.03); }
       <div class="form-group full"><label>Observação</label><input type="text" id="bi-obs" placeholder="Ex: Pix, transferência…"></div>
     </div>
     <div class="modal-footer">
+      <div class="form-group full"><label><input type="checkbox" id="bi-somente-recebivel" onchange="alternarSomenteRecebivel()"> Baixar somente o recebível do cliente (não baixar a comissão agora)</label></div>
       <button class="btn-ghost" onclick="fecharModal('modal-baixar-individual')">Cancelar</button>
       <button class="btn-primary" onclick="confirmarBaixaIndividual()">Confirmar baixa</button>
     </div>
@@ -1848,8 +1849,9 @@ function atualizarBaixaIndividualPreview() {
   renderBaixaIndividualInfo(v);
   const original=vendas.find(x=>x.id===baixandoId);
   const recebimentoAumentado=original&&valorRecebidoVenda(v)>valorRecebidoVenda(original)+0.009;
-  if (!ajustandoBaixa || recebimentoAumentado) document.getElementById('bi-valor').value=comissaoDisponivelBaixa(v).toFixed(2);
+  if (!document.getElementById('bi-somente-recebivel').checked && (!ajustandoBaixa || recebimentoAumentado)) document.getElementById('bi-valor').value=comissaoDisponivelBaixa(v).toFixed(2);
 }
+ function alternarSomenteRecebivel(){ const s=document.getElementById('bi-somente-recebivel').checked; document.getElementById('bi-valor').disabled=s; if(s) document.getElementById('bi-valor').value='0.01'; else atualizarBaixaIndividualPreview(); }
 
 function abrirBaixarIndividual(id, modo='nova') {
   const v=vendas.find(x=>x.id===id); if(!v) return;
@@ -1868,6 +1870,7 @@ function abrirBaixarIndividual(id, modo='nova') {
   document.getElementById('bi-data').value=new Date().toISOString().slice(0,10);
   document.getElementById('bi-data-recebimento').value=new Date().toISOString().slice(0,10);
   document.getElementById('bi-valor-recebido').value='';
+  document.getElementById('bi-somente-recebivel').checked=false; document.getElementById('bi-valor').disabled=false;
   const historico=historicoBaixas(v);
   document.getElementById('bi-valor').value=(ajustandoBaixa && historico.length ? historico[historico.length-1].valor : com).toFixed(2);
   document.getElementById('bi-obs').value='';
@@ -1887,10 +1890,15 @@ async function confirmarBaixaIndividual() {
   const recebimentoAnterior = valorRecebidoVenda(vendas[idx]);
   const recebimentoAumentado = valorRecebidoVenda(vendaAtualizada) > recebimentoAnterior + 0.009;
   const valorPago = parseFloat(document.getElementById('bi-valor').value)||0;
+  const somenteRecebivel=document.getElementById('bi-somente-recebivel').checked;
   const disponivel = comissaoDisponivelBaixa(vendaAtualizada);
   if(valorPago<=0 || ((!ajustandoBaixa || recebimentoAumentado) && valorPago>disponivel+0.009) || (ajustandoBaixa && !recebimentoAumentado && valorPago>comissaoLiberada(vendaAtualizada)+0.009)){ alert('Informe um valor de baixa válido, limitado à comissão liberada.'); return; }
   let vendaBaixada;
-  if (ajustandoBaixa && !recebimentoAumentado) {
+  if (somenteRecebivel) {
+    if (!recebimentoAumentado) { alert('Informe um novo recebimento do cliente.'); return; }
+    vendaBaixada=vendaAtualizada;
+  }
+  else if (ajustandoBaixa && !recebimentoAumentado) {
     const historico=historicoBaixas(vendaAtualizada).slice();
     historico[historico.length-1]={ data, valor:Number(valorPago.toFixed(2)), obs };
     vendaBaixada=normalizarVenda({ ...vendaAtualizada, historicoBaixas:historico, valorComissaoBaixada:historico.reduce((s,b)=>s+(parseFloat(b.valor)||0),0), dataBaixaComissao:data, obsBaixa:obs });
